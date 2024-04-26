@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import Login from "./Login";
+import Signup from "./Signup";
+import ForgotPassword from "./ForgotPassword";
 
-const Login = () => {
+const Registration = () => {
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
@@ -24,71 +27,28 @@ const Login = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className="w-full h-screen flex items-center justify-center bg-gray-200">
-        <form
-          onSubmit={handleSubmitLogin}
-          className="bg-gray-200 p-6 rounded-lg  shadow-md w-96 h-96 rounded-lg"
+    <>
+      <div className="w-full min-h-screen flex items-center justify-center bg-[#f8f9fa] ">
+        <div
+          className="w-[50%] h-[70vh] rounded-[20px] bg-[white]  grid grid-cols-12 min-w-[800px] "
+          style={{ boxShadow: "0px 0px 20px 0px #9ca3af" }}
         >
-          <h3 className="text-xl   font-light m-0">Personal Information</h3>
-          <p className="text-xs text-gray-400  mb-3 font-light mt-3">
-            Enter your e-mail address and your password.
-          </p>
-          <div className="mb-4">
-            <input
-              placeholder="admin@gmail.com"
-              onChange={handleChange}
-              name="email"
-              className="border rounded border-gray-300   p-2 w-full"
-              type="email"
-            />
+          <div className="col-span-6 rounded-[20px] bg-primary flex items-center justify-center text-[white]">
+            <h1 className="text-[30px] ">LOGO</h1>
           </div>
-          <div className="mb-4">
-            <input
-              placeholder="password"
-              onChange={handleChange}
-              name="password"
-              className="border rounded border-gray-300   p-2 w-full"
-              type="email"
-            />
-          </div>
-
-          <h5 className="text-red-500">{/* {error} */}</h5>
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                name="check"
-                onChange={handleChange}
-                className="form-checkbox h-4 w-4 text-gray-600"
-              />
-              <label
-                className="ml-2 text-gray-700 text-xs"
-                htmlFor="remember-me"
-              >
-                Remember me
-              </label>
+          <div className="col-span-6 flex items-center justify-center ">
+            <div className="p-10 w-full flex items-center justify-center flex-col">
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/register" element={<Signup />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+              </Routes>
             </div>
-            <button
-              className="text-xs text-blue-500 text-primary"
-              type="button"
-            >
-              Forget Password?
-            </button>
           </div>
-          <button
-            className="mt-2 w-full bg-primary hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg"
-            type="submit"
-          >
-            Sign Me In
-          </button>
-          <button className="mt-2 w-full bg-secondary hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">
-            Create an account
-          </button>
-        </form>
+        </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
-export default Login;
+export default Registration;

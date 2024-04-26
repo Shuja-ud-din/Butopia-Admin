@@ -4,7 +4,7 @@ import { DataContext } from "./context/AppData";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Login from "./views/Login/index";
+import Registration from "./views/Login";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -12,7 +12,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/*" element={<Registration />} />
           {/* <Route
             path="/"
             element={isAuthenticated ? <Navigate to="/admin" /> : <>Login</>}
