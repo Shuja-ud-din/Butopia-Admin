@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  overflow: hidden;
+  box-sizing: border-box;
 }
 
 * {
