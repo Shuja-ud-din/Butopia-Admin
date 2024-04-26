@@ -18,7 +18,7 @@ function App() {
             path="/admin/*"
             element={
               <>
-                <ProtectedRoute isAuthenticated={!isAuthenticated}>
+                <ProtectedRoute isAuthenticated={true}>
                   <Dashboard />
                 </ProtectedRoute>
               </>

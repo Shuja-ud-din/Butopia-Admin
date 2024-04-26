@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import Appoinments from "../pages/Appoinments";
+import Customers from "../pages/Customers.";
 
 const Dashboard = () => {
   return (
@@ -25,6 +26,7 @@ const Dashboard = () => {
               <Route path="/" element={<>Admin</>} />
               <Route path="/dashboard/" element={<>DashBoard</>} />
               <Route path="/appointments/*" element={<Appoinments />} />
+              <Route path="/customers/*" element={<Customers />} />
             </Routes>
           </div>
         </div>

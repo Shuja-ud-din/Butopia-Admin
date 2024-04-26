@@ -108,7 +108,7 @@ const Table = ({
                     {extraColumns.map((item) => {
                       return (
                         <td
-                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap`}
+                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left text-right pr-9 whitespace-nowrap`}
                         >
                           {item(obj)}
                         </td>

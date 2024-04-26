@@ -1,24 +1,28 @@
 import React from "react";
 import Table from "../Table/Table";
+import Button from "../Button/Button";
 
 const data = [
   {
     id: "1",
-    name: "John Doe",
-    email: "johndoe@gmail.com",
+    customerName: "John Doe",
     phone: "09087654321",
+    provider: "Clinic 1",
+    date: "2015-03-25",
   },
   {
-    id: "1",
-    name: "John Doe",
-    email: "johndoe@gmail.com",
+    id: "2",
+    customerName: "John Doe",
     phone: "09087654321",
+    provider: "Clinic 1",
+    date: "2015-03-25",
   },
   {
-    id: "1",
-    name: "John Doe",
-    email: "johndoe@gmail.com",
+    id: "3",
+    customerName: "John Doe",
     phone: "09087654321",
+    provider: "Clinic 1",
+    date: "2015-03-25",
   },
 ];
 
@@ -31,9 +35,14 @@ const AppointmentsTable = () => {
 
       <Table
         array={data}
-        filters={["name"]}
-        keysToDisplay={["id", "name", "email", "phone"]}
-        label={["id", "name", "email", "phone"]}
+        filters={["customerName"]}
+        keysToDisplay={["id", "customerName", "phone", "provider", "date"]}
+        label={["#", "customer Name", "phone", "provider", "date", "Actions"]}
+        extraColumns={[
+          () => {
+            return <Button className="bg-[red]  w-[100px] ">Cancel</Button>;
+          },
+        ]}
       />
     </>
   );
