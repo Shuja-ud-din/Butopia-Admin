@@ -20,12 +20,10 @@ const Registration = () => {
       [name]: value,
     });
   };
-
-  const handleSubmitLogin = (event) => {
-    event.preventDefault();
-    navigate("/admin/appointments");
+  console.log(loginData);
+  const handleSubmitLogin = () => {
+    //submit login data
   };
-
   return (
     <>
       <div className="w-full min-h-screen flex items-center justify-center bg-[#f8f9fa] ">
