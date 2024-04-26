@@ -1,8 +1,11 @@
 import React from "react";
 
-const Button = ({ children }) => {
+const Button = ({ children, onClick }) => {
   return (
-    <button className="bg-primary border-none outline-none w-full p-2 text-[white] rounded-lg text-[14px] ">
+    <button
+      onClick={onClick}
+      className="bg-primary border-none outline-none w-full p-2 text-[white] rounded-lg text-[14px] "
+    >
       {children}
     </button>
   );

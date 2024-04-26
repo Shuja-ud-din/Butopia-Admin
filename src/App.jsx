@@ -13,10 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Registration />} />
-          {/* <Route
-            path="/"
-            element={isAuthenticated ? <Navigate to="/admin" /> : <>Login</>}
-          />
+
           <Route
             path="/admin/*"
             element={
@@ -26,7 +23,7 @@ function App() {
                 </ProtectedRoute>
               </>
             }
-          /> */}
+          />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,7 +1,10 @@
 import { Avatar } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProfileBox = ({ name, role, image }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="absolute top-[60px] right-2 rounded-md bg-[white] border border-secondary w-[200px] ">
       <div className="profile_head bg-[#f9f9f9] flex p-3 rounded-tl-md rounded-tr-md border-b border-secondary  ">
@@ -19,7 +22,10 @@ const ProfileBox = ({ name, role, image }) => {
           <li className="p-2 transition duration-200 cursor-pointer hover:bg-primary hover:text-[white]    border-b border-[#dedada]">
             Settings
           </li>
-          <li className="p-2 transition duration-200 cursor-pointer hover:bg-primary hover:text-[white] rounded-bl-md  rounded-br-md ">
+          <li
+            onClick={() => navigate("/")}
+            className="p-2 transition duration-200 cursor-pointer hover:bg-primary hover:text-[white] rounded-bl-md  rounded-br-md "
+          >
             Logout
           </li>
         </ul>

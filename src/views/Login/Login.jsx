@@ -1,9 +1,11 @@
 import React from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <h1 className="text-[26px] font-[500] mb-2 ">Login</h1>
@@ -14,7 +16,7 @@ const Login = () => {
       <Input type="text" placeholder="Phone Number" />
       <Input type="password" />
 
-      <Button>Login</Button>
+      <Button onClick={() => navigate("/admin/dashboard")}>Login</Button>
 
       <NavLink
         to="/forgot-password"
