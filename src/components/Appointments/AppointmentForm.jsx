@@ -1,35 +1,52 @@
 import React from 'react'
-
+import CalendarComponent from '../Calendar/Calendar'
+import TimePickerComponent from '../TimePickerComponent/TimePickerComponent'
+import Button from '../Button/Button'
 const AppointmentForm = () => {
     return (
         <>
-            <div className="w-full">
+            <div className="w-full ">
                 <h3 className="text-[25px] font-[500] ">Add Appoinment</h3>
             </div>
-            <div className="mt-12 max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-center mb-4">Add Appointment</h2>
-                <form className="space-y-4">
-                    <div>
-                        <label htmlFor="name" className="block font-medium text-gray-700">Name</label>
-                        <input type="text" id="name" name="name" className="mt-1 block w-full  rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" />
+            <div className="w-full flex mt-3 flex">
+                <div className='w-30 bg-[white] rounded-md  flex flex-col p-3 h-80 mr-3  shadow-md'>
+                    <CalendarComponent />
+                </div>
+                <div className='w-70 bg-[white] rounded-md  flex  flex-col p-4 ml-2  shadow-md'>
+                    <h2 className='font-[600]'>Morning</h2>
+                    <p className='color-[grey] mb-4 text-[12px] font-[500]'>9:00 AM to 12:00 PM</p>
+                    <div className='w-full flex  flex-wrap min-w-[200px]'>
+                        <TimePickerComponent time="9:10 AM" />
+                        <TimePickerComponent time="9:10 AM" />
+                        <TimePickerComponent time="9:20 AM" />
+                        <TimePickerComponent time="9:30 AM" />
+                        <TimePickerComponent time="9:40 AM" />
+                        <TimePickerComponent time="9:50 AM" />
+                        <TimePickerComponent time="10:00 AM" />
+                        <TimePickerComponent time="10:10 AM" />
+                        <TimePickerComponent time="10:20 AM" />
+                        <TimePickerComponent time="10:30 AM" />
+
                     </div>
-                    <div>
-                        <label htmlFor="email" className="block font-medium text-gray-700">Email</label>
-                        <input type="email" id="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" />
+                    <div className='mt-5 mb-4 w-full h-[0.5px] bg-[grey]'></div>
+                    <h2 className='font-[600]'>Evening</h2>
+                    <p className='color-[grey] mb-4 text-[12px] font-[500]'>5:00 PM to 9:00 PM</p>
+                    <div className='w-full mb-16 flex  flex-wrap min-w-[200px]'>
+                        <TimePickerComponent time="5:00 AM" />
+                        <TimePickerComponent time="5:10 AM" />
+                        <TimePickerComponent time="5:20 AM" />
+                        <TimePickerComponent time="5:30 AM" />
+                        <TimePickerComponent time="5:40 AM" />
+                        <TimePickerComponent time="5:50 AM" />
+                        <TimePickerComponent time="6:00 AM" />
+                        <TimePickerComponent time="6:10 AM" />
+                        <TimePickerComponent time="6:20 AM" />
+
                     </div>
-                    <div>
-                        <label htmlFor="date" className="block font-medium text-gray-700">Date</label>
-                        <input type="date" id="date" name="date" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" />
-                    </div>
-                    <div>
-                        <label htmlFor="time" className="block font-medium text-gray-700">Time</label>
-                        <input type="time" id="time" name="time" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" />
-                    </div>
-                    <div>
-                        <button type="submit" className="w-full bg-primary text-light font-semibold py-2 px-4 rounded-lg hover:bg-opacity-80">Submit</button>
-                    </div>
-                </form>
+                    <div className='w-full flex items-center justify-center'>       <Button className='w-20 ' type="primary" >Submit</Button></div>
+                </div>
             </div>
+
 
         </>
     )
