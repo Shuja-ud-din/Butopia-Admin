@@ -1,5 +1,4 @@
 import React from 'react'
-import "./PaymentReceipt.css"
 import templateLogo from '../../assets/logos/templateLogo.jpg'
 
 const PaymentReceipt = () => {

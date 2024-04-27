@@ -5,7 +5,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Registration from "./views/Login/index";
-import PaymentReceipt from "./emailTemplates/PaymentReceipt/PaymentReceipt";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("token");
