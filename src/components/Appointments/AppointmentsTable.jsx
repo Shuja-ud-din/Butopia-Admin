@@ -40,7 +40,11 @@ const AppointmentsTable = () => {
         label={["#", "customer Name", "phone", "provider", "date", "Actions"]}
         extraColumns={[
           () => {
-            return <Button className="bg-[red]  w-[100px] ">Cancel</Button>;
+            return (
+              <Button outlined={true} type="danger">
+                Cancel
+              </Button>
+            );
           },
         ]}
       />

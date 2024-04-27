@@ -13,6 +13,7 @@ const Signup = () => {
 
       <Input type="text" placeholder="Full Name" />
       <Input type="text" placeholder="Phone Number" />
+      <Input type="email" placeholder="Email" />
       <Input type="password" />
       <Input type="password" placeholder="Confirm Password" />
 

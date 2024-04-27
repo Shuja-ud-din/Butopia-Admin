@@ -269,7 +269,11 @@ const CustomersTable = () => {
         label={["#", "customer Name", "phone No", "Actions"]}
         extraColumns={[
           () => {
-            return <Button className="bg-[red]  w-[100px] ">Delete</Button>;
+            return (
+              <Button type="danger" outlined>
+                Delete
+              </Button>
+            );
           },
         ]}
       />
