@@ -270,7 +270,7 @@ const CustomersTable = () => {
         extraColumns={[
           () => {
             return (
-              <Button type="danger" outlined>
+              <Button type="danger" className="w-[80px]" outlined>
                 Delete
               </Button>
             );
