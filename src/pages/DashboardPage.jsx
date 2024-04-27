@@ -4,7 +4,10 @@ import graph from "../assets/graph.jpg";
 import DashRange from "../components/DashRange/DashRange";
 import { Avatar } from "@mui/material";
 import avatar from "../assets/avatar.jpg";
+import { IoCalendarOutline } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
+import { FiUsers } from "react-icons/fi";
+import { PiHandCoins } from "react-icons/pi";
 import Table from "../components/Table/Table";
 import Button from "../components/Button/Button";
 
@@ -42,23 +45,23 @@ const DashboardPage = () => {
       <div className="flex gap-4 grid grid-cols-12 my-5 ">
         <div className="col-span-3  p-5 bg-primary text-[white] rounded-[1rem] shadow-lg">
           <TbCoins size={25} className="mb-4" />
-          <p className="my-2">Total Sales</p>
+          <p className="my-2">Total Revenue </p>
           <h2 className="font-[600] text-[23px] ">$12,469</h2>
         </div>
         <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
-          <TbCoins size={25} className="mb-4" />
-          <p className="my-2">Total Sales</p>
-          <h2 className="font-[600] text-[23px] ">$12,469</h2>
+          <FiUsers size={25} className="mb-4" />
+          <p className="my-2">Total Clients </p>
+          <h2 className="font-[600] text-[23px] ">1,469</h2>
         </div>
         <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
-          <TbCoins size={25} className="mb-4" />
-          <p className="my-2">Total Sales</p>
-          <h2 className="font-[600] text-[23px] ">$12,469</h2>
+          <IoCalendarOutline size={25} className="mb-4" />
+          <p className="my-2">Total Appointments</p>
+          <h2 className="font-[600] text-[23px] ">362</h2>
         </div>
         <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
-          <TbCoins size={25} className="mb-4" />
-          <p className="my-2">Total Sales</p>
-          <h2 className="font-[600] text-[23px] ">$12,469</h2>
+          <PiHandCoins size={25} className="mb-4" />
+          <p className="my-2">Total Tax</p>
+          <h2 className="font-[600] text-[23px] ">$2,469</h2>
         </div>
       </div>
       <div className="flex flex-col gap-4 grid grid-cols-12">

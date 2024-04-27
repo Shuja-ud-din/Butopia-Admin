@@ -3,6 +3,9 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { NavLink, useLocation } from "react-router-dom";
 import { SiGoogleanalytics } from "react-icons/si";
 import { FiUsers } from "react-icons/fi";
+import { TbCategory } from "react-icons/tb";
+import { MdOutlineMedicalServices } from "react-icons/md";
+import { FaUserDoctor } from "react-icons/fa6";
 
 const SideBar = () => {
   const parentLocation = useLocation().pathname.split("/")[2];
@@ -23,6 +26,21 @@ const SideBar = () => {
       title: "Customers",
       path: "/customers",
     },
+    {
+      icon: <TbCategory />,
+      title: "Categories",
+      path: "/categories",
+    },
+    {
+      icon: <MdOutlineMedicalServices />,
+      title: "Services",
+      path: "/services",
+    },
+    {
+      icon: <FaUserDoctor />,
+      title: "Providers",
+      path: "/providers",
+    },
   ];
 
   return (
@@ -31,8 +49,9 @@ const SideBar = () => {
         <NavLink
           key={index}
           to={`/admin${item.path}`}
-          className={`w-full p-[10px] mb-2 rounded-[10px] flex items-center gap-2 cursor-pointer ${"/" + parentLocation === item.path ? "bg-primary text-[white]" : ""
-            } `}
+          className={`w-full p-[10px] mb-2 rounded-[10px] flex items-center gap-2 cursor-pointer ${
+            "/" + parentLocation === item.path ? "bg-primary text-[white]" : ""
+          } `}
         >
           {item.icon}
           <span className="pl-2">{item.title}</span>
