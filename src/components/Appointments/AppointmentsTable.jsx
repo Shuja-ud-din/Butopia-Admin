@@ -35,7 +35,7 @@ const AppointmentsTable = () => {
 
       <Table
         array={data}
-        filters={["customerName"]}
+        search={"customerName"}
         keysToDisplay={[null, "customerName", "phone", "provider", "date"]}
         label={["#", "customer Name", "phone", "provider", "date", "Actions"]}
         customBlocks={[

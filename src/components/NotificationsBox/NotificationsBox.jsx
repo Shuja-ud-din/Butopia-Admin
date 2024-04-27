@@ -5,7 +5,7 @@ const NotificationsBox = ({ ref }) => {
     <>
       <div
         ref={ref}
-        className="absolute top-[60px] right-[8rem] rounded-md bg-[white] border border-secondary w-[400px] "
+        className=" absolute top-[60px] right-[8rem] rounded-md bg-[white] border border-secondary w-[400px] z-[999]"
       >
         <div className="profile_head bg-[#f9f9f9] flex p-4 rounded-tl-md rounded-tr-md border-b border-secondary  ">
           <div>

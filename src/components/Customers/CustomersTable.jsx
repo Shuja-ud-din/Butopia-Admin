@@ -264,7 +264,7 @@ const CustomersTable = () => {
 
       <Table
         array={data}
-        filters={["fullName"]}
+        search={"fullName"}
         keysToDisplay={["id", "fullName", "phNo"]}
         label={["#", "customer Name", "phone No", "Actions"]}
         extraColumns={[
