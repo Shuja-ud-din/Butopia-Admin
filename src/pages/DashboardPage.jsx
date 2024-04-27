@@ -141,6 +141,39 @@ const DashboardPage = () => {
                 <p className="text-[13px] text-[#a5a8b0] ">example@email.com</p>
               </div>
             </div>
+
+            <div className=" text-primary cursor-pointer">
+              <div className="flex items-center">
+                <p className="pr-3  font-[700] text-[14px] ">See more</p>
+                <IoChevronForward />
+              </div>
+            </div>
+          </div>
+
+          <div className=" p-5 bg-[white] rounded-[1rem] shadow-lg">
+            <h2 className="font-[600] text-[20px] mb-3 ">Top Doctors</h2>
+
+            <div className="flex my-4">
+              <Avatar src={avatar} />
+              <div className="ml-3">
+                <h3 className="font-[700] text-[14px]  ">John Doe</h3>
+                <p className="text-[13px] text-[#a5a8b0] ">example@email.com</p>
+              </div>
+            </div>
+            <div className="flex my-4">
+              <Avatar src={avatar} />
+              <div className="ml-3">
+                <h3 className="font-[700] text-[14px]  ">John Doe</h3>
+                <p className="text-[13px] text-[#a5a8b0] ">example@email.com</p>
+              </div>
+            </div>
+            <div className="flex my-4">
+              <Avatar src={avatar} />
+              <div className="ml-3">
+                <h3 className="font-[700] text-[14px]  ">John Doe</h3>
+                <p className="text-[13px] text-[#a5a8b0] ">example@email.com</p>
+              </div>
+            </div>
             <div className="flex my-4">
               <Avatar src={avatar} />
               <div className="ml-3">
@@ -155,21 +188,6 @@ const DashboardPage = () => {
                 <IoChevronForward />
               </div>
             </div>
-          </div>
-
-          <div className=" p-5 bg-[white] rounded-[1rem] shadow-lg text-center">
-            <div className="px-4 py-3">
-              <h2 className="font-[600] text-[22px] mb-3 ">
-                The Unique Power of One
-              </h2>
-              <p className="text-[13px] text-[#a5a8b0] mb-5">
-                With just one contact systeminvoice, we aim to help simplify
-                your work
-              </p>
-            </div>
-            <Button type="primary" outlined>
-              Create Invoice
-            </Button>
           </div>
         </div>
       </div>
