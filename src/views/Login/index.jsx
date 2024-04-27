@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
+import VerifyOtp from "./VerifyOtp";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Registration = () => {
           style={{ boxShadow: "0px 0px 20px 0px #9ca3af" }}
         >
           <div className="col-span-6 rounded-[20px] bg-primary flex items-center justify-center text-[white]">
-            <h1 className="text-[30px] ">LOGO</h1>
+            <h3>Logo</h3>
           </div>
           <div className="col-span-6 flex items-center justify-center ">
             <div className="p-10 w-full flex items-center justify-center flex-col">
@@ -40,6 +41,7 @@ const Registration = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Signup />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/verify-otp" element={<VerifyOtp />} />
               </Routes>
             </div>
           </div>

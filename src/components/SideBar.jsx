@@ -25,9 +25,8 @@ const SideBar = () => {
         <NavLink
           key={index}
           to={`/admin${item.path}`}
-          className={`w-full p-[10px] mb-2 rounded-[10px] flex items-center gap-2 cursor-pointer ${
-            "/" + parentLocation === item.path ? "bg-primary text-[white]" : ""
-          } `}
+          className={`w-full p-[10px] mb-2 rounded-[10px] flex items-center gap-2 cursor-pointer ${"/" + parentLocation === item.path ? "bg-primary text-[white]" : ""
+            } `}
         >
           {item.icon}
           <span className="pl-2">{item.title}</span>

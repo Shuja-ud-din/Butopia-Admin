@@ -40,6 +40,19 @@ const Input = ({ type = "text", onChange, name, placeholder, className }) => {
           />
         </>
       )}
+      {(type === "otpNumber") && (
+        <>
+          <input
+            type="text"
+            name={name}
+            id="otp"
+            placeholder={placeholder}
+            className="w-8 h-8 text-center border border-gray-300 rounded-lg "
+            maxLength={1}
+            onChange={onChange}
+          />
+        </>
+      )}
     </div>
   );
 };
