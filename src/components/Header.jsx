@@ -6,6 +6,7 @@ import avatar from "../assets/avatar.jpg";
 import ProfileBox from "./ProfileBox/ProfileBox";
 import { GoChevronDown } from "react-icons/go";
 import logo from "../assets/logo.jpg";
+import { Avatar, Badge } from "@mui/material";
 
 const Header = () => {
   const [showProfileBox, setShowProfileBox] = useState(false);

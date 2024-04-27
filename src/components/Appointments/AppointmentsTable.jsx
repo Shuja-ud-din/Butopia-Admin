@@ -41,7 +41,12 @@ const AppointmentsTable = () => {
         extraColumns={[
           () => {
             return (
-              <Button outlined={true} type="danger">
+              <Button
+                className="w-20 text-right"
+                width="70px"
+                outlined={true}
+                type="danger"
+              >
                 Cancel
               </Button>
             );

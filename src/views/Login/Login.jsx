@@ -16,7 +16,9 @@ const Login = () => {
       <Input type="text" placeholder="Phone Number" />
       <Input type="password" />
 
-      <Button onClick={() => navigate("/admin/dashboard")}>Login</Button>
+      <Button type="primary" onClick={() => navigate("/admin/dashboard")}>
+        Login
+      </Button>
 
       <NavLink
         to="/forgot-password"

@@ -13,7 +13,7 @@ const Dashboard = () => {
       </Routes> */}
 
       <div className="w-full min-h-screen">
-        {/* <Header /> */}
+        <Header />
         <div
           className="w-full grid grid-cols-12 "
           style={{ height: "calc(100vh - 60px)" }}
