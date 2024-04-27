@@ -2,6 +2,7 @@ import React from "react";
 import { IoCalendarOutline } from "react-icons/io5";
 import { NavLink, useLocation } from "react-router-dom";
 import { SiGoogleanalytics } from "react-icons/si";
+import { FiUsers } from "react-icons/fi";
 
 const SideBar = () => {
   const parentLocation = useLocation().pathname.split("/")[2];
@@ -16,6 +17,11 @@ const SideBar = () => {
       icon: <IoCalendarOutline />,
       title: "Appointments",
       path: "/appointments",
+    },
+    {
+      icon: <FiUsers />,
+      title: "Customers",
+      path: "/customers",
     },
   ];
 
