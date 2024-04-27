@@ -36,8 +36,21 @@ const AppointmentsTable = () => {
       <Table
         array={data}
         filters={["customerName"]}
-        keysToDisplay={["id", "customerName", "phone", "provider", "date"]}
+        keysToDisplay={[null, "customerName", "phone", "provider", "date"]}
         label={["#", "customer Name", "phone", "provider", "date", "Actions"]}
+        customBlocks={[
+          {
+            index: 0,
+            component: (obj) => {
+              return (
+                <>
+                  <p>{obj.id}</p>
+                  <p>{obj.phone}</p>
+                </>
+              );
+            },
+          },
+        ]}
         extraColumns={[
           () => {
             return (
