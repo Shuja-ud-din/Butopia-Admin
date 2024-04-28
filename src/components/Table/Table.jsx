@@ -88,7 +88,7 @@ const Table = ({
                   <tr
                     onClick={() => {
                       if (setRecord) setRecord(obj);
-                      navigate("/customers/customerdetails")
+                      // navigate("/customers/customerdetails")
                     }}
                     className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
                   >

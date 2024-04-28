@@ -3,6 +3,16 @@ import clientAvatar from "../../assets/images/clientAvatar.png";
 import SelectTabComponent from '../SelectTabComponent/SelectTabComponent'
 const CustomerDetails = () => {
     const [clientInfo, setClientData] = useState();
+    const [activeInx, setActiveIndx] = useState(0);
+
+    const buttonsTxt = [
+        "Appointment",
+        "Payment Details",
+
+    ]
+    const showContent = (index) => {
+        setActiveIndx(index);
+    }
     return (
         <>
             <div className="w-full">
@@ -29,8 +39,24 @@ const CustomerDetails = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center mt-20 mb-10">
-                    <SelectTabComponent />
+                <div className="w-full flex  mt-20 mb-10">
+                    <div className="flex flex-col gap-2 md:flex-row mt-3">
+                        {buttonsTxt.map((text, index) => (
+                            <button
+                                key={index}
+                                className={`px-4 w-40 py-2  rounded-md text-white ${(activeInx === index) ? "text-[white] bg-primary" : "bg-white"} border border-gray-300`}
+                                onClick={() => showContent(index)}
+                            >
+                                {text}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="mt-4 w-full min-h-[25rem] flex items-center justify-center ml-5 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg p-8">
+                        {
+                            activeInx === 0 ? "Appointment Table"
+                                : "Payment Table"
+                        }
+                    </div>
                 </div>
 
             </div>
