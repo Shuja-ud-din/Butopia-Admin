@@ -13,6 +13,7 @@ const Table = ({
   customBlocks = [],
   extraColumns = [],
   setRecord,
+  search,
 }) => {
   const [searchedData, setSearchedData] = useState("");
   const navigate = useNavigate("");
@@ -26,7 +27,7 @@ const Table = ({
         array.filter((obj) => {
           return (
             searchedData === "" ||
-            obj[filters[0]].toLowerCase().includes(searchedData.toLowerCase())
+            obj[search].toLowerCase().includes(searchedData.toLowerCase())
           );
         })
     );
@@ -52,9 +53,11 @@ const Table = ({
   return (
     <>
       <div className="flex justify-end">
-        <TableSearchBar
-          onChange={(event) => setSearchedData(event.target.value)}
-        />
+        {search && (
+          <TableSearchBar
+            onChange={(event) => setSearchedData(event.target.value)}
+          />
+        )}
       </div>
       <div className="bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
         <table className="w-full">

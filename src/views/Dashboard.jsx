@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import Appoinments from "../pages/Appoinments";
 import Customers from "../pages/Customers.";
+import DashboardPage from "../pages/DashboardPage";
 
 const Dashboard = () => {
   return (
@@ -24,7 +25,7 @@ const Dashboard = () => {
           <div className="col-span-10 bg-[#f8f9fa] overflow-y-auto p-10">
             <Routes>
               <Route path="/" element={<>Admin</>} />
-              <Route path="/dashboard/" element={<>DashBoard</>} />
+              <Route path="/dashboard/" element={<DashboardPage />} />
               <Route path="/appointments/*" element={<Appoinments />} />
               <Route path="/customers/*" element={<Customers />} />
             </Routes>

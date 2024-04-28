@@ -5,6 +5,7 @@ import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
 import "./Login.css";
 import logo from "../../assets/logos/logo2.jpg";
+import VerifyOtp from "./VerifyOtp";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const Registration = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Signup />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/verify-otp" element={<VerifyOtp />} />
               </Routes>
             </div>
           </div>

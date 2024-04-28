@@ -1,9 +1,11 @@
 import React from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <h1 className="text-[26px] font-[500] mb-2 ">Forgot Password?</h1>
@@ -13,7 +15,7 @@ const ForgotPassword = () => {
 
       <Input type="text" placeholder="Phone Number" />
 
-      <Button>Reset Password</Button>
+      <Button onClick={() => navigate("/verify-otp")}>Reset Password</Button>
 
       <div className="flex">
         <p className="text-[#a0a0a0] mt-5 ">Remember your password?</p>

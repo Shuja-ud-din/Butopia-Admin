@@ -3,10 +3,9 @@ import React from "react";
 const Button = ({
   children,
   onClick,
-  className = "",
+  className = "w-full",
   type = "primary",
   outlined = false,
-  width = "10px",
 }) => {
   return (
     <div className={className}>

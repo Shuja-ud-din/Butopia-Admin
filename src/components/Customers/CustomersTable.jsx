@@ -264,13 +264,13 @@ const CustomersTable = () => {
 
       <Table
         array={data}
-        filters={["fullName"]}
+        search={"fullName"}
         keysToDisplay={["id", "fullName", "phNo"]}
         label={["#", "customer Name", "phone No", "Actions"]}
         extraColumns={[
           () => {
             return (
-              <Button type="danger" outlined>
+              <Button type="danger" className="w-[80px]" outlined>
                 Delete
               </Button>
             );

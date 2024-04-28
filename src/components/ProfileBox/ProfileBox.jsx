@@ -6,7 +6,7 @@ const ProfileBox = ({ name, role, image }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute top-[60px] right-2 rounded-md bg-[white] border border-secondary w-[200px] ">
+    <div className="z-[999] absolute top-[60px] right-2 rounded-md bg-[white] border border-secondary w-[200px] ">
       <div className="profile_head bg-[#f9f9f9] flex p-3 rounded-tl-md rounded-tr-md border-b border-secondary  ">
         <Avatar src={image} className="mr-2" />
         <div>
