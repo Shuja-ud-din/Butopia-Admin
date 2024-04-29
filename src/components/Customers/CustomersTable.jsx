@@ -1,8 +1,12 @@
 import React from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
+import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
 
 const CustomersTable = () => {
+  const navigate = useNavigate();
+
   const data = [
     {
       id: 1,
@@ -261,6 +265,16 @@ const CustomersTable = () => {
       <div className="w-full">
         <h3 className="text-[25px] font-[500] ">Customers</h3>
       </div>
+
+      {/* <div className="flex justify-end my-3">
+        <Button
+          className=""
+          onClick={() => navigate("/admin/customers/addCustomer")}
+        >
+          <FaPlus size={14} className="mr-2" />
+          Add Customer
+        </Button>
+      </div> */}
 
       <Table
         array={data}
