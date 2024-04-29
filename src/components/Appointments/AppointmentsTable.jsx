@@ -1,6 +1,8 @@
 import React from "react";
 import Table from "../Table/Table";
 import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
 
 const data = [
   {
@@ -27,30 +29,28 @@ const data = [
 ];
 
 const AppointmentsTable = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="w-full">
         <h3 className="text-[25px] font-[500] ">Appoitments</h3>
       </div>
+      <div className="flex justify-end my-3">
+        <Button
+          className=""
+          onClick={() => navigate("/admin/appointments/addappointment")}
+        >
+          <FaPlus size={14} className="mr-2" />
+          Add Appointment
+        </Button>
+      </div>
 
       <Table
         array={data}
         search={"customerName"}
-        keysToDisplay={[null, "customerName", "phone", "provider", "date"]}
+        keysToDisplay={["id", "customerName", "phone", "provider", "date"]}
         label={["#", "customer Name", "phone", "provider", "date", "Actions"]}
-        customBlocks={[
-          {
-            index: 0,
-            component: (obj) => {
-              return (
-                <>
-                  <p>{obj.id}</p>
-                  <p>{obj.phone}</p>
-                </>
-              );
-            },
-          },
-        ]}
         extraColumns={[
           () => {
             return (
