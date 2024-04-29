@@ -3,7 +3,10 @@ import Table from "../Table/Table";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-
+import { TbCoins } from "react-icons/tb";
+import { FiUsers } from "react-icons/fi";
+import { IoCalendarOutline } from "react-icons/io5";
+import { PiHandCoins } from "react-icons/pi";
 const data = [
   {
     id: "1",
@@ -33,10 +36,8 @@ const AppointmentsTable = () => {
 
   return (
     <>
-      <div className="w-full">
-        <h3 className="text-[25px] font-[500] ">Appoitments</h3>
-      </div>
-      <div className="flex justify-end my-3">
+      <div className="w-full flex justify-between mb-5">
+        <h3 className="text-[25px] font-[500] ">Appointments</h3>
         <Button
           className=""
           onClick={() => navigate("/admin/appointments/addappointment")}
@@ -44,6 +45,30 @@ const AppointmentsTable = () => {
           <FaPlus size={14} className="mr-2" />
           Add Appointment
         </Button>
+      </div>
+      <div className="flex gap-4 grid grid-cols-12 my-5 ">
+        <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
+          <FiUsers size={25} className="mb-4" />
+          <p className="my-2">Total Appointments</p>
+          <h2 className="font-[600] text-[23px] ">18399</h2>
+        </div>
+        <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
+          <FiUsers size={25} className="mb-4" />
+          <p className="my-2">Cancelled Appointments</p>
+          <h2 className="font-[600] text-[23px] ">123</h2>
+        </div>
+        <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
+          <IoCalendarOutline size={25} className="mb-4" />
+          <p className="my-2">Pending Appointments</p>
+          <h2 className="font-[600] text-[23px] ">1001</h2>
+        </div>
+        <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
+          <PiHandCoins size={25} className="mb-4" />
+          <p className="my-2">Rescheduled Appointments</p>
+          <h2 className="font-[600] text-[23px] ">988</h2>
+        </div>
+      </div>
+      <div className="flex justify-end my-3">
       </div>
 
       <Table

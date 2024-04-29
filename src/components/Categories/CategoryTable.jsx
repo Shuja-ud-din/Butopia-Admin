@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
 import Modal from '../Modal/Modal'
+import { FaPlus } from "react-icons/fa6";
 const CustomersTable = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalType, setModalType] = useState("");
@@ -115,8 +116,15 @@ const CustomersTable = () => {
     console.log(isModalVisible);
     return (
         <>
-            <div className="w-full">
+            <div className="w-full flex justify-between mb-5">
                 <h3 className="text-[25px] font-[500] ">Categories</h3>
+                <Button
+                    className=""
+                    onClick={() => navigate("/admin/categories/addcategory")}
+                >
+                    <FaPlus size={14} className="mr-2" />
+                    Add Categories
+                </Button>
             </div>
             {/* {isModalVisible && <Modal></Modal>} */}
             <Table

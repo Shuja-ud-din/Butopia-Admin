@@ -262,8 +262,15 @@ const CustomersTable = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full flex justify-between mb-5">
         <h3 className="text-[25px] font-[500] ">Customers</h3>
+        <Button
+          className=""
+          onClick={() => navigate("/admin/customers/addcustomers")}
+        >
+          <FaPlus size={14} className="mr-2" />
+          Add Customers
+        </Button>
       </div>
 
       {/* <div className="flex justify-end my-3">

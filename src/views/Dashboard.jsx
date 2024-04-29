@@ -7,6 +7,7 @@ import Customers from "../pages/Customers.";
 import DashboardPage from "../pages/DashboardPage";
 import Categories from "../pages/Categories";
 import Services from "../pages/Services";
+import Providers from '../pages/Providers'
 
 const Dashboard = () => {
   return (
@@ -32,6 +33,7 @@ const Dashboard = () => {
               <Route path="/customers/*" element={<Customers />} />
               <Route path="/categories/*" element={<Categories />} />
               <Route path="/services/*" element={<Services />} />
+              <Route path="/providers/*" element={<Providers />} />
             </Routes>
           </div>
         </div>

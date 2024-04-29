@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
+import { FaPlus } from "react-icons/fa6";
 
 const ServiceTable = () => {
   const data = [
@@ -358,8 +359,15 @@ const ServiceTable = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full flex justify-between mb-5">
         <h3 className="text-[25px] font-[500] ">Services</h3>
+        <Button
+          className=""
+          onClick={() => navigate("/admin/services/addservices")}
+        >
+          <FaPlus size={14} className="mr-2" />
+          Add Services
+        </Button>
       </div>
 
       <Table

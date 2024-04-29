@@ -1,13 +1,13 @@
 import React from "react";
 import { TbCoins } from "react-icons/tb";
+import { FiUsers } from "react-icons/fi";
+import { IoCalendarOutline } from "react-icons/io5";
+import { PiHandCoins } from "react-icons/pi";
 import graph from "../assets/graph.jpg";
 import DashRange from "../components/DashRange/DashRange";
 import { Avatar } from "@mui/material";
 import avatar from "../assets/avatar.jpg";
-import { IoCalendarOutline } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
-import { FiUsers } from "react-icons/fi";
-import { PiHandCoins } from "react-icons/pi";
 import Table from "../components/Table/Table";
 import Button from "../components/Button/Button";
 
