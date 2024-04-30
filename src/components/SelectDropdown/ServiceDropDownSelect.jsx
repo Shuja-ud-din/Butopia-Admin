@@ -15,7 +15,7 @@ export default function BasicSelect() {
     return (
         <Box sx={{ minWidth: 120 }} className="bg-[white] rounded-md  shadow-md">
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+                <InputLabel id="demo-simple-select-label">Services</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -23,10 +23,9 @@ export default function BasicSelect() {
                     label="Age"
                     onChange={handleChange}
                 >
-                    <MenuItem value={10}>Hair Treatments</MenuItem>
-                    <MenuItem value={20}>Body Treatments</MenuItem>
-                    <MenuItem value={30}>Chemical Peels</MenuItem>
-                    <MenuItem value={30}>Laser Hair Removal</MenuItem>
+                    <MenuItem value={10}>Skin Care</MenuItem>
+                    <MenuItem value={20}>Beauty</MenuItem>
+                    <MenuItem value={30}>Hair</MenuItem>
                 </Select>
             </FormControl>
         </Box>

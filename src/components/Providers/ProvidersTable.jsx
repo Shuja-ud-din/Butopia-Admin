@@ -64,7 +64,7 @@ const CustomersTable = () => {
                 <h3 className="text-[25px] font-[500] ">Providers</h3>
                 <Button
                     className=""
-                    onClick={() => navigate("/admin/providers/addcustomers")}
+                    onClick={() => navigate("/admin/providers/addproviders")}
                 >
                     <FaPlus size={14} className="mr-2" />
                     Add Providers

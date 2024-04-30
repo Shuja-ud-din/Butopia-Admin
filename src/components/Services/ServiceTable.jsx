@@ -2,8 +2,10 @@ import React from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
 import { FaPlus } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const ServiceTable = () => {
+  const navigate = useNavigate("")
   const data = [
     {
       serviceName: 1,
