@@ -16,7 +16,11 @@ const Login = () => {
       <Input type="text" placeholder="Phone Number" />
       <Input type="password" />
 
-      <Button type="primary" onClick={() => navigate("/admin/dashboard")}>
+      <Button
+        type="primary"
+        className="w-full flex"
+        onClick={() => navigate("/admin/dashboard")}
+      >
         Login
       </Button>
 
