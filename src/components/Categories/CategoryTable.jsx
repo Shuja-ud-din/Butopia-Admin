@@ -4,6 +4,7 @@ import Table from "../Table/Table";
 import Modal from '../Modal/Modal'
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import Input from '../Input/Input'
 const CustomersTable = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalType, setModalType] = useState("");
@@ -127,7 +128,42 @@ const CustomersTable = () => {
                     Add Categories
                 </Button>
             </div>
-            {/* {isModalVisible && <Modal></Modal>} */}
+            {isModalVisible && <Modal toggleModal={toggleModal}>
+                <>
+                    <div className="w-full mb-3">
+                        <h3 className="text-[23px] font-[500] ">Add Category</h3>
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="harvestingPeriod"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Name
+                        </label>
+                        <Input
+                            type='text'
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label
+                            htmlFor="description"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Additional Comments
+                        </label>
+                        <textarea
+                            name="description"
+                            id="description"
+                            rows={4}
+                            className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                    </div>
+                    <div className="w-full flex justify-end">
+                        <Button className='m-2' type="primary">Submit</Button>
+                        <Button className='m-2' onClick={toggleModal} type="secondary">Cancel</Button>
+                    </div>
+                </>
+            </Modal>}
             <Table
                 array={data}
                 search={"description"}

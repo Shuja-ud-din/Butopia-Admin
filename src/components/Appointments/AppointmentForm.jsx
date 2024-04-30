@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CalendarComponent from "../Calendar/Calendar";
 import TimePickerComponent from "../TimePickerComponent/TimePickerComponent";
 import Button from "../Button/Button";
@@ -7,7 +7,14 @@ import DoctorDropdown from '../SelectDropdown/DoctorDropDownSelect'
 import UserDropdown from '../SelectDropdown/UserDropDownSelect'
 const AppointmentForm = () => {
   const navigate = useNavigate();
-
+  const [selectedTime, setSelectedTime] = useState(null)
+  const times = [
+    "9:00 AM", "9:10 AM", "9:20 AM", "9:30 AM", "9:40 AM",
+    "9:50 AM", "10:00 AM", "10:10 AM", "10:20 AM", "10:30 AM"
+  ];
+  const handleSelectedTime = (time) => {
+    setSelectedTime(time)
+  }
   return (
     <>
       <div className="w-full ">
@@ -29,16 +36,10 @@ const AppointmentForm = () => {
             9:00 AM to 12:00 PM
           </p>
           <div className="w-full flex  flex-wrap min-w-[200px]">
-            <TimePickerComponent time="9:10 AM" />
-            <TimePickerComponent time="9:10 AM" />
-            <TimePickerComponent time="9:20 AM" />
-            <TimePickerComponent time="9:30 AM" />
-            <TimePickerComponent time="9:40 AM" />
-            <TimePickerComponent time="9:50 AM" />
-            <TimePickerComponent time="10:00 AM" />
-            <TimePickerComponent time="10:10 AM" />
-            <TimePickerComponent time="10:20 AM" />
-            <TimePickerComponent time="10:30 AM" />
+            {times.map((item, index) => {
+              return <TimePickerComponent
+                time={item} onClick={() => handleSelectedTime(item)} />
+            })}
           </div>
           <div className="mt-5 mb-4 w-full h-[0.5px] bg-[grey]"></div>
           <h2 className="font-[600]">Evening</h2>
