@@ -3,10 +3,11 @@ import Button from "../Button/Button";
 import Table from "../Table/Table";
 import Modal from '../Modal/Modal'
 import { FaPlus } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 const CustomersTable = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalType, setModalType] = useState("");
-
+    const navigate = useNavigate("")
     const toggleModal = () => {
         setIsModalVisible((prevState) => !prevState);
     };

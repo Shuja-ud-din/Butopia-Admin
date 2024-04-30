@@ -3,6 +3,8 @@ import CalendarComponent from "../Calendar/Calendar";
 import TimePickerComponent from "../TimePickerComponent/TimePickerComponent";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import DoctorDropdown from '../SelectDropdown/DoctorDropDownSelect'
+import UserDropdown from '../SelectDropdown/UserDropDownSelect'
 const AppointmentForm = () => {
   const navigate = useNavigate();
 
@@ -11,8 +13,14 @@ const AppointmentForm = () => {
       <div className="w-full ">
         <h3 className="text-[25px] font-[500] ">Add Appoinment</h3>
       </div>
+      <div className="mt-5 mb-8 w-full flex  justify-end">
+        <div className="mr-5">
+          < DoctorDropdown />
+        </div>
+        <UserDropdown />
+      </div>
       <div className="w-full flex mt-3 flex">
-        <div className="w-30 bg-[white] rounded-md  flex flex-col p-3 h-80 mr-3  shadow-md">
+        <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-md  shadow-md">
           <CalendarComponent />
         </div>
         <div className="w-70 bg-[white] rounded-md  flex  flex-col p-4 ml-2  shadow-md">
@@ -48,17 +56,18 @@ const AppointmentForm = () => {
             <TimePickerComponent time="6:10 AM" />
             <TimePickerComponent time="6:20 AM" />
           </div>
+          <div className="my-3 w-full flex items-center justify-end">
+            <Button
+              className="w-20 "
+              type="primary"
+              onClick={() => navigate("/admin/appointments")}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </div>
-      <div className="my-3 w-full flex items-center justify-end">
-        <Button
-          className="w-20 "
-          type="primary"
-          onClick={() => navigate("/admin/appointments")}
-        >
-          Submit
-        </Button>
-      </div>
+
     </>
   );
 };

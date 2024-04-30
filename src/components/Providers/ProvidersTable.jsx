@@ -83,7 +83,7 @@ const CustomersTable = () => {
 
             <Table
                 array={data}
-                search={"fullName"}
+                search={"providerName"}
                 keysToDisplay={["providerName", "qualification", "experience", "workSamples"]}
                 label={["Providers", "Qualification", "Experience", "Samples", "Actions"]}
                 extraColumns={[
