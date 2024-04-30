@@ -36,16 +36,6 @@ const AppointmentsTable = () => {
 
   return (
     <>
-      <div className="w-full flex justify-between mb-5">
-        <h3 className="text-[25px] font-[500] ">Appointments</h3>
-        <Button
-          className=""
-          onClick={() => navigate("/admin/appointments/addappointment")}
-        >
-          <FaPlus size={14} className="mr-2" />
-          Add Appointment
-        </Button>
-      </div>
       <div className="flex gap-4 grid grid-cols-12 my-5 ">
         <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
           <FiUsers size={25} className="mb-4" />
@@ -68,7 +58,16 @@ const AppointmentsTable = () => {
           <h2 className="font-[600] text-[23px] ">988</h2>
         </div>
       </div>
-      <div className="flex justify-end my-3">
+      <div className="flex justify-end my-3"></div>
+      <div className="w-full flex justify-between mb-5 mt-[5rem]">
+        <h3 className="text-[25px] font-[500] ">Appointments</h3>
+        <Button
+          className=""
+          onClick={() => navigate("/admin/appointments/addappointment")}
+        >
+          <FaPlus size={14} className="mr-2" />
+          Add Appointment
+        </Button>
       </div>
 
       <Table
