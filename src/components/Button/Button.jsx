@@ -17,6 +17,14 @@ const Button = ({
           {children}
         </button>
       )}
+      {type === "secondary" && !outlined && (
+        <button
+          onClick={onClick}
+          class=" bg-[gray] flex items-center text-[white] border-[grey] py-2 px-4 border  hover:border-transparent rounded"
+        >
+          {children}
+        </button>
+      )}
 
       {type === "primary" && outlined && (
         <button
