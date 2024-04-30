@@ -7,7 +7,9 @@ import Customers from "../pages/Customers.";
 import DashboardPage from "../pages/DashboardPage";
 import Categories from "../pages/Categories";
 import Services from "../pages/Services";
-import Providers from '../pages/Providers'
+import Providers from "../pages/Providers";
+import Admins from "../pages/Admins";
+import Payments from "../pages/Payments";
 
 const Dashboard = () => {
   return (
@@ -34,6 +36,8 @@ const Dashboard = () => {
               <Route path="/categories/*" element={<Categories />} />
               <Route path="/services/*" element={<Services />} />
               <Route path="/providers/*" element={<Providers />} />
+              <Route path="/admins/*" element={<Admins />} />
+              <Route path="/payments/*" element={<Payments />} />
             </Routes>
           </div>
         </div>
