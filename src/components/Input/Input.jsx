@@ -40,7 +40,7 @@ const Input = ({ type = "text", onChange, name, placeholder, className }) => {
           />
         </>
       )}
-      {(type === "otpNumber") && (
+      {type === "otpNumber" && (
         <>
           <input
             type="text"
@@ -49,6 +49,18 @@ const Input = ({ type = "text", onChange, name, placeholder, className }) => {
             placeholder={placeholder}
             className="w-8 h-8 text-center border border-gray-300 rounded-lg "
             maxLength={1}
+            onChange={onChange}
+          />
+        </>
+      )}
+      {type === "date" && (
+        <>
+          <input
+            type="date"
+            name={name}
+            id="date"
+            placeholder={placeholder}
+            className="w-8 h-8 text-center border border-gray-300 rounded-lg "
             onChange={onChange}
           />
         </>

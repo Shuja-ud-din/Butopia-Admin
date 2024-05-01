@@ -3,34 +3,78 @@ import CalendarComponent from "../Calendar/Calendar";
 import TimePickerComponent from "../TimePickerComponent/TimePickerComponent";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
-import DoctorDropdown from '../SelectDropdown/DoctorDropDownSelect'
-import UserDropdown from '../SelectDropdown/UserDropDownSelect'
+import UserDropdown from "../SelectDropdown/UserDropDownSelect";
+import { Autocomplete, Box, TextField } from "@mui/material";
+
+const dummyDoctors = [
+  { name: "Dr. John Doe", id: 1 },
+  { name: "Dr. Jane Doe", id: 2 },
+  { name: "Dr. John Doe", id: 3 },
+  { name: "Dr. Jane Doe", id: 4 },
+  { name: "Dr. John Doe", id: 5 },
+  { name: "Dr. Jane Doe", id: 6 },
+  { name: "Dr. John Doe", id: 7 },
+  { name: "Dr. Jane Doe", id: 8 },
+  { name: "Dr. John Doe", id: 9 },
+  { name: "Dr. Jane Doe", id: 10 },
+];
+
 const AppointmentForm = () => {
   const navigate = useNavigate();
-  const [morningSelectedTime, setMorningSelectedTime] = useState(null)
-  const [eveningSelectedTime, setEveningSelectedTime] = useState(null);
-  const morningTimes = [
-    "9:00 AM", "9:10 AM", "9:20 AM", "9:30 AM", "9:40 AM",
-    "9:50 AM", "10:00 AM", "10:10 AM", "10:20 AM", "10:30 AM"
+
+  const [selectedTime, setSelectedTime] = useState(null);
+  const times = [
+    "9:00 AM",
+    "9:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
   ];
-  const eveningTimes = [
-    "5:00 AM", "5:10 AM", "5:20 AM", "5:30 AM", "5:40 AM",
-    "5:50 AM", "6:00 AM", "6:10 AM", "6:20 AM"
+  const eveningSlot = [
+    "5:00 PM",
+    "5:30 PM",
+    "6:00 PM",
+    "6:30 PM",
+    "7:00 PM",
+    "7:30 PM",
+    "8:00 PM",
   ];
+
   const handleSelectedTime = (time) => {
-    setMorningSelectedTime(time)
-    setEveningSelectedTime(time)
-  }
+    setSelectedTime(time);
+  };
   return (
     <>
       <div className="w-full ">
         <h3 className="text-[25px] font-[500] ">Add Appoinment</h3>
       </div>
-      <div className="mt-5 mb-8 w-full flex  justify-end">
+      <div className="mt-8 mb-3 w-full flex  ">
         <div className="mr-5">
-          < DoctorDropdown />
+          <Autocomplete
+            disablePortal
+            className="p-0 bg-[white]"
+            size="small"
+            id="combo-box-demo"
+            // onChange={(e, newValue) => setSelectedClient(newValue)}
+            options={dummyDoctors}
+            sx={{ width: 300 }}
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => <TextField {...params} label="Doctor" />}
+          />
         </div>
-        <UserDropdown />
+        <Autocomplete
+          disablePortal
+          className="p-0 bg-[white]"
+          size="small"
+          id="combo-box-demo"
+          // onChange={(e, newValue) => setSelectedClient(newValue)}
+          options={dummyDoctors}
+          sx={{ width: 300 }}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => <TextField {...params} label="Client" />}
+        />
       </div>
       <div className="w-full flex mt-3 flex">
         <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-md  shadow-md">
@@ -42,30 +86,32 @@ const AppointmentForm = () => {
             9:00 AM to 12:00 PM
           </p>
           <div className="w-full flex  flex-wrap min-w-[200px]">
-            {morningTimes.map((time, index) => {
-              return <TimePickerComponent
-                time={time} onClick={() => {
-                  setMorningSelectedTime(time)
-                }}
-                className={morningSelectedTime === time ? "bg-[blue] text-[white]" : ""}
-              />
-
+            {times.map((item, index) => {
+              return (
+                <TimePickerComponent
+                  time={item}
+                  isSelected={selectedTime === item}
+                  key={index}
+                  onClick={() => handleSelectedTime(item)}
+                />
+              );
             })}
           </div>
           <div className="mt-5 mb-4 w-full h-[0.5px] bg-[grey]"></div>
           <h2 className="font-[600]">Evening</h2>
           <p className="color-[grey] mb-4 text-[12px] font-[500]">
-            5:00 PM to 9:00 PM
+            5:00 PM to 8:00 PM
           </p>
           <div className="w-full mb-16 flex  flex-wrap min-w-[200px]">
-            {eveningTimes.map((item, index) => {
-              return <TimePickerComponent
-                time={item} onClick={() => {
-                  setEveningSelectedTime(item)
-                }}
-                className={eveningSelectedTime === item ? "bg-[blue] text-[white]" : ""}
-              />
-
+            {eveningSlot.map((item, index) => {
+              return (
+                <TimePickerComponent
+                  time={item}
+                  isSelected={selectedTime === item}
+                  key={index}
+                  onClick={() => handleSelectedTime(item)}
+                />
+              );
             })}
           </div>
           <div className="my-3 w-full flex items-center justify-end">
@@ -79,7 +125,6 @@ const AppointmentForm = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

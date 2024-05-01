@@ -6,6 +6,8 @@ import { FiUsers } from "react-icons/fi";
 import { TbCategory } from "react-icons/tb";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
+import { RiAdminFill } from "react-icons/ri";
+import { MdOutlinePayments } from "react-icons/md";
 
 const SideBar = () => {
   const parentLocation = useLocation().pathname.split("/")[2];
@@ -40,6 +42,16 @@ const SideBar = () => {
       icon: <FaUserDoctor />,
       title: "Providers",
       path: "/providers",
+    },
+    {
+      icon: <RiAdminFill />,
+      title: "Admins",
+      path: "/admins",
+    },
+    {
+      icon: <MdOutlinePayments />,
+      title: "Payments",
+      path: "/payments",
     },
   ];
 
