@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
       "2xl": { max: "1440px" },
@@ -17,8 +17,8 @@ export default {
       // => @media (max-width: 480px) { ... }
     },
     colors: {
-      primary: "#09373d",
-      secondary: "#acbabf",
+      primary: "#039443",
+      secondary: "#b5b5b5",
       light: "F8F8F8",
     },
     extend: {

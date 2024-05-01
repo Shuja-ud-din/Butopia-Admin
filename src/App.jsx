@@ -1,30 +1,23 @@
-import { useContext } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { DataContext } from "./context/AppData";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Dashboard from "./views/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Registration from "./views/Login/index";
+import "./index.css";
+import Login from "./pages/Login";
+import { SkeletonTheme } from "react-loading-skeleton";
+import Dashboard from "./screens/Dashboard";
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem("token");
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<Registration />} />
-          <Route
-            path="/admin/*"
-            element={
-              <>
-                <ProtectedRoute isAuthenticated={true}>
-                  <Dashboard />
-                </ProtectedRoute>
-              </>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <SkeletonTheme baseColor="#f6f6f6" highlightColor="#ECECEC">
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+
+            <Route path="/*" element={<Dashboard />} />
+          </Routes>
+        </Router>
+      </SkeletonTheme>
     </>
   );
 }
