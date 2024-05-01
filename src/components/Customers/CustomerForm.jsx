@@ -22,30 +22,45 @@ const CustomerForm = () => {
                     </div>
 
                     <div className="flex gap-28 mt-10 w-full">
-                        <div className="flex justify-center items-center flex-col">
-                            <label htmlFor="image-upload" className="cursor-pointer">
-                                <div className="w-[350px] h-[300px] mb-4 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden">
-                                    {imagePreview ? (
-                                        <img
-                                            src={imagePreview}
-                                            alt="Plant"
-                                            className="w-full h-full"
-                                        />
-                                    ) : (
-                                        <img
-                                            // src="/placeholder"
-                                            // alt="placeholder"
-                                            className="w-18 h-18"
-                                        />
-                                    )}
-                                </div>
+                        <div>
+                            <div className="flex justify-center items-center flex-col mb-5">
+                                <label htmlFor="image-upload" className="cursor-pointer">
+                                    <div className="w-[350px] h-[300px] mb-4 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden">
+                                        {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                alt=""
+                                                className="w-full h-full"
+                                            />
+                                        ) : (
+                                            <img
+                                                // src="/placeholder"
+                                                // alt="placeholder"
+                                                className="w-18 h-18"
+                                            />
+                                        )}
+                                    </div>
+                                    <input
+                                        id="image-upload"
+                                        name="image"
+                                        type="file"
+                                        className="hidden"
+                                    />
+                                </label>
+                            </div>
+                            <label htmlFor="file-upload" className="p-2 rounded-[9px]  border border-[#c4c4c4] shadow-md overflow-hidden">
+                                Upload your file
                                 <input
-                                    id="image-upload"
-                                    name="image"
                                     type="file"
+                                    id="file-upload"
                                     className="hidden"
+                                    onChange={(e) => {
+                                        const fileName = e.target.files[0].name;
+                                        document.getElementById("file-name").innerText = fileName;
+                                    }}
                                 />
                             </label>
+                            <div id="file-name" className='mt-4'></div>
                         </div>
 
                         <div className="flex-1 space-y-6">
@@ -96,25 +111,12 @@ const CustomerForm = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-8">
-                        <label
-                            htmlFor="description"
-                            className="block text-sm font-medium text-gray-700"
-                        >
-                            Additional Comments
-                        </label>
-                        <textarea
-                            name="description"
-                            id="description"
-                            rows={4}
-                            className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                    </div>
 
 
 
 
-                    <div className="mt-8">
+
+                    <div className="w-full flex justify-end mt-8">
                         <Button className='w-40' type='primary' outlined="true">   Save Customer</Button>
                     </div>
                 </form>

@@ -7,13 +7,19 @@ import DoctorDropdown from '../SelectDropdown/DoctorDropDownSelect'
 import UserDropdown from '../SelectDropdown/UserDropDownSelect'
 const AppointmentForm = () => {
   const navigate = useNavigate();
-  const [selectedTime, setSelectedTime] = useState(null)
-  const times = [
+  const [morningSelectedTime, setMorningSelectedTime] = useState(null)
+  const [eveningSelectedTime, setEveningSelectedTime] = useState(null);
+  const morningTimes = [
     "9:00 AM", "9:10 AM", "9:20 AM", "9:30 AM", "9:40 AM",
     "9:50 AM", "10:00 AM", "10:10 AM", "10:20 AM", "10:30 AM"
   ];
+  const eveningTimes = [
+    "5:00 AM", "5:10 AM", "5:20 AM", "5:30 AM", "5:40 AM",
+    "5:50 AM", "6:00 AM", "6:10 AM", "6:20 AM"
+  ];
   const handleSelectedTime = (time) => {
-    setSelectedTime(time)
+    setMorningSelectedTime(time)
+    setEveningSelectedTime(time)
   }
   return (
     <>
@@ -36,9 +42,14 @@ const AppointmentForm = () => {
             9:00 AM to 12:00 PM
           </p>
           <div className="w-full flex  flex-wrap min-w-[200px]">
-            {times.map((item, index) => {
+            {morningTimes.map((time, index) => {
               return <TimePickerComponent
-                time={item} onClick={() => handleSelectedTime(item)} />
+                time={time} onClick={() => {
+                  setMorningSelectedTime(time)
+                }}
+                className={morningSelectedTime === time ? "bg-[blue] text-[white]" : ""}
+              />
+
             })}
           </div>
           <div className="mt-5 mb-4 w-full h-[0.5px] bg-[grey]"></div>
@@ -47,20 +58,20 @@ const AppointmentForm = () => {
             5:00 PM to 9:00 PM
           </p>
           <div className="w-full mb-16 flex  flex-wrap min-w-[200px]">
-            <TimePickerComponent time="5:00 AM" />
-            <TimePickerComponent time="5:10 AM" />
-            <TimePickerComponent time="5:20 AM" />
-            <TimePickerComponent time="5:30 AM" />
-            <TimePickerComponent time="5:40 AM" />
-            <TimePickerComponent time="5:50 AM" />
-            <TimePickerComponent time="6:00 AM" />
-            <TimePickerComponent time="6:10 AM" />
-            <TimePickerComponent time="6:20 AM" />
+            {eveningTimes.map((item, index) => {
+              return <TimePickerComponent
+                time={item} onClick={() => {
+                  setEveningSelectedTime(item)
+                }}
+                className={eveningSelectedTime === item ? "bg-[blue] text-[white]" : ""}
+              />
+
+            })}
           </div>
           <div className="my-3 w-full flex items-center justify-end">
             <Button
-              className="w-20 "
               type="primary"
+              outlined
               onClick={() => navigate("/admin/appointments")}
             >
               Submit

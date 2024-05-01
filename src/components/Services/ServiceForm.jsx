@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Input from '../Input/Input'
 import Button from '../Button/Button';
 import ServiceDropDown from '../SelectDropdown/ServiceDropDownSelect'
+import ServiceProviderDropDown from '../SelectDropdown/ServiceProviderDropDown'
 const ServiceForm = () => {
     const [imagePreview, setImagePreview] = useState("");
     return (
@@ -44,6 +45,15 @@ const ServiceForm = () => {
                                     Service Category
                                 </label>
                                 <div className='mt-2 mb-2'><ServiceDropDown /></div>
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor="scientificName"
+                                    className="block text-sm font-medium text-gray-700"
+                                >
+                                    Service Provider
+                                </label>
+                                <div className='mt-2 mb-2'><ServiceProviderDropDown /></div>
                             </div>
                             <label
                                 htmlFor="description"

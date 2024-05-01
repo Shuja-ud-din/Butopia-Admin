@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Input from '../Input/Input'
-import Button from '../Button/Button';
-import ServiceDropDown from '../SelectDropdown/ServiceDropDownSelect'
+import Input from '../../Input/Input'
+import Button from '../../Button/Button';
+import ServiceDropDown from '../../SelectDropdown/ServiceDropDownSelect'
+import AdminTable from './AdminTable'
 
 const ProvidersForm = () => {
     const [imagePreview, setImagePreview] = useState("");
@@ -127,14 +128,8 @@ const ProvidersForm = () => {
                         </div>
                     </div>
 
-
-
-
-
-
+                    <div className='mt-[4rem]'><AdminTable /></div>
                 </form>
-
-
             </div>
         </>
     )
