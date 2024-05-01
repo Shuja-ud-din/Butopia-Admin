@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import Table from "../Table/Table";
 import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
+import { useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -23,13 +24,14 @@ const data = [
 ];
 
 const AdminTable = () => {
+  const navigate = useNavigate("")
   return (
     <>
       <div className="w-full flex justify-between mb-5">
         <h3 className="text-[25px] font-[500] ">Admins</h3>
         <Button
           className=""
-          // onClick={() => navigate("/admin/providers/addproviders")}
+          onClick={() => navigate("/admin/admins/addadmin")}
         >
           <FaPlus size={14} className="mr-2" />
           Add Admin
