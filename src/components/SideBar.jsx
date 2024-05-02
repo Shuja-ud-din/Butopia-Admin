@@ -8,6 +8,8 @@ import { MdOutlineMedicalServices } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
 import { RiAdminFill } from "react-icons/ri";
 import { MdOutlinePayments } from "react-icons/md";
+import { BiSupport } from "react-icons/bi";
+import { IoMdChatbubbles } from "react-icons/io";
 
 const SideBar = () => {
   const parentLocation = useLocation().pathname.split("/")[2];
@@ -52,6 +54,16 @@ const SideBar = () => {
       icon: <MdOutlinePayments />,
       title: "Payments",
       path: "/payments",
+    },
+    {
+      icon: <BiSupport />,
+      title: "Support",
+      path: "/support",
+    },
+    {
+      icon: <IoMdChatbubbles />,
+      title: "Chats",
+      path: "/chats",
     },
   ];
 

@@ -7,9 +7,6 @@ import Input from "../Input/Input";
 import Select from "../Dropdown/Select";
 
 const AdminForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   return (
     <>
       <div className="p-3 pl-[2rem] pr-[2rem] bg-[white] rounded-[1rem] shadow-lg border border-gray-300">
