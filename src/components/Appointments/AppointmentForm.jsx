@@ -77,10 +77,10 @@ const AppointmentForm = () => {
         />
       </div>
       <div className="w-full flex mt-3 flex">
-        <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-md  shadow-md">
+        <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
           <CalendarComponent />
         </div>
-        <div className="w-70 bg-[white] rounded-md  flex  flex-col p-4 ml-2  shadow-md">
+        <div className="w-70 flex  flex-col p-4 ml-2 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
           <h2 className="font-[600]">Morning</h2>
           <p className="color-[grey] mb-4 text-[12px] font-[500]">
             9:00 AM to 12:00 PM
