@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-const TimeButton = ({ time, onClick, className }) => {
+const TimeButton = ({ time, onClick, isSelected, key }) => {
 
     return (
         <button
             className={`m-2 ml-0 pl-2 pr-2 pt-2 pb-2 w-22 h-3rem rounded-0.1rem bg-[white] rounded-lg flex items-center justify-start  border border-[grey] 
-            ${className}`}
+            ${isSelected ? "bg-[blue]" : ""}`}
             onClick={onClick}
         >
 
