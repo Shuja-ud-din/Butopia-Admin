@@ -16,8 +16,9 @@ const Message = ({ profile, profileName }) => {
     console.log(messages);
     return (
         <>
-            <div className='w-full h-[4.3rem] bg-primary gap-[1rem]   flex justify-center items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary'>
-                <div className='text-center text-lg font-semibold  text-[white]' >{profileName}</div>  <img src={profile ? profile : profilePhoto} alt="" className='h-[3rem] rounded-full' />
+            <div className='w-full pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary'>
+                <img src={profile ? profile : profilePhoto} alt="" className='h-[3rem] rounded-full' />
+                <div className='text-center text-lg font-semibold  text-[white]' >{profileName}</div>
                 {/* <h3 className="text-[25px] font-[500] mb-5 ">Messages</h3> */}
             </div>
             <div className='w-full h-[90%] p-[1rem] pl-[2rem] pr-[2rem] flex flex-col gap-[2rem]'>
