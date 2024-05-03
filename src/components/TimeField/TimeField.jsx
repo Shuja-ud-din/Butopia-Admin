@@ -2,7 +2,7 @@ import React from 'react'
 
 const TimeField = ({ TimeZone = "am", onChange, placeholder, value, className, name }) => {
     const validateTime = (time) => {
-        const actualTime = time.value;
+        const actualTime = time[startTime ? "startTime" : "endTime"];
         const regex = /[A-Za-z]/;
         if (!regex) {
             if (actualTime >= 0) {
