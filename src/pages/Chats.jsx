@@ -12,15 +12,13 @@ const Chats = () => {
       <div>
         <h3 className="text-[25px] font-[500] mb-5 ">Chats</h3>
       </div>
-      <div className="min-h-[70vh] flex mt-4 bg-[white] w-full border border-[#c4c4c4]  rounded-[9px]  shadow-md">
-        <div className="w-[60%] flex flex-col">
-          <div className="w-[full] flex gap-[0.5rem] mb-[2rem] pl-[1rem] pt-[1rem]">
-            <SearchBar />
-            {/* <Select>
-              <option value="">All</option>
-              <option value="">Selected</option>
-            </Select> */}
-            <Filter />
+      <div className="min-h-[72vh] p-[1rem] w-full bg-[#eeeeee] flex gap-[1rem] grid grid-cols-12 mt-4 bg-[white]  border border-[#c4c4c4]  rounded-[9px]  shadow-md">
+        <div className="col-span-3 bg-[white]  border border-[#c4c4c4]  rounded-[9px] h-full  flex flex-col">
+          <div className="w-[full] border-b flex items-center gap-[0.2rem] mb-[1rem] pt-[1rem]">
+            <SearchBar
+              placeholder="search here.."
+            />
+            {/* <Filter /> */}
           </div>
           <ChatBox
             name="John Doe"
@@ -53,7 +51,7 @@ const Chats = () => {
             lastMessage="Hey, how are you?"
           />
         </div>
-        <div className="w-full  border  rounded-tl-[9px] rounded-tr-[9px]  border-[#c4c4c4] shadow-lg ">
+        <div className="col-span-9 bg-[white]  border  rounded-[9px] rounded-tr-[9px]  border-[#c4c4c4] shadow-lg ">
           <Messages />
         </div>
       </div>

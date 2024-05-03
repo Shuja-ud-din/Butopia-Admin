@@ -4,10 +4,15 @@ import Button from "../Button/Button";
 import ServiceDropDown from "../SelectDropdown/ServiceDropDownSelect";
 import profile_img from "../../assets/user_profile.png";
 import DaySelector from "../DaySelector/DaySelector";
+import TimeField from "../../components/TimeField/TimeField";
 
 const ProvidersForm = () => {
   const [imagePreview, setImagePreview] = useState("");
   const [selectedDay, setSelectedDays] = useState(null)
+  const [time, setTime] = useState({
+    startTime: "",
+    endTime: "",
+  });
   const days = [
     "Monday",
     "Tuesday",
@@ -17,11 +22,21 @@ const ProvidersForm = () => {
     "Saturday",
     "Sunday"
   ];
+
   const handleSelectedDay = (e, day) => {
     e.preventDefault();
     setSelectedDays(day)
   }
   console.log(selectedDay);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setTime({
+      ...time,
+      [name]: value
+    });
+  };
+  console.log(time);
   return (
     <>
       <div className="w-full">
@@ -117,6 +132,39 @@ const ProvidersForm = () => {
                 onClick={(e) => handleSelectedDay(e, item)}
               />
             })}
+          </div>
+
+          <div className="flex gap-[1rem]">
+            <div>
+              <label
+                htmlFor="name"
+                className="mb-2 mt-[2rem] block text-sm font-medium text-gray-700"
+              >
+                Start Time
+              </label>
+              <TimeField
+                TimeZone="am"
+                placeholder="start time"
+                name="startTime"
+                value={time}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="name"
+                className="mb-2 mt-[2rem] block text-sm font-medium text-gray-700"
+              >
+                End Time
+              </label>
+              <TimeField
+                placeholder="end time"
+                TimeZone="pm"
+                value={time}
+                name="endTime"
+                onChange={handleChange}
+              />
+            </div>
           </div>
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
             <Button className="w-40" type="primary">

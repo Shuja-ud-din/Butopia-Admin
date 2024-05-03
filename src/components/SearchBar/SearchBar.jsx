@@ -8,7 +8,7 @@ const SearchBar = ({ placeholder, onChange }) => {
                 type="text"
                 placeholder={placeholder}
                 onChange={onChange}
-                className="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full py-2 px-4 outline-none rounded-md "
             />
             <svg
                 xmlns="http://www.w3.org/2000/svg"

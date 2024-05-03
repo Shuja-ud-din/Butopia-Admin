@@ -21,7 +21,7 @@ const Message = ({ profile, profileName }) => {
                 <div className='text-center text-lg font-semibold  text-[white]' >{profileName}</div>
                 {/* <h3 className="text-[25px] font-[500] mb-5 ">Messages</h3> */}
             </div>
-            <div className='w-full h-[90%] p-[1rem] pl-[2rem] pr-[2rem] flex flex-col gap-[2rem]'>
+            <div className='w-full h-[90%]  pl-[2rem] pr-[2rem] flex flex-col gap-[2rem]'>
                 <div className='h-[80%]'>
                     {messages.length === 0 ? <div className='h-full w-full text-[2rem] text-[#CCCCCC] font-[700]  flex items-center justify-center'>No Messages yet</div> :
                         <MessageArea>
@@ -45,5 +45,4 @@ const Message = ({ profile, profileName }) => {
         </>
     )
 }
-
 export default Message
