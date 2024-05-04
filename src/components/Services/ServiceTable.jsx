@@ -380,9 +380,14 @@ const ServiceTable = () => {
         extraColumns={[
           () => {
             return (
-              <Button type="danger" className="w-[80px]" outlined>
-                Delete
-              </Button>
+              <div className="flex gap-[1rem]">
+                <Button type="danger" className="w-[80px]" outlined>
+                  Edit
+                </Button>
+                <Button type="danger" className="w-[80px]" outlined>
+                  Delete
+                </Button>
+              </div>
             );
           },
         ]}

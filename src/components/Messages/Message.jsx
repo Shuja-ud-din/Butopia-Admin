@@ -16,14 +16,14 @@ const Message = ({ profile, profileName }) => {
     console.log(messages);
     return (
         <>
-            <div className='w-full inline-block h-[100%]   flex flex-col gap-[2rem]'>
-                <div className='h-[10%] w-[100%]  pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary'>
+            <div className='w-full inline-block min-h-[70vh]  flex flex-col justify-between gap-[2rem]'>
+                <div className=' w-[100%]  pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary'>
                     <img src={profile ? profile : profilePhoto} alt="" className='h-[3rem] rounded-full' />
                     <div className='text-center text-lg font-semibold  text-[white]' >{profileName}</div>
                     {/* <h3 className="text-[25px] font-[500] mb-5 ">Messages</h3> */}
                 </div>
-                <div className='h-[80%]'>
-                    {messages.length === 0 ? <div className='h-full w-full text-[2rem] text-[#CCCCCC] font-[700]  flex items-center justify-center'>No Messages yet</div> :
+                <div className='h-full w-full  flex items-center'>
+                    {messages.length === 0 ? <div className='w-full  text-[2rem] text-[#CCCCCC] font-[700]  flex items-center justify-center'>No Messages yet</div> :
                         <MessageArea>
                             {messages.map((message, index) => (
                                 <MessageBubble
@@ -34,9 +34,9 @@ const Message = ({ profile, profileName }) => {
                             ))}
                         </MessageArea>}
                 </div>
-                <div className='w-full flex items-center justify-center h-[10%]'>
+                <div className='w-full flex items-center justify-center '>
                     <InputBar
-                        className="h-[2.5rem] w-[80%] flex items-center justify-center"
+                        className="h-[2.5rem] w-[70%] flex items-center justify-center"
                         type="chat"
                         value={value}
                         onChange={(e) => setValue(e.target.value)}

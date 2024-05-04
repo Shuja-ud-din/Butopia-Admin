@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import { Skeleton } from "@mui/material";
 
 const Table = ({
+  recordClickRoute,
   array,
   label = [],
   keysToDisplay = [],
@@ -24,12 +25,12 @@ const Table = ({
   useEffect(() => {
     setRecordsPerPage(
       array &&
-        array.filter((obj) => {
-          return (
-            searchedData === "" ||
-            obj[search].toLowerCase().includes(searchedData.toLowerCase())
-          );
-        })
+      array.filter((obj) => {
+        return (
+          searchedData === "" ||
+          obj[search].toLowerCase().includes(searchedData.toLowerCase())
+        );
+      })
     );
   }, [searchedData]);
 
@@ -68,13 +69,12 @@ const Table = ({
                 return (
                   <th
                     className={`py-4 bg-[#F9FAFB] font-[600] text-[15px] text-[#1D2939] whitespace-nowrap 
-                        ${
-                          index === label.length - 1
-                            ? "text-right pr-9 rounded-tr-[9px]"
-                            : index == 0
-                            ? "text-left pl-9 rounded-tl-[9px]"
-                            : "text-left pl-9"
-                        }
+                        ${index === label.length - 1
+                        ? "text-right pr-9 rounded-tr-[9px]"
+                        : index == 0
+                          ? "text-left pl-9 rounded-tl-[9px]"
+                          : "text-left pl-9"
+                      }
                         `}
                   >
                     {text}
@@ -90,7 +90,7 @@ const Table = ({
                   <tr
                     onClick={() => {
                       if (setRecord) setRecord(obj);
-                      // navigate("/customers/customerdetails")
+                      navigate(recordClickRoute)
                     }}
                     className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
                   >
@@ -98,11 +98,10 @@ const Table = ({
                       const blocksList = renderComponent(index, customBlocks);
                       return (
                         <td
-                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
-                            index === label.length - 1
-                              ? "text-right pr-9 "
-                              : "text-left pl-9 "
-                          }`}
+                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${index === label.length - 1
+                            ? "text-right pr-9 "
+                            : "text-left pl-9 "
+                            }`}
                         >
                           {blocksList
                             ? blocksList.component(key ? obj[key] : obj)

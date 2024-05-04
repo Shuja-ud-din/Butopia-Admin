@@ -12,7 +12,7 @@ const Chats = () => {
       <div>
         <h3 className="text-[25px] font-[500] mb-5 ">Chats</h3>
       </div>
-      <div className="min-h-[72vh] p-[1rem] w-full bg-[#eeeeee] flex gap-[1rem] grid grid-cols-12 mt-4 bg-[white]  border border-[#c4c4c4]  rounded-[9px]  shadow-md">
+      <div className="min-h-[72vh] p-[1rem] w-full  flex gap-[1rem] grid grid-cols-12 mt-4   border border-[#c4c4c4]  rounded-[9px]  shadow-md">
         <div className="col-span-3 bg-[white]  border border-[#c4c4c4]  rounded-[9px] h-full  flex flex-col">
           <div className="w-[full] border-b flex items-center gap-[0.2rem] mb-[1rem] pt-[1rem]">
             <SearchBar

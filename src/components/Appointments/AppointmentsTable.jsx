@@ -93,14 +93,25 @@ const AppointmentsTable = () => {
         extraColumns={[
           () => {
             return (
-              <Button
-                className="w-20 text-right"
-                width="70px"
-                outlined={true}
-                type="danger"
-              >
-                Cancel
-              </Button>
+              <div className="flex gap-[1rem]">
+                <Button
+                  className="w-20 text-right"
+                  width="70px"
+                  outlined={true}
+                  type="danger"
+                  onClick={() => navigate("/admin/appointments/addappointment")}
+                >
+                  Schedule
+                </Button>
+                <Button
+                  className="w-20 text-right"
+                  width="70px"
+                  outlined={true}
+                  type="danger"
+                >
+                  Cancel
+                </Button>
+              </div>
             );
           },
         ]}

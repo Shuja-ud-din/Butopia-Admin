@@ -7,10 +7,14 @@ import { useNavigate } from "react-router-dom";
 import Input from '../Input/Input'
 const CustomersTable = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [modalType, setModalType] = useState("");
     const navigate = useNavigate("")
     const toggleModal = () => {
         setIsModalVisible((prevState) => !prevState);
+    };
+    const toggleEditModal = () => {
+        setIsEditModalVisible((prevState) => !prevState);
     };
 
     const data = [
@@ -128,10 +132,68 @@ const CustomersTable = () => {
                     Add Categories
                 </Button>
             </div>
+            {isEditModalVisible && <Modal toggleModal={toggleEditModal}>
+                <>
+                    <div className="w-full mb-3">
+                        <h3 className="text-[23px] font-[500] ">Edit Category</h3>
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="harvestingPeriod"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Name
+                        </label>
+                        <Input
+                            type='text'
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="harvestingPeriod"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Price
+                        </label>
+                        <Input
+                            type='text'
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="harvestingPeriod"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Special Offer
+                        </label>
+                        <Input
+                            type='text'
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label
+                            htmlFor="description"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Additional Comments
+                        </label>
+                        <textarea
+                            name="description"
+                            id="description"
+                            rows={4}
+                            className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                    </div>
+                    <div className="w-full flex justify-end">
+                        <Button className='m-2 w-[6rem]' type="primary">Edit</Button>
+                        <Button className='m-2' onClick={toggleEditModal} type="secondary">Cancel</Button>
+                    </div>
+                </>
+            </Modal>}
             {isModalVisible && <Modal toggleModal={toggleModal}>
                 <>
                     <div className="w-full mb-3">
-                        <h3 className="text-[23px] font-[500] ">Add Category</h3>
+                        <h3 className="text-[23px] font-[500] ">Delete Category</h3>
                     </div>
                     <div>
                         <label
@@ -159,7 +221,7 @@ const CustomersTable = () => {
                         />
                     </div>
                     <div className="w-full flex justify-end">
-                        <Button className='m-2' type="primary">Submit</Button>
+                        <Button className='m-2' type="primary">Delete</Button>
                         <Button className='m-2' onClick={toggleModal} type="secondary">Cancel</Button>
                     </div>
                 </>
@@ -172,9 +234,14 @@ const CustomersTable = () => {
                 extraColumns={[
                     () => {
                         return (
-                            <Button onClick={() => setIsModalVisible(!isModalVisible)} type="danger" className="w-[80px]" outlined>
-                                Delete
-                            </Button>
+                            <div className="flex gap-[1rem]">
+                                <Button onClick={() => setIsEditModalVisible(!isEditModalVisible)} type="danger" className="w-[80px]" outlined>
+                                    Edit
+                                </Button>
+                                <Button onClick={() => setIsModalVisible(!isModalVisible)} type="danger" className="w-[80px]" outlined>
+                                    Delete
+                                </Button>
+                            </div>
                         );
                     },
                 ]}

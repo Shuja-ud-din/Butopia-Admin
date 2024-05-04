@@ -27,16 +27,34 @@ const ProvidersForm = () => {
     e.preventDefault();
     setSelectedDays(day)
   }
-  console.log(selectedDay);
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const validateTime = (time) => {
+    const alphabeticRegex = /^[A-Za-z]+$/
+    if (time.startTime || time.endTime) {
+      if (!alphabeticRegex.test(time.startTime) && !alphabeticRegex.test(time.endTime)) {
+        const actualTime = time.startTime ? time.startTime : time.endTime
+        const hour = parseInt(actualTime[0], 10);
+        const minute = parseInt(actualTime[1], 10)
+        if (hour < 13) {
+          return hour
+        }
+        if (minute < 60) {
+          return minute
+        }
 
+      }
+    }
+
+  }
+  const handleChange = (e) => {
+    e.preventDefault()
+    const { name, value } = e.target;
     setTime({
       ...time,
       [name]: value
     });
+
+
   };
-  console.log(time);
   return (
     <>
       <div className="w-full">

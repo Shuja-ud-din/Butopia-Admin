@@ -82,6 +82,7 @@ const CustomersTable = () => {
       </div> */}
 
             <Table
+                recordClickRoute="/admin/providers/providerdetails"
                 array={data}
                 search={"providerName"}
                 keysToDisplay={["providerName", "qualification", "experience", "workSamples"]}
