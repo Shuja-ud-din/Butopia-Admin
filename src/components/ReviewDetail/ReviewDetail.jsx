@@ -4,11 +4,11 @@ import { IoLocationOutline } from "react-icons/io5"
 import { IoIosStar } from "react-icons/io";
 const ReviewDetail = ({ profilePhoto, comment, name, profession, starRates = 2 }) => {
     const stars = [
-        <IoIosStar />,
-        <IoIosStar />,
-        <IoIosStar />,
-        <IoIosStar />,
-        <IoIosStar />
+        <IoIosStar className="text-[#FFD700]" />,
+        <IoIosStar className="text-[#FFD700]" />,
+        <IoIosStar className="text-[#FFD700]" />,
+        <IoIosStar className="text-[#FFD700]" />,
+        <IoIosStar className="text-[#FFD700]" />
     ]
     return (
         <>

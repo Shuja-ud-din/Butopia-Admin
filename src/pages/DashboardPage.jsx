@@ -10,6 +10,7 @@ import avatar from "../assets/avatar.jpg";
 import { IoChevronForward } from "react-icons/io5";
 import Table from "../components/Table/Table";
 import Button from "../components/Button/Button";
+import { MdCancel } from "react-icons/md";
 
 const DashboardPage = () => {
   const data = [
@@ -94,14 +95,7 @@ const DashboardPage = () => {
               extraColumns={[
                 () => {
                   return (
-                    <Button
-                      className="w-20 text-right"
-                      width="70px"
-                      outlined={true}
-                      type="danger"
-                    >
-                      Cancel
-                    </Button>
+                    <MdCancel className="text-[1.3rem]" />
                   );
                 },
               ]}

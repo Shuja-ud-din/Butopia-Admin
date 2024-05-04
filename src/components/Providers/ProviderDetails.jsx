@@ -9,6 +9,7 @@ import ExperiencePanel from '../../assets/ExperiencePanel/ExperiencePanel'
 import heart from "../../assets/heart.png"
 import { FaHeart } from "react-icons/fa";
 import ReviewDetail from '../ReviewDetail/ReviewDetail'
+import ServiceCard from '../ServiceCard/ServiceCard'
 
 const ProviderDetails = () => {
     return (
@@ -63,18 +64,42 @@ const ProviderDetails = () => {
                         <div className='text-[0.93rem] font-[400] '>Monday to Friday 08:00 AM-18:00 PM</div>
                     </div>
                     <div className=' w-full flex  mt-[2rem]'>
-                        <div className='w-[40%] '>
+                        <div className='w-[50%] '>
                             <div className='text-[1.2rem] font-primary font-[600] mb-[0.5rem]'>Reviews</div>
                             <ReviewDetail
                                 profilePhoto={doctorProfile}
                                 name="Emily Anderson"
-                                starRates={4}
+                                starRates={5}
                                 comment="Dr. David is a true professional who genuinely cares"
                             />
 
                         </div>
-                        <div className='w-[60%] flex items-end justify-end'>
-                            <Button>Book Appointment</Button>
+                        <div className='w-[60%]  flex flex-col'>
+                            <div className='text-[1.2rem] font-primary font-[600] mb-[0.5rem]'>Services</div>
+                            <div className='flex justify-between'>
+                                <div className=''>
+                                    <ServiceCard
+                                        name="Beauty App Clinics"
+                                        img={doctorProfile}
+                                        description="288 McClure Court Arkans"
+                                    />
+                                </div>
+                                <div className=''>
+                                    <ServiceCard
+                                        name="Skin Care"
+                                        img={doctorProfile}
+                                        description="What to do have to be best"
+                                    />
+                                </div>
+                                <div className=''>
+                                    <ServiceCard
+                                        name="Acne Solution"
+                                        img={doctorProfile}
+                                        description="Curing in a good way to do"
+                                    />
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import Table from "../Table/Table";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const ServiceTable = () => {
   const navigate = useNavigate("")
@@ -381,12 +382,8 @@ const ServiceTable = () => {
           () => {
             return (
               <div className="flex gap-[1rem]">
-                <Button type="danger" className="w-[80px]" outlined>
-                  Edit
-                </Button>
-                <Button type="danger" className="w-[80px]" outlined>
-                  Delete
-                </Button>
+                <MdEdit className="text-[#ccccc] text-[1.3rem]" />
+                <MdDelete className="text-[#FF6666] text-[1.3rem]" />
               </div>
             );
           },

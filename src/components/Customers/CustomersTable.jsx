@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import Table from "../Table/Table";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
+import { MdDelete } from "react-icons/md";
 
 const CustomersTable = () => {
   const navigate = useNavigate();
@@ -292,9 +293,7 @@ const CustomersTable = () => {
         extraColumns={[
           () => {
             return (
-              <Button type="danger" className="w-[80px]" outlined>
-                Delete
-              </Button>
+              <MdDelete className="text-[#FF6666] mr-[1rem] text-[1.3rem]" />
             );
           },
         ]}

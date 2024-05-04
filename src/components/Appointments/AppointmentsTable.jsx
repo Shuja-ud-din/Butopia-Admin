@@ -9,6 +9,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { PiHandCoins } from "react-icons/pi";
 import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
+import { MdCancel, MdSchedule } from "react-icons/md";
 const data = [
   {
     id: "1",
@@ -94,23 +95,9 @@ const AppointmentsTable = () => {
           () => {
             return (
               <div className="flex gap-[1rem]">
-                <Button
-                  className="w-20 text-right"
-                  width="70px"
-                  outlined={true}
-                  type="danger"
-                  onClick={() => navigate("/admin/appointments/addappointment")}
-                >
-                  Schedule
-                </Button>
-                <Button
-                  className="w-20 text-right"
-                  width="70px"
-                  outlined={true}
-                  type="danger"
-                >
-                  Cancel
-                </Button>
+                <MdSchedule className="text-[1.3rem]" />
+
+                <MdCancel className="text-[1.3rem]" />
               </div>
             );
           },

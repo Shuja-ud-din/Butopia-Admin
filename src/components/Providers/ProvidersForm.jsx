@@ -5,8 +5,13 @@ import ServiceDropDown from "../SelectDropdown/ServiceDropDownSelect";
 import profile_img from "../../assets/user_profile.png";
 import DaySelector from "../DaySelector/DaySelector";
 import TimeField from "../../components/TimeField/TimeField";
+import ReactDOM from 'react-dom';
+import { TimePicker } from 'antd';
+import moment from 'moment';
+
 
 const ProvidersForm = () => {
+  const format = 'HH:mm';
   const [imagePreview, setImagePreview] = useState("");
   const [selectedDay, setSelectedDays] = useState(null)
   const [time, setTime] = useState({
@@ -27,34 +32,17 @@ const ProvidersForm = () => {
     e.preventDefault();
     setSelectedDays(day)
   }
-  const validateTime = (time) => {
-    const alphabeticRegex = /^[A-Za-z]+$/
-    if (time.startTime || time.endTime) {
-      if (!alphabeticRegex.test(time.startTime) && !alphabeticRegex.test(time.endTime)) {
-        const actualTime = time.startTime ? time.startTime : time.endTime
-        const hour = parseInt(actualTime[0], 10);
-        const minute = parseInt(actualTime[1], 10)
-        if (hour < 13) {
-          return hour
-        }
-        if (minute < 60) {
-          return minute
-        }
 
-      }
-    }
-
-  }
-  const handleChange = (e) => {
-    e.preventDefault()
-    const { name, value } = e.target;
-    setTime({
-      ...time,
-      [name]: value
-    });
+  // const handleChange = (e) => {
+  //   e.preventDefault()
+  //   const { name, value } = e.target;
+  //   setTime({
+  //     ...time,
+  //     [name]: value
+  //   });
 
 
-  };
+  // };
   return (
     <>
       <div className="w-full">
@@ -160,13 +148,16 @@ const ProvidersForm = () => {
               >
                 Start Time
               </label>
-              <TimeField
+              {/* <TimeField
                 TimeZone="am"
                 placeholder="start time"
                 name="startTime"
                 value={time}
                 onChange={handleChange}
-              />
+              /> */}
+              <TimePicker
+                defaultValue={moment('12:08', format)}
+                format={format} />
             </div>
             <div>
               <label
@@ -175,13 +166,16 @@ const ProvidersForm = () => {
               >
                 End Time
               </label>
-              <TimeField
+              <TimePicker
+                defaultValue={moment('12:08', format)}
+                format={format} />
+              {/* <TimeField
                 placeholder="end time"
                 TimeZone="pm"
                 value={time}
                 name="endTime"
                 onChange={handleChange}
-              />
+              /> */}
             </div>
           </div>
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">

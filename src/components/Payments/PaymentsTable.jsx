@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import Table from "../Table/Table";
 import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
+import { MdDelete } from "react-icons/md";
 
 const data = [
   {
@@ -69,9 +70,7 @@ const PaymentsTable = () => {
         extraColumns={[
           () => {
             return (
-              <Button type="danger" className="w-[80px]" outlined>
-                Delete
-              </Button>
+              <MdDelete className="text-[#FF6666] mr-[1rem] text-[1.3rem]" />
             );
           },
         ]}

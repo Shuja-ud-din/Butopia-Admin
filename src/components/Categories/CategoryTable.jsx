@@ -5,6 +5,10 @@ import Modal from '../Modal/Modal'
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import Input from '../Input/Input'
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
+
+
 const CustomersTable = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -235,12 +239,9 @@ const CustomersTable = () => {
                     () => {
                         return (
                             <div className="flex gap-[1rem]">
-                                <Button onClick={() => setIsEditModalVisible(!isEditModalVisible)} type="danger" className="w-[80px]" outlined>
-                                    Edit
-                                </Button>
-                                <Button onClick={() => setIsModalVisible(!isModalVisible)} type="danger" className="w-[80px]" outlined>
-                                    Delete
-                                </Button>
+                                <MdEdit className="text-[#ccccc] text-[1.3rem]" onClick={() => setIsEditModalVisible(!isEditModalVisible)} />
+                                <MdDelete className="text-[#FF6666] text-[1.3rem]" onClick={() => setIsModalVisible(!isModalVisible)} />
+
                             </div>
                         );
                     },
