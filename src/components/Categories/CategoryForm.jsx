@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import CategoryDropdown from "../SelectDropdown/CategoryDropDownSelect";
+import ImageUploader from '../ImageUploader/ImageUploader'
 const CategoryForm = () => {
   const [imagePreview, setImagePreview] = useState("");
   return (
@@ -16,8 +17,11 @@ const CategoryForm = () => {
           </div>
 
           <div className="flex gap-28 mt-10 w-full">
-            <div className="flex justify-center items-center flex-col ">
-              <label htmlFor="image-upload" className="cursor-pointer">
+            <div className="w-full h-[50%] flex justify-center items-center flex-col ">
+              <ImageUploader
+                typeOfImage="profile"
+              />
+              {/* <label htmlFor="image-upload" className="cursor-pointer">
                 <div className="w-[350px] h-[300px] mb-4 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden ">
                   {imagePreview ? (
                     <img
@@ -39,7 +43,7 @@ const CategoryForm = () => {
                   type="file"
                   className="hidden"
                 />
-              </label>
+              </label> */}
             </div>
             <div class="h-[25rem] w-[1px] bg-[black]"></div>
             <div className="w-full">
