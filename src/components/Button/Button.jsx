@@ -11,6 +11,7 @@ const Button = ({
     <div className={className}>
       {type === "primary" && !outlined && (
         <button
+          type="submit"
           onClick={onClick}
           className="w-full bg-primary flex items-center justify-center text-[white]  py-2 px-4 border border-primary hover:border-transparent rounded"
         >

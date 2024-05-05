@@ -44,6 +44,18 @@ const Input = ({ value, type = "text", onChange, onSend, name, placeholder, clas
           />
         </>
       )}
+      {(type === "number") && (
+        <>
+          <input
+            type={type}
+            name={name}
+            id="email"
+            placeholder={placeholder || ""}
+            className="w-[100%]"
+            onChange={onChange}
+          />
+        </>
+      )}
       {(type === "chat") && (
         <div className="flex  items-center w-full">
           <input
