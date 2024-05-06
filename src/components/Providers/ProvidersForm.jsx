@@ -8,16 +8,14 @@ import TimeField from "../../components/TimeField/TimeField";
 import ReactDOM from 'react-dom';
 import { TimePicker } from 'antd';
 import moment from 'moment';
-
+import useProvider from "../../Hooks/useProvider";
 
 const ProvidersForm = () => {
+  const { addProviderData, handleChange, handleSelectedDay, selectedDay } = useProvider()
   const format = 'HH:mm';
   const [imagePreview, setImagePreview] = useState("");
-  const [selectedDay, setSelectedDays] = useState(null)
-  const [time, setTime] = useState({
-    startTime: "",
-    endTime: "",
-  });
+
+  console.log(addProviderData);
   const days = [
     "Monday",
     "Tuesday",
@@ -28,21 +26,10 @@ const ProvidersForm = () => {
     "Sunday"
   ];
 
-  const handleSelectedDay = (e, day) => {
-    e.preventDefault();
-    setSelectedDays(day)
-  }
 
-  // const handleChange = (e) => {
-  //   e.preventDefault()
-  //   const { name, value } = e.target;
-  //   setTime({
-  //     ...time,
-  //     [name]: value
-  //   });
+  console.log(selectedDay);
 
 
-  // };
   return (
     <>
       <div className="w-full">
@@ -80,7 +67,11 @@ const ProvidersForm = () => {
                 >
                   Provider Name
                 </label>
-                <Input type="text" />
+                <Input
+                  name="name"
+                  value={addProviderData}
+                  onChange={handleChange}
+                  type="text" />
               </div>
               <div>
                 <label
@@ -89,16 +80,37 @@ const ProvidersForm = () => {
                 >
                   Email
                 </label>
-                <Input type="text" />
+                <Input
+                  name="email"
+                  value={addProviderData}
+                  onChange={handleChange}
+                  type="text" />
               </div>
               <div>
                 <label
                   htmlFor="name"
                   className="mb-2 block text-sm font-medium text-gray-700"
                 >
-                  Speciality
+                  Phone Number
                 </label>
-                <Input type="text" />
+                <Input
+                  name="phoneNumber"
+                  value={addProviderData}
+                  onChange={handleChange}
+                  type="text" />
+              </div>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+                <Input
+                  name="password"
+                  onChange={handleChange}
+                  value={addProviderData}
+                  type="password" />
               </div>
               <div>
                 <label
@@ -107,7 +119,37 @@ const ProvidersForm = () => {
                 >
                   Address
                 </label>
-                <Input type="text" />
+                <Input
+                  name="address"
+                  onChange={handleChange}
+                  value={addProviderData}
+                  type="text" />
+              </div>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                  Speciality
+                </label>
+                <Input
+                  name="speciality"
+                  value={addProviderData}
+                  onChange={handleChange}
+                  type="text" />
+              </div>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                  Experience
+                </label>
+                <Input
+                  name="experience"
+                  value={addProviderData}
+                  onChange={handleChange}
+                  type="number" />
               </div>
             </div>
           </div>
@@ -118,12 +160,13 @@ const ProvidersForm = () => {
             Description
           </label>
           <textarea
-            name="description"
-            id="description"
+            value={addProviderData.about}
+            onChange={handleChange}
+            name="about"
+            type="text"
             rows={4}
             className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
-
           <label
             htmlFor="name"
             className="mb-2 mt-[2rem] block text-sm font-medium text-gray-700"
@@ -133,8 +176,11 @@ const ProvidersForm = () => {
           <div className="w-full  flex flex-wrap gap-[0.4rem]">
             {days.map((item) => {
               return <DaySelector
+                value={addProviderData.workingDays}
+                onChange={handleChange}
+                name="days"
                 day={item}
-                isSelected={selectedDay === item}
+                isSelected={selectedDay.includes(item)}
                 onClick={(e) => handleSelectedDay(e, item)}
               />
             })}
@@ -148,13 +194,7 @@ const ProvidersForm = () => {
               >
                 Start Time
               </label>
-              {/* <TimeField
-                TimeZone="am"
-                placeholder="start time"
-                name="startTime"
-                value={time}
-                onChange={handleChange}
-              /> */}
+
               <TimePicker
                 defaultValue={moment('12:08', format)}
                 format={format} />
@@ -169,13 +209,7 @@ const ProvidersForm = () => {
               <TimePicker
                 defaultValue={moment('12:08', format)}
                 format={format} />
-              {/* <TimeField
-                placeholder="end time"
-                TimeZone="pm"
-                value={time}
-                name="endTime"
-                onChange={handleChange}
-              /> */}
+
             </div>
           </div>
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
