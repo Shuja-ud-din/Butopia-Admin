@@ -3,13 +3,16 @@ import { FiEyeOff } from "react-icons/fi";
 import { FiEye } from "react-icons/fi";
 import "./Input.css";
 
-const Input = ({ value, type = "text", onChange, onSend, name, placeholder, className }) => {
+const Input = ({
+  value,
+  type = "text",
+  onChange,
+  name,
+  placeholder,
+  className,
+}) => {
   const [passwordVisible1, setPasswordVisible1] = useState(false);
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      onSend();
-    }
-  };
+
   return (
     <div
       className={`flex items-center  w-full custom_input px-[13px] py-[8px] border border-primary rounded-lg mb-3 ${className}`}
@@ -21,7 +24,7 @@ const Input = ({ value, type = "text", onChange, onSend, name, placeholder, clas
             name={name}
             id="password"
             placeholder={placeholder || "Password"}
-            className="w-[95%]"
+            className="w-[95%] bg-[transparent]"
             onChange={onChange}
           />
           <span
@@ -39,30 +42,29 @@ const Input = ({ value, type = "text", onChange, onSend, name, placeholder, clas
             name={name}
             id="email"
             placeholder={placeholder || ""}
-            className="w-[100%]"
+            className="w-[100%] bg-[transparent]"
             onChange={onChange}
           />
         </>
       )}
-      {(type === "number") && (
+      {type === "number" && (
         <>
           <input
             type={type}
             name={name}
             id="email"
             placeholder={placeholder || ""}
-            className="w-[100%]"
+            className="w-[100%] bg-[transparent]"
             onChange={onChange}
           />
         </>
       )}
-      {(type === "chat") && (
+      {type === "chat" && (
         <div className="flex  items-center w-full">
           <input
             type="text"
             value={value}
             onChange={onChange}
-            onKeyPress={handleKeyPress}
             placeholder="Type your message..."
             className="w-full outline-none px-3  outline-none"
           />

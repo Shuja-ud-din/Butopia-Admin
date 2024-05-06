@@ -6,9 +6,9 @@ import AppData from "./context/AppData.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AppData>
-      <App />
-    </AppData>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <AppData>
+    <App />
+  </AppData>
+  // </React.StrictMode>
 );

@@ -69,9 +69,9 @@ const Header = () => {
           <div className=" flex justify-center items-center ml-7 cursor-pointer">
             <FiAlignLeft size={30} color="#09373d" />
           </div>
-          <div class="flex justify-between items-center h-full ">
+          <div className="flex justify-between items-center h-full ">
             <div
-              class="flex justify-center items-center px-4   "
+              className="flex justify-center items-center px-4   "
               onClick={() => setShowNotificationsBox(!showNotificationsBox)}
               ref={bell_ref}
             >
@@ -84,7 +84,7 @@ const Header = () => {
               </Badge>
             </div>
             <div
-              class="flex justify-center cursor-pointer items-center px-4 "
+              className="flex justify-center cursor-pointer items-center px-4 "
               onClick={() => setShowProfileBox(!showProfileBox)}
               ref={profile_ref}
             >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
@@ -12,8 +12,28 @@ import Admins from "../pages/Admins";
 import Payments from "../pages/Payments";
 import Support from "../pages/Support";
 import Chats from "../pages/Chats";
+import { io } from "socket.io-client";
+
+// const socket = io("http://localhost:7000");
+const socket = null;
 
 const Dashboard = () => {
+  // useEffect(() => {
+  //   socket.connect();
+
+  //   socket.on("connect", () => {
+  //     console.log("Connected to server");
+  //   });
+
+  //   socket.on("disconnect", () => {
+  //     console.log("Disconnected from server");
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
   return (
     <>
       {/* <Routes>
@@ -51,3 +71,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+export { socket };
