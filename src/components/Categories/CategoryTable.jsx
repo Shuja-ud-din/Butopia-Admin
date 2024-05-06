@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
 import Modal from '../Modal/Modal'
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Input from '../Input/Input'
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import useCategories from "../../Hooks/useCategories";
 
 
 const CustomersTable = () => {
@@ -124,6 +125,10 @@ const CustomersTable = () => {
         { "categoryName": 100, "description": "Sherie", "pricing": "Toft", "duration": "stoft2r@booking.com", "specialOffers": "Female" }
     ]
     console.log(isModalVisible);
+    const { getCategoryTable } = useCategories();
+    useEffect(() => {
+        getCategoryTable()
+    })
     return (
         <>
             <div className="w-full flex justify-between mb-5">

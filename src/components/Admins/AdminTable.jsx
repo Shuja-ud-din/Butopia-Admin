@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaPlus } from "react-icons/fa6";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
@@ -6,6 +6,7 @@ import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import useAdmin from "../../Hooks/useAdmin";
 
 const data = [
   {
@@ -25,7 +26,12 @@ const data = [
 ];
 
 const AdminTable = () => {
+  const token = localStorage.getItem("token")
   const navigate = useNavigate("")
+  const { getProviderTable } = useAdmin();
+  useEffect(() => {
+    getProviderTable()
+  })
   return (
     <>
       <div className="w-full flex justify-between mb-5">

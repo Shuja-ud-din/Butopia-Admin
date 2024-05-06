@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
+import useProvider from "../../Hooks/useProvider";
 
 const CustomersTable = () => {
     const navigate = useNavigate();
@@ -58,7 +59,10 @@ const CustomersTable = () => {
     { "providerName": "lcabrera1b", "qualification": "Macaé Airport", "experience": "Kipling", "workSamples": "Cube" },
     { "providerName": "astatham1c", "qualification": "Charlotte County Airport", "experience": "Thackeray", "workSamples": "Paseo" },
     { "providerName": "mnavarre1d", "qualification": "Kuala Lumpur International Airport", "experience": "Anthes", "workSamples": "G-Series 3500" }]
-
+    const { getProviderTable } = useProvider()
+    useEffect(() => {
+        getProviderTable()
+    })
     return (
         <>
             <div className="w-full flex justify-between mb-5">
