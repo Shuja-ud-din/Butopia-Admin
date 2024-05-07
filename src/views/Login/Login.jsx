@@ -32,7 +32,10 @@ const Login = () => {
           onChange={handleChange}
           name="password"
           type="password" />
-        <Button type="primary" className="w-full flex">
+        <Button
+          type="primary"
+          className="w-full flex"
+        >
           {loading ? <Loader /> : "Login"}
         </Button>
       </form>

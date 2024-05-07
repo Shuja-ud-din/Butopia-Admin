@@ -38,20 +38,24 @@ const useProvider = () => {
         speciality: "",
         about: "",
         experience: "",
+        startTime: "",
+        endTime: "",
     })
-    // const payLoad = {
-    //     name: addProvider.name,
-    //     email: addProvider.email,
-    //     phoneNumber: addProvider.phoneNumber,
-    //     password: addProvider.password,
-    //     address: addProvider.address,
-    //     speciality: addProvider.speciality,
-    //     about: addProvider.about,
-    //     experience: parseInt(addProvider.experience),
-    //     workingDays: selectedDay,
-    //     workingTimes: {
-    //     }
-    // }
+    const payLoad = {
+        name: addProviderData.name,
+        email: addProviderData.email,
+        phoneNumber: addProviderData.phoneNumber,
+        password: addProviderData.password,
+        address: addProviderData.address,
+        speciality: addProviderData.speciality,
+        about: addProviderData.about,
+        experience: parseInt(addProviderData.experience),
+        workingDays: selectedDay,
+        workingTimes: {
+            start: addProviderData.startTime,
+            end: addProviderData.endTime,
+        }
+    }
     const handleChange = (e) => {
         const { value, name } = e.target;
         setAddProviderData({
@@ -59,10 +63,11 @@ const useProvider = () => {
             [name]: value
         })
     }
-    const addProvider = async () => {
+    const addProvider = async (e) => {
+        e.preventDefault()
         try {
             const response = api.post("/api/provider", {
-                // ...payLoad,
+                ...payLoad,
             })
             console.log(response);
         } catch (e) {

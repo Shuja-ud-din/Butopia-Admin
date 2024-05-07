@@ -7,13 +7,15 @@ import DaySelector from "../DaySelector/DaySelector";
 import TimeField from "../../components/TimeField/TimeField";
 import ReactDOM from 'react-dom';
 import { TimePicker } from 'antd';
-import moment from 'moment';
 import useProvider from "../../Hooks/useProvider";
 
 const ProvidersForm = () => {
-  const { addProviderData, handleChange, handleSelectedDay, selectedDay } = useProvider()
-  const format = 'HH:mm';
+  const { addProviderData, handleChange, handleSelectedDay, selectedDay, addProvider } = useProvider()
   const [imagePreview, setImagePreview] = useState("");
+  const [selectedTime, setSelectedTime] = useState('');
+
+  // Function to handle time selection
+
 
   console.log(addProviderData);
   const days = [
@@ -195,9 +197,16 @@ const ProvidersForm = () => {
                 Start Time
               </label>
 
-              <TimePicker
-                defaultValue={moment('12:08', format)}
-                format={format} />
+              <div>
+                <input
+                  name="startTime"
+                  type="time"
+                  className="border  rounded-[5px]"
+                  value={addProviderData.startTime}
+                  placeholder={addProviderData.startTime}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
             <div>
               <label
@@ -206,14 +215,23 @@ const ProvidersForm = () => {
               >
                 End Time
               </label>
-              <TimePicker
-                defaultValue={moment('12:08', format)}
-                format={format} />
+              <div>
+                <input
+                  name="endTime"
+                  className="border  rounded-[5px]"
+                  type="time"
+                  placeholder={addProviderData.endTime}
+                  value={addProviderData.endTime}
+                  onChange={handleChange}
+                />
+              </div>
 
             </div>
           </div>
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
-            <Button className="w-40" type="primary">
+            <Button
+              onClick={addProvider}
+              className="w-40" type="primary">
               {" "}
               Save Provider
             </Button>
