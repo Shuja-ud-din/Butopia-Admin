@@ -8,30 +8,20 @@ import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import useAdmin from "../../Hooks/useAdmin";
 
-const data = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "example@mail.com",
-    phone: "1234567890",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "John Doe",
-    email: "example@mail.com",
-    phone: "1234567890",
-    status: "Inactive",
-  },
-];
+
 
 const AdminTable = () => {
   const token = localStorage.getItem("token")
   const navigate = useNavigate("")
-  const { getProviderTable } = useAdmin();
+  const { getProviderTable, getAllAdminsTable,
+    getAdminData, getAdmin
+  } = useAdmin();
   useEffect(() => {
-    getProviderTable()
-  })
+    getProviderTable();
+    getAdmin();
+  }, [])
+  console.log(getAllAdminsTable);
+  console.log(getAdminData);
   return (
     <>
       <div className="w-full flex justify-between mb-5">
@@ -46,10 +36,10 @@ const AdminTable = () => {
       </div>
 
       <Table
-        array={data}
+        array={getAllAdminsTable}
         search={"name"}
-        keysToDisplay={["id", "name", "email", "phone", "status"]}
-        label={["#", "Name", "Email", "Phone Number", "Status", "Actions"]}
+        keysToDisplay={["name", "phoneNumber", "email"]}
+        label={["Name", "Phone Number", "Email", "Actions"]}
         filter={() => {
           return (
             <>

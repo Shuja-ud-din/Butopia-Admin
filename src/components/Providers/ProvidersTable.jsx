@@ -9,7 +9,6 @@ import useProvider from "../../Hooks/useProvider";
 const CustomersTable = () => {
     const navigate = useNavigate();
 
-
     const { getProviderTable, data, getProvider, getProviderData } = useProvider()
     useEffect(() => {
         getProviderTable()

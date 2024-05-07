@@ -5,8 +5,11 @@ import { GoEyeClosed } from "react-icons/go";
 import { GoEye } from "react-icons/go";
 import Input from "../Input/Input";
 import Select from "../Dropdown/Select";
+import useAdmin from "../../Hooks/useAdmin";
+import Loader from '../Loader/Loader'
 
 const AdminForm = () => {
+  const { addAdminDetail, handleChange, addAdmin, loading } = useAdmin();
   return (
     <>
       <div className="p-3 pl-[2rem] pr-[2rem] bg-[white] rounded-[1rem] shadow-lg border border-gray-300">
@@ -21,7 +24,7 @@ const AdminForm = () => {
                 <img alt="Remy Sharp" src={Profile} className="rounded-full" />
               </div>
             </div>
-            <div className="lg:w-1/2 md:w-2/3 mx-auto px-[5rem]">
+            <form onSubmit={addAdmin} className="lg:w-1/2 md:w-2/3 mx-auto px-[5rem]">
               <div className="flex flex-wrap -m-2">
                 <div className="p-2 w-1/2">
                   <div className="relative">
@@ -31,11 +34,14 @@ const AdminForm = () => {
                     >
                       Name
                     </label>
-                    <Input type="text" placeholder={"Name"} />
+                    <Input type="text"
+                      name="name"
+                      onChange={handleChange}
+                      placeholder={"Name"} />
                   </div>
                 </div>
 
-                <div className="p-2 w-1/2">
+                {/* <div className="p-2 w-1/2">
                   <div className="relative">
                     <label
                       htmlFor="role"
@@ -47,7 +53,7 @@ const AdminForm = () => {
                       <option value="admin">Admin</option>
                     </Select>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="p-2 w-1/2 ">
                   <div className="relative flex flex-col">
@@ -57,7 +63,12 @@ const AdminForm = () => {
                     >
                       Phone Number
                     </label>
-                    <Input type="text" placeholder={"Phone Number"} />
+                    <Input
+                      type="text"
+                      placeholder={"Phone Number"}
+                      name="phoneNumber"
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
                 <div className="p-2 w-1/2">
@@ -68,7 +79,11 @@ const AdminForm = () => {
                     >
                       Email
                     </label>
-                    <Input type="email" placeholder={"Email"} />
+                    <Input
+                      name="email"
+                      onChange={handleChange}
+                      type="email"
+                      placeholder={"Email"} />
                   </div>
                 </div>
 
@@ -80,11 +95,15 @@ const AdminForm = () => {
                     >
                       Password
                     </label>
-                    <Input type="password" placeholder={"Password"} />
+                    <Input
+                      name="password"
+                      onChange={handleChange}
+                      type="password"
+                      placeholder={"Password"} />
                   </div>
                 </div>
 
-                <div className="p-2 w-1/2">
+                {/* <div className="p-2 w-1/2">
                   <div className="relative">
                     <label
                       htmlFor="confirmPassword"
@@ -94,14 +113,17 @@ const AdminForm = () => {
                     </label>
                     <Input type="password" placeholder={"Confirm Password"} />
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className=" my-6 w-full flex justify-end">
-                <Button type="primary" className="w-[200px]">
-                  Add
+                <Button
+                  onClick={addAdmin}
+                  type="primary"
+                  className="w-[200px]">
+                  {loading ? <Loader /> : "Add"}
                 </Button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

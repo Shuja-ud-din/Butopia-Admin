@@ -8,16 +8,16 @@ import TimeField from "../../components/TimeField/TimeField";
 import ReactDOM from 'react-dom';
 import { TimePicker } from 'antd';
 import useProvider from "../../Hooks/useProvider";
-
+import Loader from '../Loader/Loader'
 const ProvidersForm = () => {
-  const { addProviderData, handleChange, handleSelectedDay, selectedDay, addProvider } = useProvider()
+  const { loading, addProviderData, handleChange, handleSelectedDay, selectedDay, addProvider, payLoad } = useProvider()
   const [imagePreview, setImagePreview] = useState("");
   const [selectedTime, setSelectedTime] = useState('');
 
   // Function to handle time selection
 
-
   console.log(addProviderData);
+  console.log(payLoad);
   const days = [
     "Monday",
     "Tuesday",
@@ -38,7 +38,7 @@ const ProvidersForm = () => {
         <h3 className="text-[25px] font-[500] ">Add Providers</h3>
       </div>
       <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-        <form className="p-7 px-[4rem]">
+        <form onSubmit={addProvider} className="p-7 px-[4rem]">
           <div className="flex justify-between">
             <p className="font-semibold">Provider Details</p>
           </div>
@@ -233,7 +233,7 @@ const ProvidersForm = () => {
               onClick={addProvider}
               className="w-40" type="primary">
               {" "}
-              Save Provider
+              {loading ? <Loader /> : "Add Provider"}
             </Button>
           </div>
         </form>
