@@ -89,9 +89,11 @@ const useAdmin = () => {
       }
 
       console.log(response);
-    } catch (e) {
+    } catch (error) {
       console.error("Error encountered", e.message);
-      showErrorNotification(e.message);
+      showErrorNotification(
+        error.response.data.message || error.message || "Something went wrong!"
+      );
       setLoading(false);
     }
   };

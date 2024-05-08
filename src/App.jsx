@@ -12,7 +12,16 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<Registration />} />
+          <Route
+            path="/*"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/admin/dashboard" />
+              ) : (
+                <Registration />
+              )
+            }
+          />
           <Route
             path="/admin/*"
             element={
