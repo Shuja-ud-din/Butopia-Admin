@@ -29,7 +29,14 @@ const useProvider = () => {
         },
       });
       if (response.data.success) {
-        setData(response.data.data);
+        setData(
+          response.data.data.map((item, index) => {
+            return {
+              index: index + 1,
+              ...item,
+            };
+          })
+        );
       }
     } catch (e) {
       console.error("Error message", e.message);

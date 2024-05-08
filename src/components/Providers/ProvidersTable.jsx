@@ -31,8 +31,15 @@ const CustomersTable = () => {
         recordClickRoute={"/admin/providers/"}
         array={data}
         search={"name"}
-        keysToDisplay={["name", "email", "phoneNumber", "speciality"]}
-        label={["Providers", "Email", "Phone Number", "Speciality", "Actions"]}
+        keysToDisplay={["index", "name", "email", "phoneNumber", "speciality"]}
+        label={[
+          "#",
+          "Providers",
+          "Email",
+          "Phone Number",
+          "Speciality",
+          "Actions",
+        ]}
         extraColumns={[
           () => {
             return (
