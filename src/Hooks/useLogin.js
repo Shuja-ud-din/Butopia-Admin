@@ -32,7 +32,6 @@ const useLogin = () => {
   const login = async (e) => {
     e.preventDefault();
     setLoading(true);
-    navigate("/admin");
     try {
       if (phoneNumber === "" || password === "") {
         throw new Error("Please fill in all the fields");
@@ -58,7 +57,7 @@ const useLogin = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.error(error.message);
+      console.error(error);
       showErrorNotification(error.message);
     }
   };
