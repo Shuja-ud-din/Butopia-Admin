@@ -47,7 +47,12 @@ const useProvider = () => {
   const [selectedDay, setSelectedDays] = useState([]);
   const handleSelectedDay = (e, day) => {
     e.preventDefault();
-    setSelectedDays([...selectedDay, day]);
+    if (!selectedDay.includes(day)) {
+      setSelectedDays([...selectedDay, day]);
+    }
+    else {
+      setSelectedDays(selectedDay.filter(item => item !== day))
+    }
   };
   const [addProviderData, setAddProviderData] = useState({
     name: "",
@@ -162,7 +167,21 @@ const useProvider = () => {
         },
       });
       console.log(response);
-      setGetProviderData(response);
+      const data = response.data.data;
+      setGetProviderData({
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        address: data.address,
+        speciality: data.speciality,
+        experience: data.experience,
+        about: data.about,
+        workingDays: data.workingDays,
+        workingTimes: data.workingTimes,
+        profilePicture: data.profilePicture,
+        reviews: data.reviews,
+      })
     } catch (e) {
       console.error(e.message);
     }

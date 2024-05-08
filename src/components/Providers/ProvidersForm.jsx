@@ -70,6 +70,7 @@ const ProvidersForm = () => {
                   Provider Name
                 </label>
                 <Input
+                  placeholder={"Name"}
                   name="name"
                   value={addProviderData}
                   onChange={handleChange}
@@ -83,6 +84,7 @@ const ProvidersForm = () => {
                   Email
                 </label>
                 <Input
+                  placeholder={"Email"}
                   name="email"
                   value={addProviderData}
                   onChange={handleChange}
@@ -97,6 +99,7 @@ const ProvidersForm = () => {
                 </label>
                 <Input
                   name="phoneNumber"
+                  placeholder={"Phone Number"}
                   value={addProviderData}
                   onChange={handleChange}
                   type="text" />
@@ -109,6 +112,7 @@ const ProvidersForm = () => {
                   Password
                 </label>
                 <Input
+                  placeholder={"Password"}
                   name="password"
                   onChange={handleChange}
                   value={addProviderData}
@@ -123,6 +127,7 @@ const ProvidersForm = () => {
                 </label>
                 <Input
                   name="address"
+                  placeholder={"Address"}
                   onChange={handleChange}
                   value={addProviderData}
                   type="text" />
@@ -135,6 +140,7 @@ const ProvidersForm = () => {
                   Speciality
                 </label>
                 <Input
+                  placeholder={"Speciality"}
                   name="speciality"
                   value={addProviderData}
                   onChange={handleChange}
@@ -148,6 +154,7 @@ const ProvidersForm = () => {
                   Experience
                 </label>
                 <Input
+                  placeholder={"Experience"}
                   name="experience"
                   value={addProviderData}
                   onChange={handleChange}
@@ -162,6 +169,7 @@ const ProvidersForm = () => {
             Description
           </label>
           <textarea
+            placeholder="About Provider"
             value={addProviderData.about}
             onChange={handleChange}
             name="about"

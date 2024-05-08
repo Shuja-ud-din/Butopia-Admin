@@ -19,7 +19,6 @@ const CategoryForm = () => {
           <div className="flex gap-28 mt-10 w-full">
             <div className="w-full h-[50%] flex justify-center items-center flex-col ">
               <ImageUploader
-                typeOfImage="profile"
               />
               {/* <label htmlFor="image-upload" className="cursor-pointer">
                 <div className="w-[350px] h-[300px] mb-4 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden ">

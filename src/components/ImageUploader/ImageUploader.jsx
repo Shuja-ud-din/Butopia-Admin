@@ -1,20 +1,37 @@
 import React, { useState } from 'react'
 import profile from '../../assets/user_profile.png';
-const ImageUploader = ({ typeOfImage, imagePreview }) => {
-    const [file, setFile] = useState(null)
-    const { previewImage, setPreviewImage } = useState("")
+import Image from '../../assets/avatar.jpg'
+const ImageUploader = ({ typeOfImage, name, url }) => {
+    const [file, setFile] = useState(url || null)
+    const defaultHandleChangeFunction = (e) => {
+        e.preventDefault();
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setFile(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    };
+
     return (
         <>
-            <div className='h-[14rem]  w-[14rem] border rounded-[9px] border-primary shadow-lg'>
-                <label htmlFor="image-upload " className='cursor-pointe'>
-                    {imagePreview ? <img src={imagePreview} alt="" /> :
-                        (typeOfImage === "profile" ? <img src={profile} alt="" />
-                            : <img src="other" alt="" />
-                        )}
-                    <div>
+            <div htmlFor="image-upload " className='h-[14rem] cursor-pointer w-[14rem] border rounded-[9px] border-primary shadow-lg'>
+                <label className='w-full h-full'>
+                    <div className='h-full w-full rounded-[9px] flex justify-center items-center'>
+                        {file ? <img className='w-full h-full rounded-[9px]' src={file} alt="" /> :
+                            (typeOfImage === "profile" ? <img className='w-full h-full rounded-[9px]' src={profile} alt="" /> :
+                                (typeOfImage === "image" ? <img className='w-full h-full rounded-[9px]' src={Image} /> :
+                                    "no Image yet"))}
                         <input
-
-                            type="file" className='hidden' value={file} />
+                            name={name}
+                            id='image-upload'
+                            type="file"
+                            className='hidden'
+                            onChange={defaultHandleChangeFunction}
+                            accept="image/*"
+                        />
                     </div>
                 </label>
             </div>
