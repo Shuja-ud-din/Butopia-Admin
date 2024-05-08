@@ -1,7 +1,9 @@
 import React, { useState } from "react"
 import { api } from "../api/api";
 import { notification } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 const useProvider = () => {
+    const navigate = useNavigate("")
     const token = localStorage.getItem("token")
     const showErrorNotification = (message) => {
         notification.error({
@@ -114,7 +116,7 @@ const useProvider = () => {
 
             if (response.data.success) {
                 console.log(response);
-                showSuccessNotification("Provider Created Successfully!")
+                showSuccessNotification("Provider Added Successfully!")
                 setLoading(false)
             }
             else {
@@ -128,11 +130,11 @@ const useProvider = () => {
         }
     }
     ///////////////////getProvider/////////////
-
     const [getProviderData, setGetProviderData] = useState([])
     const getProvider = async () => {
+        console.log(id);
         try {
-            const response = await api.get(`${"/api/provider/"}${token}`, {
+            const response = await api.get(`${"/api/provider/"}${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

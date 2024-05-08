@@ -87,10 +87,10 @@ const Table = ({
             {recordsPerPage ? (
               recordsPerPage.map((obj, mainIndex) => {
                 return (
-                  <tr
+                  <tr key={obj.id}
                     onClick={() => {
                       if (setRecord) setRecord(obj);
-                      navigate(recordClickRoute)
+                      navigate(`${recordClickRoute}${obj.id}`)
                     }}
                     className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
                   >
