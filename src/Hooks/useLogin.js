@@ -58,7 +58,9 @@ const useLogin = () => {
     } catch (error) {
       setLoading(false);
       console.error(error);
-      showErrorNotification(error.message);
+      showErrorNotification(
+        error.message || error.response.data.message || "Something went wrong!"
+      );
     }
   };
 
