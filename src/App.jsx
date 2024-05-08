@@ -12,23 +12,14 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/*"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/admin/dashboard" />
-              ) : (
-                <Registration />
-              )
-            }
-          />
+          <Route path="/*" element={<Registration />} />
           <Route
             path="/admin/*"
             element={
               <>
-                <ProtectedRoute isAuthenticated={true}>
-                  <Dashboard />
-                </ProtectedRoute>
+                {/* <ProtectedRoute isAuthenticated={true}> */}
+                <Dashboard />
+                {/* </ProtectedRoute> */}
               </>
             }
           />

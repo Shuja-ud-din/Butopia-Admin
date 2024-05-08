@@ -59,7 +59,7 @@ const useLogin = () => {
       setLoading(false);
       console.error(error);
       showErrorNotification(
-        error.message || error.response.data.message || "Something went wrong!"
+        error.response.data.message || error.message || "Something went wrong!"
       );
     }
   };

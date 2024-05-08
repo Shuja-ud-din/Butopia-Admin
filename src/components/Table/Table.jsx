@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Table.css";
 import TableSearchBar from "./TableSearchBar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import { Skeleton } from "@mui/material";
 
 const Table = ({
-  recordClickRoute,
   array,
   label = [],
   keysToDisplay = [],
@@ -15,9 +14,10 @@ const Table = ({
   extraColumns = [],
   setRecord,
   search,
+  routes = [],
 }) => {
   const [searchedData, setSearchedData] = useState("");
-  const navigate = useNavigate("");
+  const navigate = useNavigate();
   const [noOfRecordsPerPage, setNoOfRecordsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState();
@@ -25,12 +25,12 @@ const Table = ({
   useEffect(() => {
     setRecordsPerPage(
       array &&
-      array.filter((obj) => {
-        return (
-          searchedData === "" ||
-          obj[search].toLowerCase().includes(searchedData.toLowerCase())
-        );
-      })
+        array.filter((obj) => {
+          return (
+            searchedData === "" ||
+            obj[search].toLowerCase().includes(searchedData.toLowerCase())
+          );
+        })
     );
   }, [searchedData]);
 
@@ -69,12 +69,13 @@ const Table = ({
                 return (
                   <th
                     className={`py-4 bg-[#F9FAFB] font-[600] text-[15px] text-[#1D2939] whitespace-nowrap 
-                        ${index === label.length - 1
-                        ? "text-right pr-9 rounded-tr-[9px]"
-                        : index == 0
-                          ? "text-left pl-9 rounded-tl-[9px]"
-                          : "text-left pl-9"
-                      }
+                        ${
+                          index === label.length - 1
+                            ? "text-right pr-9 rounded-tr-[9px]"
+                            : index == 0
+                            ? "text-left pl-9 rounded-tl-[9px]"
+                            : "text-left pl-9"
+                        }
                         `}
                   >
                     {text}
@@ -87,10 +88,10 @@ const Table = ({
             {recordsPerPage ? (
               recordsPerPage.map((obj, mainIndex) => {
                 return (
-                  <tr key={obj.id}
+                  <tr
+                    key={obj.id}
                     onClick={() => {
                       if (setRecord) setRecord(obj);
-                      navigate(`${recordClickRoute}${obj.id}`)
                     }}
                     className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
                   >
@@ -98,10 +99,12 @@ const Table = ({
                       const blocksList = renderComponent(index, customBlocks);
                       return (
                         <td
-                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${index === label.length - 1
-                            ? "text-right pr-9 "
-                            : "text-left pl-9 "
-                            }`}
+                          onClick={() => navigate(`${routes[0]}/${obj.id}`)}
+                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
+                            index === label.length - 1
+                              ? "text-right pr-9 "
+                              : "text-left pl-9 "
+                          }`}
                         >
                           {blocksList
                             ? blocksList.component(key ? obj[key] : obj)

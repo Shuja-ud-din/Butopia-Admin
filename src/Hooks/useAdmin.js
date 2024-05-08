@@ -90,9 +90,10 @@ const useAdmin = () => {
 
       console.log(response);
     } catch (error) {
-      console.error("Error encountered", e.message);
+      console.error("Error encountered", error);
       showErrorNotification(
-        error.response.data.message || error.message || "Something went wrong!"
+        (error.response ? error.response.data.message : error.message) ||
+          "Something went wrong!"
       );
       setLoading(false);
     }
