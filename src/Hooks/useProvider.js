@@ -49,9 +49,8 @@ const useProvider = () => {
     e.preventDefault();
     if (!selectedDay.includes(day)) {
       setSelectedDays([...selectedDay, day]);
-    }
-    else {
-      setSelectedDays(selectedDay.filter(item => item !== day))
+    } else {
+      setSelectedDays(selectedDay.filter((item) => item !== day));
     }
   };
   const [addProviderData, setAddProviderData] = useState({
@@ -152,7 +151,10 @@ const useProvider = () => {
       }
     } catch (e) {
       console.error(e.message);
-      showErrorNotification(e.message);
+      showErrorNotification(
+        (e.response ? e.response.data.message : e.message) ||
+          "Something went wrong!"
+      );
       setLoading(false);
     }
   };
@@ -181,7 +183,7 @@ const useProvider = () => {
         workingTimes: data.workingTimes,
         profilePicture: data.profilePicture,
         reviews: data.reviews,
-      })
+      });
     } catch (e) {
       console.error(e.message);
     }
