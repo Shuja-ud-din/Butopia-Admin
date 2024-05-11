@@ -153,14 +153,14 @@ const useProvider = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
   };
   ///////////////////getProvider/////////////
   const [getProviderData, setGetProviderData] = useState([]);
-  const getProvider = async () => {
+  const getProvider = async (id) => {
     console.log(id);
     try {
       const response = await api.get(`${"/api/provider/"}${id}`, {

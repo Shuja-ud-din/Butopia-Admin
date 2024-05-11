@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import useProvider from "../../Hooks/useProvider";
 
 const CustomersTable = () => {
   const navigate = useNavigate();
-
   const { getProviderTable, data, getProvider, getProviderData } =
     useProvider();
   useEffect(() => {
     getProviderTable();
   }, []);
+  console.log(getProviderData)
   return (
     <>
       <div className="w-full flex justify-between mb-5">

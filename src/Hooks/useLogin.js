@@ -47,7 +47,9 @@ const useLogin = () => {
         throw new Error("Password must be at least 8 characters long");
       }
       const response = await api.post("/api/auth/login", formData);
-
+      if (response.data.user.role !== "Admin") {
+        throw new Error("Admin role must be used for successful login!");
+      }
       if (response.data.success) {
         localStorage.setItem("token", response.data.token);
         setLoading(false);
@@ -57,10 +59,10 @@ const useLogin = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.error(error);
+      console.error("Error Encounrtered", error.message);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
     }
   };
