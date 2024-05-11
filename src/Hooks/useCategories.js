@@ -118,6 +118,7 @@ const useCategories = () => {
       await api.delete(`${"/api/category/"}${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      getCategoryTable()
       showErrorNotification("Vehicle Deleted Successfully");
     } catch (e) {
       showErrorNotification(

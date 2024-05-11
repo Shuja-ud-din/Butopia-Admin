@@ -26,7 +26,8 @@ const CustomersTable = () => {
     };
 
     const { getCategoryTable, getAllCategories,
-        data, handleChange, buttonStatus, handleButtonStatus, addCategory, loading } = useCategories();
+        data, handleChange, buttonStatus, handleButtonStatus, addCategory, loading,
+        deleteCategory } = useCategories();
     useEffect(() => {
         getCategoryTable()
     }, [])
@@ -209,7 +210,10 @@ const CustomersTable = () => {
                         return (
                             <div className="flex gap-[1rem]">
                                 <MdEdit className="text-[#ccccc] text-[1.3rem]" onClick={() => setIsEditModalVisible(!isEditModalVisible)} />
-                                <MdDelete className="text-[#FF6666] text-[1.3rem]" onClick={() => setIsModalVisible(!isModalVisible)} />
+                                <MdDelete className="text-[#FF6666] text-[1.3rem]"
+                                // onClick={() => setIsModalVisible(!isModalVisible)} 
+
+                                />
 
                             </div>
                         );
