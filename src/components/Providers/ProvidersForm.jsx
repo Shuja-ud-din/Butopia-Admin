@@ -5,14 +5,23 @@ import ServiceDropDown from "../SelectDropdown/ServiceDropDownSelect";
 import profile_img from "../../assets/user_profile.png";
 import DaySelector from "../DaySelector/DaySelector";
 import TimeField from "../../components/TimeField/TimeField";
-import ReactDOM from 'react-dom';
-import { TimePicker } from 'antd';
+import ReactDOM from "react-dom";
+import { TimePicker } from "antd";
 import useProvider from "../../Hooks/useProvider";
-import Loader from '../Loader/Loader'
+import Loader from "../Loader/Loader";
+import ImageUploader from "../ImageUploader/ImageUploader";
 const ProvidersForm = () => {
-  const { loading, addProviderData, handleChange, handleSelectedDay, selectedDay, addProvider, payLoad } = useProvider()
+  const {
+    loading,
+    addProviderData,
+    handleChange,
+    handleSelectedDay,
+    selectedDay,
+    addProvider,
+    payLoad,
+  } = useProvider();
   const [imagePreview, setImagePreview] = useState("");
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedTime, setSelectedTime] = useState("");
 
   // Function to handle time selection
 
@@ -25,12 +34,10 @@ const ProvidersForm = () => {
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday"
+    "Sunday",
   ];
 
-
   console.log(selectedDay);
-
 
   return (
     <>
@@ -44,121 +51,74 @@ const ProvidersForm = () => {
           </div>
 
           <div className=" mt-10 w-full grid grid-cols-12 ">
-            <div className="w-full h-full flex  flex-col col-span-4 ">
-              <label htmlFor="image-upload" className="cursor-pointer">
-                <div className="w-full flex justify-start items-center rounded-[12px] overflow-hidden ">
-                  <img
-                    src={imagePreview || profile_img}
-                    alt="Plant"
-                    className="w-[250px] h-full"
-                  />
-                </div>
-                <input
-                  id="image-upload"
-                  name="image"
-                  type="file"
-                  className="hidden"
-                />
-              </label>
+            <div className="w-full h-full flex  flex-col col-span-4 pr-[5rem] ">
+              <ImageUploader profile />
             </div>
             <div className=" col-span-8">
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Provider Name
-                </label>
                 <Input
                   placeholder={"Name"}
                   name="name"
-                  value={addProviderData}
+                  label={"Provider Name"}
+                  // value={addProviderData}
                   onChange={handleChange}
-                  type="text" />
+                  type="text"
+                />
               </div>
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Email
-                </label>
                 <Input
+                  label={"Email"}
                   placeholder={"Email"}
                   name="email"
-                  value={addProviderData}
+                  // value={addProviderData}
                   onChange={handleChange}
-                  type="text" />
+                  type="text"
+                />
               </div>
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Phone Number
-                </label>
                 <Input
                   name="phoneNumber"
+                  label={"Phone Number"}
                   placeholder={"Phone Number"}
-                  value={addProviderData}
                   onChange={handleChange}
-                  type="text" />
+                  type="text"
+                />
               </div>
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Password
-                </label>
                 <Input
+                  label={"Password"}
                   placeholder={"Password"}
                   name="password"
                   onChange={handleChange}
-                  value={addProviderData}
-                  type="password" />
+                  type="password"
+                />
               </div>
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Address
-                </label>
                 <Input
+                  label={"Address"}
                   name="address"
                   placeholder={"Address"}
-                  onChange={handleChange}
                   value={addProviderData}
-                  type="text" />
+                  type="text"
+                />
               </div>
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Speciality
-                </label>
                 <Input
+                  label={"Speciality"}
                   placeholder={"Speciality"}
                   name="speciality"
-                  value={addProviderData}
                   onChange={handleChange}
-                  type="text" />
+                  type="text"
+                />
               </div>
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Experience
-                </label>
                 <Input
                   placeholder={"Experience"}
+                  label={"Experience"}
                   name="experience"
-                  value={addProviderData}
                   onChange={handleChange}
-                  type="number" />
+                  type="number"
+                />
               </div>
             </div>
           </div>
@@ -185,14 +145,16 @@ const ProvidersForm = () => {
           </label>
           <div className="w-full  flex flex-wrap gap-[0.4rem]">
             {days.map((item) => {
-              return <DaySelector
-                value={addProviderData.workingDays}
-                onChange={handleChange}
-                name="days"
-                day={item}
-                isSelected={selectedDay.includes(item)}
-                onClick={(e) => handleSelectedDay(e, item)}
-              />
+              return (
+                <DaySelector
+                  value={addProviderData.workingDays}
+                  onChange={handleChange}
+                  name="days"
+                  day={item}
+                  isSelected={selectedDay.includes(item)}
+                  onClick={(e) => handleSelectedDay(e, item)}
+                />
+              );
             })}
           </div>
 
@@ -233,13 +195,10 @@ const ProvidersForm = () => {
                   onChange={handleChange}
                 />
               </div>
-
             </div>
           </div>
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
-            <Button
-              onClick={addProvider}
-              className="w-40" type="primary">
+            <Button onClick={addProvider} className="w-40" type="primary">
               {" "}
               {loading ? <Loader /> : "Add Provider"}
             </Button>

@@ -29,7 +29,7 @@ const Login = () => {
         />
         <Input onChange={handleChange} name="password" type="password" />
         <Button type="primary" className="w-full flex">
-          {loading ? <Loader /> : "Login"}
+          {!loading ? <Loader color="white" weight={10} size={30} /> : "Login"}
         </Button>
       </form>
       {/* 
