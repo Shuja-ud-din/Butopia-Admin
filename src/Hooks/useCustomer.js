@@ -18,7 +18,7 @@ const useCustomer = () => {
             placement: "topRight",
         });
     };
-    /////////////getAllProviders/////////////
+    /////////////getAllCustomers/////////////
     const [data, setData] = useState();
     const getCustomerTable = async () => {
         try {

@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import Table from "../Table/Table";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import useProvider from "../../Hooks/useProvider";
 
 const CustomersTable = () => {
@@ -31,19 +31,19 @@ const CustomersTable = () => {
         routes={["/admin/providers"]}
         array={data}
         search={"name"}
-        keysToDisplay={["index", "name", "email", "phoneNumber", "speciality"]}
+        keysToDisplay={["index", "name", "email", "phoneNumber", "isActive"]}
         label={[
           "#",
           "Providers",
           "Email",
           "Phone Number",
-          "Speciality",
+          "Is Active",
           "Actions",
         ]}
         extraColumns={[
           () => {
             return (
-              <MdDelete className="text-[#FF6666] mr-[1rem] text-[1.3rem]" />
+              <MdEdit className="text-[#ccccc] text-[1.3rem]" />
             );
           },
         ]}

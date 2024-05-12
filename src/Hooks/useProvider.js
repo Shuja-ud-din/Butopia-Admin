@@ -160,7 +160,9 @@ const useProvider = () => {
   };
   ///////////////////getProvider/////////////
   const [getProviderData, setGetProviderData] = useState([]);
+  const [providerDetailLoading, setProviderDetailLoading] = useState(false)
   const getProvider = async (id) => {
+    setProviderDetailLoading(true)
     console.log(id);
     try {
       const response = await api.get(`${"/api/provider/"}${id}`, {
@@ -184,8 +186,12 @@ const useProvider = () => {
         profilePicture: data.profilePicture,
         reviews: data.reviews,
       });
+      if (response) {
+        setProviderDetailLoading(false)
+      }
     } catch (e) {
       console.error(e.message);
+      setProviderDetailLoading(false)
     }
   };
   return {
@@ -200,6 +206,7 @@ const useProvider = () => {
     payLoad,
     getProvider,
     getProviderData,
+    providerDetailLoading
   };
 };
 

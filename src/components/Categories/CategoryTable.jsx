@@ -11,16 +11,13 @@ import useCategories from "../../Hooks/useCategories";
 import StatusButton from "../StatusButton/StatusButton";
 import Loader from "../Loader/Loader";
 import Select from "../Dropdown/Select";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
 const CustomersTable = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
 
-  const [categoryDetails, setCategoryDetails] = useState({
-    title: "",
-    description: "",
-    isActive: true,
-  });
+
 
   const toggleModal = () => {
     setIsModalVisible((prevState) => !prevState);
@@ -42,6 +39,8 @@ const CustomersTable = () => {
     addCategory,
     loading,
     deleteCategory,
+    categoryDetails,
+    setCategoryDetails
   } = useCategories();
   useEffect(() => {
     getCategoryTable();
@@ -56,7 +55,7 @@ const CustomersTable = () => {
         <Button
           className=""
           onClick={toggleAddModal}
-          // onClick={() => navigate("/admin/categories/addcategory")}
+        // onClick={() => navigate("/admin/categories/addcategory")}
         >
           <FaPlus size={14} className="mr-2" />
           Add Categories
@@ -79,7 +78,7 @@ const CustomersTable = () => {
                 type="text"
                 name={"title"}
                 onChange={handleChange}
-                value={data}
+                value={data.title}
               />
             </div>
 
@@ -117,7 +116,7 @@ const CustomersTable = () => {
                 type="primary"
                 onClick={addCategory}
               >
-                {loading ? <Loader /> : "Add"}
+                {loading ? <ButtonLoader /> : "Add"}
               </Button>
               <Button className="m-2" onClick={toggleAddModal} type="secondary">
                 Cancel

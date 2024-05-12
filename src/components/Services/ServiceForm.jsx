@@ -3,15 +3,20 @@ import Input from '../Input/Input'
 import Button from '../Button/Button';
 import ServiceDropDown from '../SelectDropdown/ServiceDropDownSelect'
 import ServiceProviderDropDown from '../SelectDropdown/ServiceProviderDropDown'
+import useServices from '../../Hooks/useServices';
+import ImageUploader from '../ImageUploader/ImageUploader'
+import ButtonLoader from '../ButtonLoader/ButtonLoader';
+
 const ServiceForm = () => {
-    const [imagePreview, setImagePreview] = useState("");
+    const { addService, handleChange, addServiceData, loading } = useServices()
+
     return (
         <>
             <div className="w-full">
                 <h3 className="text-[25px] font-[500] ">Add Services</h3>
             </div>
             <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-                <form className="p-7">
+                <form className="p-7" onSubmit={addService}>
                     <div className="flex justify-between">
                         <p className="font-semibold">Service Details</p>
                         <button
@@ -33,11 +38,13 @@ const ServiceForm = () => {
                                     Service Name
                                 </label>
                                 <Input
+                                    onChange={handleChange}
+                                    name={"name"}
                                     type='text'
                                 />
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label
                                     htmlFor="scientificName"
                                     className="block text-sm font-medium text-gray-700"
@@ -54,14 +61,15 @@ const ServiceForm = () => {
                                     Service Provider
                                 </label>
                                 <div className='mt-2 mb-2'><ServiceProviderDropDown /></div>
-                            </div>
+                            </div> */}
                             <label
                                 htmlFor="description"
-                                className="mt-12 block text-sm font-medium text-gray-700"
+                                className="mt-5 block text-sm font-medium text-gray-700"
                             >
                                 Description
                             </label>
                             <textarea
+                                onChange={handleChange}
                                 name="description"
                                 id="description"
                                 rows={4}
@@ -72,43 +80,25 @@ const ServiceForm = () => {
                                     htmlFor="status"
                                     className="block text-sm font-medium text-gray-700 mt-3"
                                 >
-                                    Duration
+                                    Price
                                 </label>
                                 <Input
+                                    name={"price"}
+                                    onChange={handleChange}
                                     type='text'
                                 />
                             </div>
                             <div className="w-full mb-8 mt-8 flex justify-start">
-                                <Button className='w-40' type='primary' outlined="true">   Save Service</Button>
+                                <Button className='w-40' type='primary' onClick={addService} >
+                                    {loading ? <ButtonLoader /> : "Add Service"}
+                                </Button>
                             </div>
 
                         </div>
 
-                        <div class="h-[28rem] w-[1px] bg-[black]"></div>
+                        {/* <div class="h-[28rem] mb-[2rem] w-[1px] bg-[#000000] shadow-lg"></div> */}
                         <div className="w-full h-full flex items-center  flex-col ">
-                            <label htmlFor="image-upload" className="cursor-pointer">
-                                <div className="w-[350px] h-[300px] mb-4 mt-12 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden ">
-                                    {imagePreview ? (
-                                        <img
-                                            src={imagePreview}
-                                            alt="Plant"
-                                            className="w-full h-full"
-                                        />
-                                    ) : (
-                                        <img
-                                            // src="/placeholder"
-                                            // alt="placeholder"
-                                            className="w-18 h-18"
-                                        />
-                                    )}
-                                </div>
-                                <input
-                                    id="image-upload"
-                                    name="image"
-                                    type="file"
-                                    className="hidden"
-                                />
-                            </label>
+                            <ImageUploader />
                         </div>
                     </div>
 

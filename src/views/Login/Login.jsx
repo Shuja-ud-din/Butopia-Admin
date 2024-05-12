@@ -6,6 +6,7 @@ import axios from "axios";
 import useLogin from "../../Hooks/useLogin";
 import Loader from "../../components/Loader/Loader";
 import { notification } from "antd";
+import ButtonLoader from "../../components/ButtonLoader/ButtonLoader";
 const Login = () => {
   const { login, handleChange, loading, ErrorMessage } = useLogin();
   return (
@@ -29,7 +30,7 @@ const Login = () => {
         />
         <Input onChange={handleChange} name="password" type="password" />
         <Button type="primary" className="w-full flex">
-          {!loading ? <Loader color="white" weight={10} size={30} /> : "Login"}
+          {loading ? <ButtonLoader /> : "Login"}
         </Button>
       </form>
       {/* 
