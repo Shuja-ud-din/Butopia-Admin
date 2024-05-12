@@ -1,42 +1,51 @@
-import React, { useState } from 'react'
-import profile from '../../assets/user_profile.png';
-import Image from '../../assets/avatar.jpg'
-const ImageUploader = ({ typeOfImage, name, url }) => {
-    const [file, setFile] = useState(url || null)
-    const defaultHandleChangeFunction = (e) => {
-        e.preventDefault();
-        const selectedFile = e.target.files[0];
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setFile(reader.result);
-            };
-            reader.readAsDataURL(selectedFile);
-        }
-    };
+import React, { useState } from "react";
+import profile_image from "../../assets/user_profile.png";
+import upload_img from "../../assets/upload_img.jpg";
+import Loader from "../Loader/Loader";
 
-    return (
-        <>
-            <div htmlFor="image-upload " className='h-[14rem] cursor-pointer w-[14rem] border rounded-[9px] border-primary shadow-lg'>
-                <label className='w-full h-full'>
-                    <div className='h-full w-full rounded-[9px] flex justify-center items-center'>
-                        {file ? <img className='w-full h-full rounded-[9px]' src={file} alt="" /> :
-                            (typeOfImage === "profile" ? <img className='w-full h-full rounded-[9px]' src={profile} alt="" /> :
-                                (typeOfImage === "image" ? <img className='w-full h-full rounded-[9px]' src={Image} /> :
-                                    "no Image yet"))}
-                        <input
-                            name={name}
-                            id='image-upload'
-                            type="file"
-                            className='hidden'
-                            onChange={defaultHandleChangeFunction}
-                            accept="image/*"
-                        />
-                    </div>
-                </label>
-            </div>
-        </>
-    )
-}
+const ImageUploader = ({ profile = false, image, setUrl }) => {
+  const [file, setFile] = useState(image || null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-export default ImageUploader
+  const defaultHandleChangeFunction = (e) => {
+    e.preventDefault();
+
+    // upload image api
+    // setUrl(url)
+  };
+
+  return (
+    <>
+      <div
+        htmlFor="image-upload "
+        className=" cursor-pointer w-auto  rounded-[9px]  "
+      >
+        <label className="w-full h-full">
+          <div className=" rounded-[9px] flex justify-center items-center">
+            {!isLoading ? (
+              <img
+                className="cursor-pointer w-full h-full rounded-[9px]"
+                src={file || (profile ? profile_image : upload_img)}
+                alt=""
+              />
+            ) : (
+              <Loader />
+            )}
+            <input
+              name={"image_upload"}
+              id="image-upload"
+              type="file"
+              className="hidden"
+              onChange={defaultHandleChangeFunction}
+              accept="image/*"
+            />
+          </div>
+          <p className="text-[red]">{error}</p>
+        </label>
+      </div>
+    </>
+  );
+};
+
+export default ImageUploader;

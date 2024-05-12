@@ -43,41 +43,34 @@ const useCategories = () => {
     }
   };
   ////////////////////addCategory/////////////
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     title: "",
-    description: ""
-  })
+    description: "",
+  });
   const handleChange = (e) => {
     const { value, name } = e.target;
     setData({
       ...data,
-      [name]: value
-    })
-  }
-  const [buttonStatus, setButtonStatus] = useState(true)
+      [name]: value,
+    });
+  };
+  const [buttonStatus, setButtonStatus] = useState(true);
   const handleButtonStatus = () => {
-    setButtonStatus(!buttonStatus)
-  }
+    setButtonStatus(!buttonStatus);
+  };
   const payLoad = {
     title: data.title,
     description: data.description,
     isActive: buttonStatus,
   };
-  const {
-    title,
-    description
-  } = payLoad;
-
+  const { title, description } = payLoad;
 
   const addCategory = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (
-        title === "" ||
-        description === ""
-      ) {
+      if (title === "" || description === "") {
         throw new Error("Please fill in all the fields");
       }
 
@@ -106,33 +99,35 @@ const useCategories = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
   };
   ////////////////deleteCategory//////////////
-  const deleteCategory = async (e) => {
-    e.preventDefault()
+  const deleteCategory = async (id) => {
     try {
       await api.delete(`${"/api/category/"}${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      getCategoryTable()
-      showErrorNotification("Vehicle Deleted Successfully");
+      getCategoryTable();
+      showSuccessNotification("Category Deleted Successfully");
     } catch (e) {
-      showErrorNotification(
-        "Error in Deleting Vehicle"
-      );
+      showErrorNotification("Error in Deleting Category");
       console.error(e.message);
     }
-  }
-
+  };
 
   return {
-    getCategoryTable, getAllCategories,
-    data, handleChange, buttonStatus, handleButtonStatus, addCategory, loading,
-    deleteCategory
+    getCategoryTable,
+    getAllCategories,
+    data,
+    handleChange,
+    buttonStatus,
+    handleButtonStatus,
+    addCategory,
+    loading,
+    deleteCategory,
   };
 };
 
