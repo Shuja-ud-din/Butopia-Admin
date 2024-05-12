@@ -31,7 +31,7 @@ const useServices = () => {
             console.log(response);
             if (response.data.success) {
                 setData(
-                    response.data.data.map((item, index) => {
+                    response.data.services.map((item, index) => {
                         return {
                             index: index + 1,
                             ...item,
@@ -46,10 +46,10 @@ const useServices = () => {
     ////////////////////addService/////////////
     const [loading, setLoading] = useState(false)
     const [addServiceData, setAddServiceData] = useState({
-        title: "",
+        name: "",
         description: "",
         price: "",
-        category: "",
+
     });
     const handleChange = (e) => {
         const { value, name } = e.target;
@@ -59,25 +59,22 @@ const useServices = () => {
         });
     };
     const payLoad = {
-        title: addServiceData.title,
+        name: addServiceData.name,
         description: addServiceData.description,
-        price: addServiceData.price,
-        category: parseInt(addServiceData.category),
+        price: parseInt(addServiceData.price),
+        category: "66412c1f02f54fc4988c41a0",
     };
-    const { title, description, price, category } = payLoad;
+    const { name, description, price, category } = payLoad;
 
     const addService = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            if (title === "" || description === "" || price.length === 0) {
+            if (name === "" || description === "" || price === 0) {
                 throw new Error("Please fill in all the fields");
             }
 
-            if (category === "") {
-                throw new Error("Upload the image");
-            }
-            if (title.length < 3) {
+            if (name.length < 3) {
                 throw new Error("Title is too short");
             }
             if (description.length < 8) {

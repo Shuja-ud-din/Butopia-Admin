@@ -12,6 +12,7 @@ import StatusButton from "../StatusButton/StatusButton";
 import Loader from "../Loader/Loader";
 import Select from "../Dropdown/Select";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import StatusDropdown from "../StatusDropdown/StatusDropdown";
 const CustomersTable = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -46,10 +47,93 @@ const CustomersTable = () => {
     getCategoryTable();
   }, []);
 
-  console.log(categoryDetails);
-
+  console.log(getAllCategories);
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [statusValue, setStatusValue] = useState(true)
+  const handleStatusButtonChange = (value) => {
+    setStatusValue(value)
+  };
+  const [editData, setEditData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    isValid: statusValue,
+  })
+  const handleEditDataChange = (e) => {
+    const { value, name } = e.target;
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
   return (
     <>
+      {isEditModalVisible && (
+        <Modal toggleModal={toggleEditModal}>
+          <>
+            <div className="w-full mb-3">
+              <h3 className="text-[23px] font-[500] ">Edit Admin</h3>
+            </div>
+            <div className="w-full flex gap-[2rem]">
+              <div><div>
+                <label
+                  htmlFor="harvestingPeriod"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Name
+                </label>
+                <Input
+                  onChange={handleEditDataChange}
+                  type="text"
+                  name={"title"}
+                />
+              </div>
+
+                <div>
+                  <label
+                    htmlFor="harvestingPeriod"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <Input
+                    type="text"
+                    onChange={handleEditDataChange}
+                    name={"description"}
+                  />
+                </div>
+
+                <div className="mt-4">
+
+                </div>
+                <StatusDropdown
+                  options={[
+                    { value: 'Valid', label: 'Valid' },
+                    { value: 'Not Valid', label: 'Not Valid' },
+                  ]}
+                  initialValue="Valid"
+                  onChange={handleStatusButtonChange}
+                />
+              </div>
+              <div>
+
+              </div>
+            </div>
+            <div className="w-full flex justify-end">
+              <Button
+                className="m-2 w-[6rem]"
+                type="primary"
+                onClick={(e) => editAdmin(e, id)}
+              >
+                {btnLoading ? <ButtonLoader /> : "Add"}
+              </Button>
+              <Button className="m-2" onClick={toggleEditModal} type="secondary">
+                Cancel
+              </Button>
+            </div>
+          </>
+        </Modal>
+      )}
       <div className="w-full flex justify-between mb-5">
         <h3 className="text-[25px] font-[500] ">Categories</h3>
         <Button

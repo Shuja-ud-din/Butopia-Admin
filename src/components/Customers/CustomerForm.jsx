@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import Input from '../Input/Input'
 import Button from '../Button/Button';
-// import uploadImg from '../../assets/images/upload-img.png';
+import ImageUploader from '../ImageUploader/ImageUploader';
+import useCustomer from '../../Hooks/useCustomer';
+import ButtonLoader from '../ButtonLoader/ButtonLoader';
 const CustomerForm = () => {
-    const [imagePreview, setImagePreview] = useState("");
+    const { addCustomerData, handleChange, addCustomer, loading, } = useCustomer();
+    console.log(addCustomerData);
     return (
         <>
             <div className="w-full">
                 <h3 className="text-[25px] font-[500] ">Add Customers</h3>
             </div>
             <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-                <form className="p-7">
+                <form onSubmit={addCustomer} className="p-7">
                     <div className="flex justify-between">
                         <p className="font-semibold">Image of customer</p>
                         <button
@@ -24,31 +27,9 @@ const CustomerForm = () => {
                     <div className="flex gap-28 mt-10 w-full">
                         <div>
                             <div className="flex justify-center items-center flex-col mb-5">
-                                <label htmlFor="image-upload" className="cursor-pointer">
-                                    <div className="w-[350px] h-[300px] mb-4 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden">
-                                        {imagePreview ? (
-                                            <img
-                                                src={imagePreview}
-                                                alt=""
-                                                className="w-full h-full"
-                                            />
-                                        ) : (
-                                            <img
-                                                // src="/placeholder"
-                                                // alt="placeholder"
-                                                className="w-18 h-18"
-                                            />
-                                        )}
-                                    </div>
-                                    <input
-                                        id="image-upload"
-                                        name="image"
-                                        type="file"
-                                        className="hidden"
-                                    />
-                                </label>
+                                <ImageUploader />
                             </div>
-                            <label htmlFor="file-upload" className="p-2 rounded-[9px]  border border-[#c4c4c4] shadow-md overflow-hidden">
+                            {/* <label htmlFor="file-upload" className="p-2 rounded-[9px]  border border-[#c4c4c4] shadow-md overflow-hidden">
                                 Upload your file
                                 <input
                                     type="file"
@@ -60,7 +41,7 @@ const CustomerForm = () => {
                                     }}
                                 />
                             </label>
-                            <div id="file-name" className='mt-4'></div>
+                            <div id="file-name" className='mt-4'></div> */}
                         </div>
 
                         <div className="flex-1 space-y-6">
@@ -73,20 +54,11 @@ const CustomerForm = () => {
                                 </label>
                                 <Input
                                     type='text'
+                                    name={"name"}
+                                    onChange={handleChange}
                                 />
                             </div>
 
-                            <div>
-                                <label
-                                    htmlFor="scientificName"
-                                    className="block text-sm font-medium text-gray-700"
-                                >
-                                    Phone Number
-                                </label>
-                                <Input
-                                    type='text'
-                                />
-                            </div>
                             <div>
                                 <label
                                     htmlFor="plantingPeriod"
@@ -96,6 +68,21 @@ const CustomerForm = () => {
                                 </label>
                                 <Input
                                     type='text'
+                                    name={"email"}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor="scientificName"
+                                    className="block text-sm font-medium text-gray-700"
+                                >
+                                    Phone Number
+                                </label>
+                                <Input
+                                    name={"phoneNumber"}
+                                    type='text'
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div>
@@ -103,10 +90,12 @@ const CustomerForm = () => {
                                     htmlFor="harvestingPeriod"
                                     className="block text-sm font-medium text-gray-700"
                                 >
-                                    Address
+                                    Password
                                 </label>
                                 <Input
+                                    name={"password"}
                                     type='text'
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -117,7 +106,7 @@ const CustomerForm = () => {
 
 
                     <div className="w-full flex justify-end mt-8">
-                        <Button className='w-40' type='primary' outlined="true">   Save Customer</Button>
+                        <Button onClick={addCustomer} className='w-40' type='primary'> {loading ? <ButtonLoader /> : "Add Customer"}</Button>
                     </div>
                 </form>
 

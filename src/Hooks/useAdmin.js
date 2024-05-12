@@ -93,7 +93,7 @@ const useAdmin = () => {
       console.error("Error encountered", error);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
@@ -115,6 +115,67 @@ const useAdmin = () => {
       console.error("Error encountered", e.message);
     }
   };
+  ///////////////editAdmin/////////////
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [statusValue, setStatusValue] = useState(true)
+  const handleStatusButtonChange = (value) => {
+    setStatusValue(value)
+  };
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    profilePicture: null,
+    isValid: statusValue,
+  })
+  const handleEditDataChange = (e) => {
+    const { value, name } = e.target;
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
+
+
+  const editAdmin = async (e, id) => {
+    e.preventDefault();
+    setBtnLoading(true);
+    try {
+      if (data.name === "" || data.email === "" || data.phoneNumber === 0) {
+        throw new Error("Please fill in all the fields");
+      }
+
+
+      if (data.name < 3) {
+        throw new Error("Name is too short");
+      }
+      if (!data.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        throw new Error("This is too short to describe");
+      }
+
+      const response = await api.put(`${"/api/admin/"}${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      if (response.data.success) {
+        console.log(response);
+        showSuccessNotification("Admin Edited Successfully!");
+        setBtnLoading(false);
+      } else {
+        showErrorNotification(e.message);
+        setBtnLoading(false);
+      }
+    } catch (e) {
+      console.error(e.message);
+      showErrorNotification(
+        (e.response ? e.response.data.message : e.message) ||
+        "Something went wrong!"
+      );
+      setBtnLoading(false);
+    }
+  };
   return {
     getProviderTable,
     getAllAdminsTable,
@@ -124,6 +185,12 @@ const useAdmin = () => {
     loading,
     getAdminData,
     getAdmin,
+    handleStatusButtonChange,
+    statusValue,
+    data,
+    handleEditDataChange,
+    editAdmin,
+    btnLoading
   };
 };
 

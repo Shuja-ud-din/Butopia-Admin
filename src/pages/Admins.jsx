@@ -8,6 +8,7 @@ const Admins = () => {
     <Routes>
       <Route path="/" element={<AdminTable />} />
       <Route path="/addadmin" element={<AdminForm />} />
+      <Route path={"/:id"} element={<AdminForm />} />
     </Routes>
   );
 };
