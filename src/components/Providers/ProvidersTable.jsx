@@ -43,7 +43,9 @@ const CustomersTable = () => {
         extraColumns={[
           () => {
             return (
-              <MdEdit className="text-[#ccccc] text-[1.3rem]" />
+              <MdEdit
+                onClick={() => navigate("/admin/providers/editprovider")}
+                className="text-[#ccccc] text-[1.3rem]" />
             );
           },
         ]}
