@@ -150,7 +150,7 @@ const useAdmin = () => {
         throw new Error("Name is too short");
       }
       if (!data.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        throw new Error("This is too short to describe");
+        throw new Error("Invalid Email format");
       }
 
       const response = await api.put(`${"/api/admin/"}${id}`, data, {

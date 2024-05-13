@@ -31,13 +31,13 @@ const CustomersTable = () => {
         routes={["/admin/providers"]}
         array={data}
         search={"name"}
-        keysToDisplay={["index", "name", "email", "phoneNumber", "isActive"]}
+        keysToDisplay={["index", "name", "email", "phoneNumber",]}
         label={[
           "#",
           "Providers",
           "Email",
           "Phone Number",
-          "Is Active",
+
           "Actions",
         ]}
         extraColumns={[

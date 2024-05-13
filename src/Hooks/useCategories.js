@@ -99,7 +99,7 @@ const useCategories = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
@@ -117,7 +117,66 @@ const useCategories = () => {
       console.error(e.message);
     }
   };
+  /////////////////////////EditCategory///////////////
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [statusValue, setStatusValue] = useState(true)
+  const handleStatusButtonChange = (value) => {
+    setStatusValue(value)
+  };
+  const [editData, setEditData] = useState({
+    title: "",
+    description: "",
 
+  })
+  const handleEditDataChange = (e) => {
+    const { value, name } = e.target;
+    setEditData({
+      ...editData,
+      [name]: value
+    })
+  }
+  const PayLoad = {
+    title: editData.title,
+    description: editData.description,
+    isActive: statusValue,
+  }
+  const editCategory = async (id) => {
+    console.log(id);
+    setBtnLoading(true);
+    try {
+      if (PayLoad.name === "" || PayLoad.description === "") {
+        throw new Error("Please fill in all the fields");
+      }
+      if (PayLoad.name < 3) {
+        throw new Error("Name is too short");
+      }
+      if (PayLoad.description < 3) {
+        throw new Error("This is too short to describe");
+      }
+
+      const response = await api.put(`${"/api/category/"}${id}`, PayLoad, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      if (response.data.success) {
+        console.log(response);
+        showSuccessNotification("Category Edited Successfully!");
+        setBtnLoading(false);
+      } else {
+        showErrorNotification(e.message);
+        setBtnLoading(false);
+      }
+    } catch (e) {
+      console.error(e.message);
+      showErrorNotification(
+        (e.response ? e.response.data.message : e.message) ||
+        "Something went wrong!"
+      );
+      setBtnLoading(false);
+    }
+  };
   return {
     getCategoryTable,
     getAllCategories,
@@ -128,6 +187,10 @@ const useCategories = () => {
     addCategory,
     loading,
     deleteCategory,
+    editCategory,
+    handleStatusButtonChange,
+    handleEditDataChange,
+    btnLoading
   };
 };
 

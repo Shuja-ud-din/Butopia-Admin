@@ -71,7 +71,6 @@ const ServiceForm = () => {
                             <textarea
                                 onChange={handleChange}
                                 name={"description"}
-                                id="description"
                                 rows={4}
                                 className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />

@@ -31,7 +31,7 @@ const useServices = () => {
             console.log(response);
             if (response.data.success) {
                 setData(
-                    response.data.services.map((item, index) => {
+                    response.data.data.map((item, index) => {
                         return {
                             index: index + 1,
                             ...item,
@@ -54,15 +54,16 @@ const useServices = () => {
     const handleChange = (e) => {
         const { value, name } = e.target;
         setAddServiceData({
-            ...data,
+            ...addServiceData,
             [name]: value,
         });
+        console.log(addServiceData);
     };
     const payLoad = {
         name: addServiceData.name,
         description: addServiceData.description,
         price: parseInt(addServiceData.price),
-        category: "66412c1f02f54fc4988c41a0",
+        category: "6641eb3a3ceb90164ad18851"
     };
     const { name, description, price, category } = payLoad;
 
@@ -86,17 +87,19 @@ const useServices = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-
+            console.log(response);
             if (response.data.success) {
                 console.log(response);
                 showSuccessNotification("Service Added Successfully!");
                 setLoading(false);
             } else {
+                console.log(response);
                 showErrorNotification(e.message);
                 setLoading(false);
             }
         } catch (e) {
             console.error(e.message);
+            console.log(response);
             showErrorNotification(
                 (e.response ? e.response.data.message : e.message) ||
                 "Something went wrong!"
