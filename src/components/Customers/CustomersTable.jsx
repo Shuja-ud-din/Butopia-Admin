@@ -10,9 +10,8 @@ const CustomersTable = () => {
   const navigate = useNavigate();
   const { data, getCustomerTable } = useCustomer();
   useEffect(() => {
-    getCustomerTable()
-  }, [])
-
+    getCustomerTable();
+  }, []);
 
   return (
     <>
@@ -38,18 +37,18 @@ const CustomersTable = () => {
       </div> */}
 
       <Table
-        recordClickRoute="/admin/customers/customerdetails"
+        routes={["/admin/customers"]}
         array={data}
         search={"name"}
         keysToDisplay={["index", "name", "email", "phoneNumber"]}
         label={["#", "customer Name", "Email", "Phone Number"]}
-      // extraColumns={[
-      //   () => {
-      //     return (
-      //       <MdDelete className="text-[#FF6666] mr-[1rem] text-[1.3rem]" />
-      //     );
-      //   },
-      // ]}
+        // extraColumns={[
+        //   () => {
+        //     return (
+        //       <MdDelete className="text-[#FF6666] mr-[1rem] text-[1.3rem]" />
+        //     );
+        //   },
+        // ]}
       />
     </>
   );

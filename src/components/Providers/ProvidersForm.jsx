@@ -52,7 +52,7 @@ const ProvidersForm = () => {
           </div>
 
           <div className=" mt-10 w-full grid grid-cols-12 ">
-            <div className="w-full h-full flex  flex-col col-span-4 pr-[5rem] ">
+            <div className="h-[15rem] h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
               <ImageUploader profile />
             </div>
             <div className=" col-span-8">
@@ -199,7 +199,7 @@ const ProvidersForm = () => {
               </div>
             </div>
           </div>
-          <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
+          <div className="w-full mb-5 mt-[1.5rem] flex justify-end">
             <Button onClick={addProvider} className="w-40" type="primary">
               {" "}
               {loading ? <ButtonLoader /> : "Add Provider"}

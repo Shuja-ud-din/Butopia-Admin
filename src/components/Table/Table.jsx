@@ -25,12 +25,12 @@ const Table = ({
   useEffect(() => {
     setRecordsPerPage(
       array &&
-      array.filter((obj) => {
-        return (
-          searchedData === "" ||
-          obj[search].toLowerCase().includes(searchedData.toLowerCase())
-        );
-      })
+        array.filter((obj) => {
+          return (
+            searchedData === "" ||
+            obj[search].toLowerCase().includes(searchedData.toLowerCase())
+          );
+        })
     );
   }, [searchedData]);
 
@@ -69,12 +69,13 @@ const Table = ({
                 return (
                   <th
                     className={`py-4 bg-[#F9FAFB] font-[600] text-[15px] text-[#1D2939] whitespace-nowrap 
-                        ${index === label.length - 1
-                        ? "text-right pr-9 rounded-tr-[9px]"
-                        : index == 0
-                          ? "text-left pl-9 rounded-tl-[9px]"
-                          : "text-left pl-9"
-                      }
+                        ${
+                          index === label.length - 1
+                            ? "text-right pr-9 rounded-tr-[9px]"
+                            : index == 0
+                            ? "text-left pl-9 rounded-tl-[9px]"
+                            : "text-left pl-9"
+                        }
                         `}
                   >
                     {text}
@@ -98,11 +99,15 @@ const Table = ({
                       const blocksList = renderComponent(index, customBlocks);
                       return (
                         <td
-                          onClick={() => navigate(`${routes[0]}/${obj.id}`)}
-                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${index === label.length - 1
+                          onClick={() => {
+                            if (routes.length > 0)
+                              navigate(`${routes[0]}/${obj.id}`);
+                          }}
+                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
+                            index === label.length - 1
                               ? "text-right pr-9 "
                               : "text-left pl-9 "
-                            }`}
+                          }`}
                         >
                           {blocksList
                             ? blocksList.component(key ? obj[key] : obj)
