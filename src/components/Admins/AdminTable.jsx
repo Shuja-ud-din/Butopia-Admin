@@ -12,6 +12,7 @@ import Input from "../Input/Input";
 import ImageUploader from "../ImageUploader/ImageUploader";
 import StatusDropdown from "../StatusDropdown/StatusDropdown";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import Profile from "../../assets/avatar.jpg";
 
 const AdminTable = () => {
   const token = localStorage.getItem("token");
@@ -50,35 +51,42 @@ const AdminTable = () => {
             <div className="w-full mb-3">
               <h3 className="text-[23px] font-[500] ">Edit Admin</h3>
             </div>
-            <div className="w-full flex gap-[2rem]">
-              <div><div>
-                <label
-                  htmlFor="harvestingPeriod"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <Input
-                  onChange={handleEditDataChange}
-                  type="text"
-                  name={"name"}
-                />
-              </div>
-
-                <div>
-                  <label
-                    htmlFor="harvestingPeriod"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <Input
-                    type="text"
-                    onChange={handleEditDataChange}
-                    name={"email"}
-                  />
+            <div className="w-full flex flex-col gap-[2rem]">
+              <div className="max-h-[12rem] w-full flex items-center justify-center">
+                <div className=" ">
+                  <img alt="Remy Sharp" src={Profile} className="rounded-full" />
                 </div>
-                <div>
+              </div>
+              <div>
+                <div className="w-full flex gap-[2rem]">
+                  <div>
+                    <label
+                      htmlFor="harvestingPeriod"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Name
+                    </label>
+                    <Input
+                      onChange={handleEditDataChange}
+                      type="text"
+                      name={"name"}
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="harvestingPeriod"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Email
+                    </label>
+                    <Input
+                      type="text"
+                      onChange={handleEditDataChange}
+                      name={"email"}
+                    />
+                  </div></div>
+                <div className="w-full flex gap-[2rem]"> <div>
                   <label
                     htmlFor="harvestingPeriod"
                     className="block text-sm font-medium text-gray-700"
@@ -94,25 +102,18 @@ const AdminTable = () => {
 
 
 
-                <div className="mt-4">
+                  <StatusDropdown
+                    options={[
+                      { value: 'Valid', label: 'Valid' },
+                      { value: 'Not Valid', label: 'Not Valid' },
+                    ]}
+                    initialValue="Valid"
+                    onChange={handleStatusButtonChange}
+                  /></div>
+              </div>
 
-                </div>
-                <StatusDropdown
-                  options={[
-                    { value: 'Valid', label: 'Valid' },
-                    { value: 'Not Valid', label: 'Not Valid' },
-                  ]}
-                  initialValue="Valid"
-                  onChange={handleStatusButtonChange}
-                />
-              </div>
-              <div>
-                <div className="mt-[2rem]">
-                  <ImageUploader />
-                </div>
-              </div>
             </div>
-            <div className="w-full flex justify-end">
+            <div className="w-full mt-[2rem] flex justify-end">
               <Button
                 className="m-2 w-[6rem]"
                 type="primary"

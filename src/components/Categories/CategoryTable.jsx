@@ -17,15 +17,15 @@ const CustomersTable = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const toggleAddModal = () => {
+    setIsAddModalVisible((prevState) => !prevState);
+  };
+
   const [id, setId] = useState("");
   const toggleEditModal = (record) => {
     setIsEditModalVisible((prevState) => !prevState);
     setId(record);
   };
-  const toggleAddModal = () => {
-    setIsAddModalVisible((prevState) => !prevState);
-  };
-
   const {
     getCategoryTable,
     getAllCategories,
@@ -124,7 +124,7 @@ const CustomersTable = () => {
         <Button
           className=""
           onClick={toggleAddModal}
-          // onClick={() => navigate("/admin/categories/addcategory")}
+        // onClick={() => navigate("/admin/categories/addcategory")}
         >
           <FaPlus size={14} className="mr-2" />
           Add Categories

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const StatusDropdown = ({ initialValue, options, onChange }) => {
+const StatusDropdown = ({ initialValue, options, onChange, className }) => {
     const [isValid, setIsValid] = useState(initialValue === 'Valid');
 
     const handleDropdownChange = (e) => {
@@ -11,8 +11,8 @@ const StatusDropdown = ({ initialValue, options, onChange }) => {
     };
 
     return (
-        <div>
-            <label htmlFor="validationStatus" className="block  text-sm font-medium text-gray-700">Validation Status</label>
+        <div className={`${className}`} >
+            <label htmlFor="validationStatus" className="block  text-sm font-medium text-gray-700 w-full" >Validation Status</label>
             <select
                 id="validationStatus"
                 name="validationStatus"
@@ -25,7 +25,7 @@ const StatusDropdown = ({ initialValue, options, onChange }) => {
                 ))}
             </select>
             <p className="mt-2 text-sm text-gray-500">Current Status: {isValid.toString()}</p>
-        </div>
+        </div >
     );
 };
 
