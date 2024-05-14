@@ -158,6 +158,105 @@ const useProvider = () => {
       setLoading(false);
     }
   };
+  ///////////////////////editProvider/////////////////
+  const [editLoading, setEditLoading] = useState(false);
+  const [editSelectDay, setEditSelectedDay] = useState([]);
+  const handleEditSelectedDay = (e, day) => {
+    e.preventDefault();
+    if (!editSelectDay.includes(day)) {
+      setEditSelectedDay([...editSelectDay, day]);
+    } else {
+      setEditSelectedDay(editSelectDay.filter((item) => item !== day));
+    }
+  };
+  const [editData, setEditData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    address: "",
+    speciality: "",
+    about: "",
+    experience: "",
+    startTime: "",
+    endTime: "",
+  });
+  const editPayload = {
+    name: editData.name,
+    email: editData.email,
+    phoneNumber: editData.phoneNumber,
+    address: editData.address,
+    speciality: editData.speciality,
+    experience: parseInt(editData.experience, 10),
+    about: editData.about,
+    workingDays: editSelectDay,
+    workingTimes: {
+      start: `${editData.startTime}${" PM"}`,
+      end: `${editData.endTime}${" AM"}`,
+    },
+  };
+
+  const editChange = (e) => {
+    const { value, name } = e.target;
+    setEditData({
+      ...editData,
+      [name]: value,
+    });
+  };
+  const editProvider = async (e) => {
+    e.preventDefault();
+    setEditLoading(true);
+    try {
+      if (
+        editPayload.name === "" ||
+        editPayload.email === "" ||
+        editPayload.phoneNumber === "" ||
+        editPayload.address === "" ||
+        editPayload.speciality === "" ||
+        editPayload.about === "" ||
+        editPayload.experience.length === 0 ||
+        editPayload.workingDays.length === 0 ||
+        editPayload.workingTimes.start === "" ||
+        editPayload.workingTimes.end === ""
+      ) {
+        throw new Error("Please fill in all the fields");
+      }
+
+      if (editPayload.phoneNumber.length !== 12) {
+        throw new Error("Phone number must be of 12 digits");
+      }
+      if (!editPayload.phoneNumber.match(/^\d+$/)) {
+        throw new Error("Phone Number must be in digits");
+      }
+      if (editPayload.about.length < 10) {
+        throw new Error("Make sure description is actual!");
+      }
+      if (!editPayload.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        throw new Error("Incorrect email format");
+      }
+      const response = await api.post(`${"/api/provider/"}${id}`, editPayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        console.log(response);
+        showSuccessNotification("Provider Edited Successfully!");
+        setEditLoading(false);
+      } else {
+        showErrorNotification(e.message);
+        setEditLoading(false);
+      }
+    } catch (e) {
+      console.error(e.message);
+      showErrorNotification(
+        (e.response ? e.response.data.message : e.message) ||
+        "Something went wrong!"
+      );
+      setEditLoading(false);
+    }
+  };
   ///////////////////getProvider/////////////
   const [getProviderData, setGetProviderData] = useState([]);
   const [providerDetailLoading, setProviderDetailLoading] = useState(false)
@@ -206,7 +305,14 @@ const useProvider = () => {
     payLoad,
     getProvider,
     getProviderData,
-    providerDetailLoading
+    providerDetailLoading,
+    ///edit
+    editLoading,
+    handleEditSelectedDay,
+    editSelectDay,
+    editChange,
+    editProvider,
+    editData
   };
 };
 

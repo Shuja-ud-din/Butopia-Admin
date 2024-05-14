@@ -29,8 +29,8 @@ const ServiceTable = () => {
       <Table
         array={data}
         search={"description"}
-        keysToDisplay={["index", "name", "description", "price", "isActive"]}
-        label={["#", "Service Name", "Description", "Price", "Is Active", "Actions"]}
+        keysToDisplay={["index", "name", "description", "price"]}
+        label={["#", "Service Name", "Description", "Price", "Actions"]}
         extraColumns={[
           () => {
             return (

@@ -46,38 +46,36 @@ const useServices = () => {
     ////////////////////addService/////////////
     const [loading, setLoading] = useState(false)
     const [addServiceData, setAddServiceData] = useState({
-        title: "",
+        name: "",
         description: "",
         price: "",
-        category: "",
+
     });
     const handleChange = (e) => {
         const { value, name } = e.target;
         setAddServiceData({
-            ...data,
+            ...addServiceData,
             [name]: value,
         });
+        console.log(addServiceData);
     };
     const payLoad = {
-        title: addServiceData.title,
+        name: addServiceData.name,
         description: addServiceData.description,
-        price: addServiceData.price,
-        category: parseInt(addServiceData.category),
+        price: parseInt(addServiceData.price),
+        category: "6641eb3a3ceb90164ad18851"
     };
-    const { title, description, price, category } = payLoad;
+    const { name, description, price, category } = payLoad;
 
     const addService = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            if (title === "" || description === "" || price.length === 0) {
+            if (name === "" || description === "" || price === 0) {
                 throw new Error("Please fill in all the fields");
             }
 
-            if (category === "") {
-                throw new Error("Upload the image");
-            }
-            if (title.length < 3) {
+            if (name.length < 3) {
                 throw new Error("Title is too short");
             }
             if (description.length < 8) {
@@ -89,17 +87,19 @@ const useServices = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-
+            console.log(response);
             if (response.data.success) {
                 console.log(response);
                 showSuccessNotification("Service Added Successfully!");
                 setLoading(false);
             } else {
+                console.log(response);
                 showErrorNotification(e.message);
                 setLoading(false);
             }
         } catch (e) {
             console.error(e.message);
+            console.log(response);
             showErrorNotification(
                 (e.response ? e.response.data.message : e.message) ||
                 "Something went wrong!"

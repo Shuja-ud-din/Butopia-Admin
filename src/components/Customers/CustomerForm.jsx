@@ -23,8 +23,48 @@ const CustomerForm = () => {
           </div>
 
           <div className="flex gap-28 mt-10 w-full">
-            <div className="w-[18rem]">
-              <ImageUploader profile />
+            <div>
+              <div className="flex justify-center items-center flex-col mb-5">
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <div className="w-[350px] h-[300px] mb-4 flex justify-center items-center border-2 border-[#E5E5E5] rounded-[12px] overflow-hidden">
+                    {imagePreview ? (
+                      <img
+                        src={imagePreview}
+                        alt=""
+                        className="w-full h-full"
+                      />
+                    ) : (
+                      <img
+                        // src="/placeholder"
+                        // alt="placeholder"
+                        className="w-18 h-18"
+                      />
+                    )}
+                  </div>
+                  <input
+                    id="image-upload"
+                    name="image"
+                    type="file"
+                    className="hidden"
+                  />
+                </label>
+              </div>
+              <label
+                htmlFor="file-upload"
+                className="p-2 rounded-[9px]  border border-[#c4c4c4] shadow-md overflow-hidden"
+              >
+                Upload your file
+                <input
+                  type="file"
+                  id="file-upload"
+                  className="hidden"
+                  onChange={(e) => {
+                    const fileName = e.target.files[0].name;
+                    document.getElementById("file-name").innerText = fileName;
+                  }}
+                />
+              </label>
+              <div id="file-name" className="mt-4"></div>
             </div>
 
             <div className="flex-1 space-y-6">

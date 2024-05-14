@@ -31,19 +31,20 @@ const CustomersTable = () => {
         routes={["/admin/providers"]}
         array={data}
         search={"name"}
-        keysToDisplay={["index", "name", "email", "phoneNumber", "isActive"]}
+        keysToDisplay={["index", "name", "email", "phoneNumber",]}
         label={[
           "#",
           "Providers",
           "Email",
           "Phone Number",
-          "Is Active",
           "Actions",
         ]}
         extraColumns={[
-          () => {
+          (record) => {
             return (
-              <MdEdit className="text-[#ccccc] text-[1.3rem]" />
+              <MdEdit
+                onClick={() => navigate(`${"/admin/providers/"}${record.id}`)}
+                className="text-[#ccccc] text-[1.3rem]" />
             );
           },
         ]}

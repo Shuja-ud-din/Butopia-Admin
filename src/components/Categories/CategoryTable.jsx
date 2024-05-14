@@ -12,18 +12,15 @@ import StatusButton from "../StatusButton/StatusButton";
 import Loader from "../Loader/Loader";
 import Select from "../Dropdown/Select";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import StatusDropdown from "../StatusDropdown/StatusDropdown";
 const CustomersTable = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-
-
-
-  const toggleModal = () => {
-    setIsModalVisible((prevState) => !prevState);
-  };
-  const toggleEditModal = () => {
+  const [id, setId] = useState("");
+  const toggleEditModal = (record) => {
     setIsEditModalVisible((prevState) => !prevState);
+    setId(record)
   };
   const toggleAddModal = () => {
     setIsAddModalVisible((prevState) => !prevState);
@@ -40,16 +37,89 @@ const CustomersTable = () => {
     loading,
     deleteCategory,
     categoryDetails,
-    setCategoryDetails
+
+    ///edit
+    editCategory,
+    handleStatusButtonChange,
+    handleEditDataChange,
+    btnLoading
   } = useCategories();
+
   useEffect(() => {
     getCategoryTable();
   }, []);
 
-  console.log(categoryDetails);
+  console.log(getAllCategories);
 
   return (
     <>
+      {isEditModalVisible && (
+        <Modal toggleModal={toggleEditModal}>
+          <>
+            <div className="w-full mb-3">
+              <h3 className="text-[23px] font-[500] ">Edit Category</h3>
+            </div>
+            <div className="w-full ">
+              <div><div>
+                <label
+                  htmlFor="harvestingPeriod"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Name
+                </label>
+                <Input
+                  onChange={handleEditDataChange}
+                  type="text"
+                  name={"title"}
+                />
+              </div>
+                <div>
+                  <label
+                    htmlFor="harvestingPeriod"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    onChange={handleEditDataChange}
+                    name={"description"}
+                    type="text"
+                    rows={3}
+                    className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <div className="mt-4">
+
+                </div>
+                <StatusDropdown
+                  options={[
+                    { value: 'Valid', label: 'Valid' },
+                    { value: 'Not Valid', label: 'Not Valid' },
+                  ]}
+                  initialValue="Valid"
+                  onChange={handleStatusButtonChange}
+                />
+              </div>
+              <div>
+
+              </div>
+            </div>
+            <div className="w-full flex justify-end">
+              <Button
+                className="m-2 w-[6rem]"
+                type="primary"
+                onClick={() => editCategory(id)}
+              >
+                {btnLoading ? <ButtonLoader /> : "Add"}
+              </Button>
+              <Button className="m-2" onClick={toggleEditModal} type="secondary">
+                Cancel
+              </Button>
+            </div>
+          </>
+        </Modal>
+      )}
       <div className="w-full flex justify-between mb-5">
         <h3 className="text-[25px] font-[500] ">Categories</h3>
         <Button
@@ -125,96 +195,7 @@ const CustomersTable = () => {
           </>
         </Modal>
       )}
-      {isEditModalVisible && (
-        <Modal toggleModal={toggleEditModal}>
-          <>
-            <div className="w-full mb-3">
-              <h3 className="text-[23px] font-[500] ">Edit Category</h3>
-            </div>
-            <div>
-              <Input
-                type="text"
-                label={"Title"}
-                value={categoryDetails.title}
-              />
-            </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <textarea
-                name="description"
-                id="description"
-                value={categoryDetails.description}
-                rows={4}
-                className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="mt-4">
-              <Select value={categoryDetails.isActive ? "active" : "inactive"}>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </Select>
-            </div>
-            <div className="w-full flex justify-end">
-              <Button className="m-2 w-[6rem]" type="primary">
-                Edit
-              </Button>
-              <Button
-                className="m-2"
-                onClick={toggleEditModal}
-                type="secondary"
-              >
-                Cancel
-              </Button>
-            </div>
-          </>
-        </Modal>
-      )}
-      {isModalVisible && (
-        <Modal toggleModal={toggleModal}>
-          <>
-            <div className="w-full mb-3">
-              <h3 className="text-[23px] font-[500] ">Delete Category</h3>
-            </div>
-            <div>
-              <label
-                htmlFor="harvestingPeriod"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
-              <Input type="text" />
-            </div>
-            <div className="mt-4">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Additional Comments
-              </label>
-              <textarea
-                name="description"
-                id="description"
-                rows={4}
-                className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="w-full flex justify-end">
-              <Button className="m-2" type="primary">
-                Delete
-              </Button>
-              <Button className="m-2" onClick={toggleModal} type="secondary">
-                Cancel
-              </Button>
-            </div>
-          </>
-        </Modal>
-      )}
       <Table
         array={getAllCategories}
         search={"description"}
@@ -227,8 +208,8 @@ const CustomersTable = () => {
                 <MdEdit
                   className="text-[#ccccc] text-[1.3rem]"
                   onClick={() => {
-                    setIsEditModalVisible(!isEditModalVisible);
-                    setCategoryDetails(record);
+                    toggleEditModal(record.id)
+                    // setIsEditModalVisible(!isEditModalVisible);
                   }}
                 />
                 <MdDelete
@@ -238,8 +219,7 @@ const CustomersTable = () => {
                       !confirm("Are you sure you want to delete this category?")
                     )
                       return;
-
-                    // deleteCategory(record.id);
+                    deleteCategory(record.id);
                   }}
                 />
               </div>

@@ -9,91 +9,116 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import useAdmin from "../../Hooks/useAdmin";
 import Modal from "../Modal/Modal";
 import Input from "../Input/Input";
-const data = [
-  {
-    id: 1,
-    customerName: "John Doe",
-    phone: "09087654321",
-    serviceName: "Service 1",
-    date: "2015-03-25",
-    amount: "2000",
-  },
-  {
-    id: 2,
-    customerName: "John Doe",
-    phone: "09087654321",
-    serviceName: "Service 1",
-    date: "2015-03-25",
-    amount: "2000",
-  },
-];
+import ImageUploader from "../ImageUploader/ImageUploader";
+import StatusDropdown from "../StatusDropdown/StatusDropdown";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
+
 const AdminTable = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate("");
-  const { getProviderTable, getAllAdminsTable, getAdminData, getAdmin } =
-    useAdmin();
+  const { getProviderTable,
+    getAllAdminsTable,
+    getAdminData,
+    getAdmin,
+    handleStatusButtonChange,
+    statusValue,
+    data,
+    editAdmin,
+    handleEditDataChange,
+    btnLoading
+  } = useAdmin();
   useEffect(() => {
     getProviderTable();
     getAdmin();
   }, []);
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   console.log(getAllAdminsTable);
   console.log(getAdminData);
-  const toggleAddModal = () => {
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [id, setId] = useState("")
+  const toggleAddModal = (record) => {
+    setId(record.id)
     setIsAddModalVisible((prevState) => !prevState);
   };
 
+  console.log(statusValue);
+  console.log(data);
   return (
     <>
       {isAddModalVisible && (
         <Modal toggleModal={toggleAddModal}>
           <>
             <div className="w-full mb-3">
-              <h3 className="text-[23px] font-[500] ">Add Admin</h3>
+              <h3 className="text-[23px] font-[500] ">Edit Admin</h3>
             </div>
-            <div>
-              <label
-                htmlFor="harvestingPeriod"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
-              <Input
-                type="text"
-                name={"title"}
-              />
-            </div>
+            <div className="w-full flex gap-[2rem]">
+              <div><div>
+                <label
+                  htmlFor="harvestingPeriod"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Name
+                </label>
+                <Input
+                  onChange={handleEditDataChange}
+                  type="text"
+                  name={"name"}
+                />
+              </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Additional Comments
-              </label>
-              <textarea
+                <div>
+                  <label
+                    htmlFor="harvestingPeriod"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <Input
+                    type="text"
+                    onChange={handleEditDataChange}
+                    name={"email"}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="harvestingPeriod"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Phone Number
+                  </label>
+                  <Input
+                    type="text"
+                    onChange={handleEditDataChange}
+                    name={"phoneNumber"}
+                  />
+                </div>
 
-                name="description"
-                id="description"
-                rows={4}
-                className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="mt-4">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Status
-              </label>
 
+
+                <div className="mt-4">
+
+                </div>
+                <StatusDropdown
+                  options={[
+                    { value: 'Valid', label: 'Valid' },
+                    { value: 'Not Valid', label: 'Not Valid' },
+                  ]}
+                  initialValue="Valid"
+                  onChange={handleStatusButtonChange}
+                />
+              </div>
+              <div>
+                <div className="mt-[2rem]">
+                  <ImageUploader />
+                </div>
+              </div>
             </div>
             <div className="w-full flex justify-end">
               <Button
                 className="m-2 w-[6rem]"
                 type="primary"
+                onClick={(e) => editAdmin(e, id)}
               >
-                Add
+                {btnLoading ? <ButtonLoader /> : "Add"}
               </Button>
               <Button className="m-2" onClick={toggleAddModal} type="secondary">
                 Cancel
@@ -111,10 +136,10 @@ const AdminTable = () => {
       </div>
 
       <Table
-        array={data}
+        array={getAllAdminsTable}
         search={"name"}
-        keysToDisplay={["name", "phoneNumber", "email", "isActive"]}
-        label={["Name", "Phone Number", "Email", "Is Active", "Actions"]}
+        keysToDisplay={["name", "phoneNumber", "email",]}
+        label={["Name", "Phone Number", "Email", "Actions"]}
         routes={["/admin/admins"]}
         filter={() => {
           return (
@@ -130,9 +155,9 @@ const AdminTable = () => {
         }}
 
         extraColumns={[
-          () => {
+          (record) => {
             return <>
-              <MdEdit onClick={toggleAddModal} className="text-[#ccccc] text-[1.3rem]" />
+              <MdEdit onClick={() => toggleAddModal(record)} className="text-[#ccccc] text-[1.3rem]" />
             </>
 
           },

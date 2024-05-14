@@ -10,6 +10,7 @@ import { TimePicker } from "antd";
 import useProvider from "../../Hooks/useProvider";
 import Loader from "../Loader/Loader";
 import ImageUploader from "../ImageUploader/ImageUploader";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
 const ProvidersForm = () => {
   const {
     loading,
@@ -98,7 +99,8 @@ const ProvidersForm = () => {
                   label={"Address"}
                   name="address"
                   placeholder={"Address"}
-                  value={addProviderData}
+                  onChange={handleChange}
+                  value={addProviderData.address}
                   type="text"
                 />
               </div>
@@ -200,7 +202,7 @@ const ProvidersForm = () => {
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
             <Button onClick={addProvider} className="w-40" type="primary">
               {" "}
-              {loading ? <Loader /> : "Add Provider"}
+              {loading ? <ButtonLoader /> : "Add Provider"}
             </Button>
           </div>
         </form>
