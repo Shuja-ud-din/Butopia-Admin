@@ -66,8 +66,8 @@ const useCategories = () => {
   };
   const { title, description } = payLoad;
 
-  const addCategory = async (e) => {
-    e.preventDefault();
+  const addCategory = async () => {
+    // e.preventDefault();
     setLoading(true);
     try {
       if (title === "" || description === "") {
@@ -90,6 +90,7 @@ const useCategories = () => {
       if (response.data.success) {
         console.log(response);
         showSuccessNotification("Category Added Successfully!");
+        getCategoryTable();
         setLoading(false);
       } else {
         showErrorNotification(e.message);
@@ -99,7 +100,7 @@ const useCategories = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -118,30 +119,29 @@ const useCategories = () => {
     }
   };
   /////////////////////////EditCategory///////////////
-  const [btnLoading, setBtnLoading] = useState(false)
-  const [statusValue, setStatusValue] = useState(true)
-  const handleStatusButtonChange = (value) => {
-    setStatusValue(value)
-  };
+  const [btnLoading, setBtnLoading] = useState(false);
+
   const [editData, setEditData] = useState({
     title: "",
     description: "",
-
-  })
+    isActive: true,
+  });
   const handleEditDataChange = (e) => {
     const { value, name } = e.target;
     setEditData({
       ...editData,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
+
   const PayLoad = {
     title: editData.title,
     description: editData.description,
-    isActive: statusValue,
-  }
+    isActive: editData.isActive,
+  };
   const editCategory = async (id) => {
     console.log(id);
+    console.log(editData);
     setBtnLoading(true);
     try {
       if (PayLoad.name === "" || PayLoad.description === "") {
@@ -162,6 +162,7 @@ const useCategories = () => {
       console.log(response);
       if (response.data.success) {
         console.log(response);
+        getCategoryTable();
         showSuccessNotification("Category Edited Successfully!");
         setBtnLoading(false);
       } else {
@@ -172,7 +173,7 @@ const useCategories = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setBtnLoading(false);
     }
@@ -181,6 +182,8 @@ const useCategories = () => {
     getCategoryTable,
     getAllCategories,
     data,
+    editData,
+    setEditData,
     handleChange,
     buttonStatus,
     handleButtonStatus,
@@ -188,9 +191,8 @@ const useCategories = () => {
     loading,
     deleteCategory,
     editCategory,
-    handleStatusButtonChange,
     handleEditDataChange,
-    btnLoading
+    btnLoading,
   };
 };
 

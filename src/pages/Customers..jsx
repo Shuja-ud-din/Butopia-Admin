@@ -9,7 +9,7 @@ const Customers = () => {
     <Routes>
       <Route path="/" element={<CustomersTable />} />
       <Route path="/addcustomers" element={<CustomerForm />} />
-      <Route path="/customerdetails" element={<CustomerDetails />} />
+      <Route path="/:id" element={<CustomerDetails />} />
     </Routes>
   );
 };

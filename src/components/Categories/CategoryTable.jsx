@@ -20,7 +20,7 @@ const CustomersTable = () => {
   const [id, setId] = useState("");
   const toggleEditModal = (record) => {
     setIsEditModalVisible((prevState) => !prevState);
-    setId(record)
+    setId(record);
   };
   const toggleAddModal = () => {
     setIsAddModalVisible((prevState) => !prevState);
@@ -30,19 +30,19 @@ const CustomersTable = () => {
     getCategoryTable,
     getAllCategories,
     data,
+    setEditData,
+    editData,
     handleChange,
     buttonStatus,
     handleButtonStatus,
     addCategory,
     loading,
     deleteCategory,
-    categoryDetails,
 
     ///edit
     editCategory,
-    handleStatusButtonChange,
     handleEditDataChange,
-    btnLoading
+    btnLoading,
   } = useCategories();
 
   useEffect(() => {
@@ -60,19 +60,16 @@ const CustomersTable = () => {
               <h3 className="text-[23px] font-[500] ">Edit Category</h3>
             </div>
             <div className="w-full ">
-              <div><div>
-                <label
-                  htmlFor="harvestingPeriod"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <Input
-                  onChange={handleEditDataChange}
-                  type="text"
-                  name={"title"}
-                />
-              </div>
+              <div>
+                <div>
+                  <Input
+                    label={"Name"}
+                    value={editData.title}
+                    onChange={handleEditDataChange}
+                    type="text"
+                    name={"title"}
+                  />
+                </div>
                 <div>
                   <label
                     htmlFor="harvestingPeriod"
@@ -82,6 +79,7 @@ const CustomersTable = () => {
                   </label>
                   <textarea
                     onChange={handleEditDataChange}
+                    value={editData.description}
                     name={"description"}
                     type="text"
                     rows={3}
@@ -89,32 +87,33 @@ const CustomersTable = () => {
                   />
                 </div>
 
-                <div className="mt-4">
-
-                </div>
-                <StatusDropdown
-                  options={[
-                    { value: 'Valid', label: 'Valid' },
-                    { value: 'Not Valid', label: 'Not Valid' },
-                  ]}
-                  initialValue="Valid"
-                  onChange={handleStatusButtonChange}
-                />
+                <div className="mt-4"></div>
+                <Select
+                  className="w-full mb-3"
+                  name="isActive"
+                  onChange={handleEditDataChange}
+                  value={editData.isActive}
+                >
+                  <option value={true}>Active</option>
+                  <option value={false}>Deactive</option>
+                </Select>
               </div>
-              <div>
-
-              </div>
+              <div></div>
             </div>
             <div className="w-full flex justify-end">
               <Button
+                className="m-2"
+                onClick={toggleEditModal}
+                type="secondary"
+              >
+                Cancel
+              </Button>
+              <Button
                 className="m-2 w-[6rem]"
                 type="primary"
-                onClick={() => editCategory(id)}
+                onClick={() => editCategory(id).then(() => toggleEditModal())}
               >
-                {btnLoading ? <ButtonLoader /> : "Add"}
-              </Button>
-              <Button className="m-2" onClick={toggleEditModal} type="secondary">
-                Cancel
+                {btnLoading ? <ButtonLoader /> : "Edit"}
               </Button>
             </div>
           </>
@@ -125,7 +124,7 @@ const CustomersTable = () => {
         <Button
           className=""
           onClick={toggleAddModal}
-        // onClick={() => navigate("/admin/categories/addcategory")}
+          // onClick={() => navigate("/admin/categories/addcategory")}
         >
           <FaPlus size={14} className="mr-2" />
           Add Categories
@@ -157,7 +156,7 @@ const CustomersTable = () => {
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
               >
-                Additional Comments
+                Description
               </label>
               <textarea
                 onChange={handleChange}
@@ -175,16 +174,21 @@ const CustomersTable = () => {
               >
                 Status
               </label>
-              <StatusButton
-                onClick={handleButtonStatus}
-                isActive={buttonStatus}
-              />
+              <Select
+                className="w-full mb-3"
+                name="isActive"
+                onChange={handleChange}
+                value={data.isActive}
+              >
+                <option value={true}>Active</option>
+                <option value={false}>Deactive</option>
+              </Select>
             </div>
             <div className="w-full flex justify-end">
               <Button
                 className="m-2 w-[6rem]"
                 type="primary"
-                onClick={addCategory}
+                onClick={() => addCategory().then(toggleAddModal)}
               >
                 {loading ? <ButtonLoader /> : "Add"}
               </Button>
@@ -199,8 +203,16 @@ const CustomersTable = () => {
       <Table
         array={getAllCategories}
         search={"description"}
-        keysToDisplay={["index", "title", "description"]}
-        label={["#", "Category Name", "Description", "Actions"]}
+        keysToDisplay={["index", "title", "description", "isActive"]}
+        label={["#", "Category Name", "Description", "Status", "Actions"]}
+        customBlocks={[
+          {
+            index: 3,
+            component: (isActive) => {
+              return isActive ? "Active" : "Inactive";
+            },
+          },
+        ]}
         extraColumns={[
           (record) => {
             return (
@@ -208,7 +220,8 @@ const CustomersTable = () => {
                 <MdEdit
                   className="text-[#ccccc] text-[1.3rem]"
                   onClick={() => {
-                    toggleEditModal(record.id)
+                    toggleEditModal(record.id);
+                    setEditData(record);
                     // setIsEditModalVisible(!isEditModalVisible);
                   }}
                 />
