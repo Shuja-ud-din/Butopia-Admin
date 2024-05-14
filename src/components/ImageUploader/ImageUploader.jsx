@@ -11,8 +11,13 @@ const ImageUploader = ({ profile = false, image, setUrl }) => {
   const defaultHandleChangeFunction = (e) => {
     e.preventDefault();
 
-    // upload image api
-    // setUrl(url)
+    const file = e.target.files[0];
+
+    if (file) {
+      console.log(file);
+    } else {
+      setError("Please select an image");
+    }
   };
 
   return (

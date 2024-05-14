@@ -3,8 +3,11 @@ import CalendarComponent from "../Calendar/Calendar";
 import TimePickerComponent from "../TimePickerComponent/TimePickerComponent";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import UserDropdown from "../SelectDropdown/UserDropDownSelect";
 import { Autocomplete, Box, TextField } from "@mui/material";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 const dummyDoctors = [
   { name: "Dr. John Doe", id: 1 },
@@ -78,7 +81,9 @@ const AppointmentForm = () => {
       </div>
       <div className="w-full flex mt-3 flex">
         <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-          <CalendarComponent />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateCalendar defaultValue={dayjs("2022-04-17")} />
+          </LocalizationProvider>
         </div>
         <div className="w-70 flex  flex-col p-4 ml-2 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
           <h2 className="font-[600]">Morning</h2>
