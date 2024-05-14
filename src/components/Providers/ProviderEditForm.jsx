@@ -13,21 +13,14 @@ import ImageUploader from "../ImageUploader/ImageUploader";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
 const ProviderEditForm = () => {
     const {
-        loading,
-        addProviderData,
-        handleChange,
-        handleSelectedDay,
-        selectedDay,
-        addProvider,
-        payLoad,
+        editLoading,
+        handleEditSelectedDay,
+        editSelectDay,
+        editChange,
+        editProvider
+        , editData
     } = useProvider();
-    const [imagePreview, setImagePreview] = useState("");
-    const [selectedTime, setSelectedTime] = useState("");
-
     // Function to handle time selection
-
-    console.log(addProviderData);
-    console.log(payLoad);
     const days = [
         "Monday",
         "Tuesday",
@@ -38,7 +31,7 @@ const ProviderEditForm = () => {
         "Sunday",
     ];
 
-    console.log(selectedDay);
+
 
     return (
         <>
@@ -46,7 +39,7 @@ const ProviderEditForm = () => {
                 <h3 className="text-[25px] font-[500] ">Edit Providers</h3>
             </div>
             <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-                <form onSubmit={addProvider} className="p-7 px-[4rem]">
+                <form onSubmit={editProvider} className="p-7 px-[4rem]">
                     <div className="flex justify-between">
                         <p className="font-semibold">Provider Details</p>
                     </div>
@@ -61,8 +54,7 @@ const ProviderEditForm = () => {
                                     placeholder={"Name"}
                                     name="name"
                                     label={"Provider Name"}
-                                    // value={addProviderData}
-                                    onChange={handleChange}
+                                    onChange={editChange}
                                     type="text"
                                 />
                             </div>
@@ -71,8 +63,8 @@ const ProviderEditForm = () => {
                                     label={"Email"}
                                     placeholder={"Email"}
                                     name="email"
-                                    // value={addProviderData}
-                                    onChange={handleChange}
+
+                                    onChange={editChange}
                                     type="text"
                                 />
                             </div>
@@ -81,26 +73,18 @@ const ProviderEditForm = () => {
                                     name="phoneNumber"
                                     label={"Phone Number"}
                                     placeholder={"Phone Number"}
-                                    onChange={handleChange}
+                                    onChange={editChange}
                                     type="text"
                                 />
                             </div>
-                            <div>
-                                <Input
-                                    label={"Password"}
-                                    placeholder={"Password"}
-                                    name="password"
-                                    onChange={handleChange}
-                                    type="password"
-                                />
-                            </div>
+
                             <div>
                                 <Input
                                     label={"Address"}
                                     name="address"
                                     placeholder={"Address"}
-                                    onChange={handleChange}
-                                    value={addProviderData.address}
+                                    onChange={editChange}
+                                    value={editData.address}
                                     type="text"
                                 />
                             </div>
@@ -109,7 +93,7 @@ const ProviderEditForm = () => {
                                     label={"Speciality"}
                                     placeholder={"Speciality"}
                                     name="speciality"
-                                    onChange={handleChange}
+                                    onChange={editChange}
                                     type="text"
                                 />
                             </div>
@@ -118,7 +102,7 @@ const ProviderEditForm = () => {
                                     placeholder={"Experience"}
                                     label={"Experience"}
                                     name="experience"
-                                    onChange={handleChange}
+                                    onChange={editChange}
                                     type="number"
                                 />
                             </div>
@@ -132,8 +116,8 @@ const ProviderEditForm = () => {
                     </label>
                     <textarea
                         placeholder="About Provider"
-                        value={addProviderData.about}
-                        onChange={handleChange}
+                        value={editData.about}
+                        onChange={editChange}
                         name="about"
                         type="text"
                         rows={4}
@@ -149,17 +133,16 @@ const ProviderEditForm = () => {
                         {days.map((item) => {
                             return (
                                 <DaySelector
-                                    value={addProviderData.workingDays}
-                                    onChange={handleChange}
+                                    value={editData.workingDays}
+                                    onChange={handleEditSelectedDay}
                                     name="days"
                                     day={item}
-                                    isSelected={selectedDay.includes(item)}
-                                    onClick={(e) => handleSelectedDay(e, item)}
+                                    isSelected={editSelectDay.includes(item)}
+                                    onClick={(e) => handleEditSelectedDay(e, item)}
                                 />
                             );
                         })}
                     </div>
-
                     <div className="flex gap-[1rem]">
                         <div>
                             <label
@@ -174,9 +157,9 @@ const ProviderEditForm = () => {
                                     name="startTime"
                                     type="time"
                                     className="border  rounded-[5px]"
-                                    value={addProviderData.startTime}
-                                    placeholder={addProviderData.startTime}
-                                    onChange={handleChange}
+                                    value={editData.startTime}
+                                    placeholder={editData.startTime}
+                                    onChange={editChange}
                                 />
                             </div>
                         </div>
@@ -192,17 +175,17 @@ const ProviderEditForm = () => {
                                     name="endTime"
                                     className="border  rounded-[5px]"
                                     type="time"
-                                    placeholder={addProviderData.endTime}
-                                    value={addProviderData.endTime}
-                                    onChange={handleChange}
+                                    placeholder={editData.endTime}
+                                    value={editData.endTime}
+                                    onChange={editChange}
                                 />
                             </div>
                         </div>
                     </div>
                     <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
-                        <Button onClick={addProvider} className="w-40" type="primary">
+                        <Button onClick={editProvider} className="w-40" type="primary">
                             {" "}
-                            {loading ? <ButtonLoader /> : "Save Provider"}
+                            {editLoading ? <ButtonLoader /> : "Save Provider"}
                         </Button>
                     </div>
                 </form>

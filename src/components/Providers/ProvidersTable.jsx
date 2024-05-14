@@ -37,14 +37,13 @@ const CustomersTable = () => {
           "Providers",
           "Email",
           "Phone Number",
-
           "Actions",
         ]}
         extraColumns={[
-          () => {
+          (record) => {
             return (
               <MdEdit
-                onClick={() => navigate("/admin/providers/editprovider")}
+                onClick={() => navigate(`${"/admin/providers/"}${record.id}`)}
                 className="text-[#ccccc] text-[1.3rem]" />
             );
           },
