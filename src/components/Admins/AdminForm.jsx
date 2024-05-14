@@ -6,7 +6,7 @@ import { GoEye } from "react-icons/go";
 import Input from "../Input/Input";
 import Select from "../Dropdown/Select";
 import useAdmin from "../../Hooks/useAdmin";
-import Loader from '../Loader/Loader'
+import LoaderButton from '../ButtonLoader/ButtonLoader'
 
 const AdminForm = () => {
   const { addAdminDetail, handleChange, addAdmin, loading } = useAdmin();
@@ -120,7 +120,7 @@ const AdminForm = () => {
                   onClick={addAdmin}
                   type="primary"
                   className="w-[200px]">
-                  {loading ? <Loader /> : "Add"}
+                  {loading ? <LoaderButton /> : "Add"}
                 </Button>
               </div>
             </form>
