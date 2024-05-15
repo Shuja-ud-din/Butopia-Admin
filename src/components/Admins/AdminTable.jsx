@@ -117,7 +117,7 @@ const AdminTable = () => {
               <Button
                 className="m-2 w-[6rem]"
                 type="primary"
-                onClick={(e) => editAdmin(e, id)}
+                onClick={(e) => editAdmin(e, id).then(toggleAddModal)}
               >
                 {loading ? <ButtonLoader /> : "Add"}
               </Button>

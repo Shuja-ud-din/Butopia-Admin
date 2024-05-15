@@ -160,6 +160,7 @@ const useAdmin = () => {
       });
       console.log(response);
       if (response.data.success) {
+        getProviderTable()
         console.log(response);
         showSuccessNotification("Admin Edited Successfully!");
         setLoading(false);

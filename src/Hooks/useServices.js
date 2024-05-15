@@ -129,7 +129,6 @@ const useServices = () => {
 
 
     const editService = async (id) => {
-
         setLoading(true);
         try {
             if (PayLoad.name === "" || PayLoad.description === "" || PayLoad.price === 0) {
@@ -142,25 +141,22 @@ const useServices = () => {
             if (PayLoad.description.length < 8) {
                 throw new Error("This is too short to describe");
             }
-
-            const response = await api.put(`${"/api/service"}${id}`, payLoad, {
+            const response = await api.put(`${"/api/service/"}${id}`, PayLoad, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(response);
+
             if (response.data.success) {
-                console.log(response);
+                getServicesTable()
                 showSuccessNotification("Service Edited Successfully!");
                 setLoading(false);
             } else {
-                console.log(response);
                 showErrorNotification(e.message);
                 setLoading(false);
             }
         } catch (e) {
             console.error(e.message);
-            console.log(response);
             showErrorNotification(
                 (e.response ? e.response.data.message : e.message) ||
                 "Something went wrong!"

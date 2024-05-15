@@ -20,7 +20,14 @@ const ServiceTable = () => {
     setId(id)
     setIsAddModalVisible((prevState) => !prevState);
   };
-  const { data, getServicesTable, handleEditServiceDataChange, editServiceData, editService } = useServices()
+  console.log(id);
+  const { data,
+    getServicesTable,
+    handleEditServiceDataChange,
+    editServiceData,
+    editService,
+    loading,
+  } = useServices()
   console.log(id);
   return (
     <>
@@ -93,7 +100,7 @@ const ServiceTable = () => {
                 type="primary"
                 onClick={() => editService(id).then(toggleAddModal)}
               >
-                Add
+                {loading ? <ButtonLoader /> : "Add"}
               </Button>
               <Button className="m-2" onClick={toggleAddModal} type="secondary">
                 Cancel
@@ -117,7 +124,7 @@ const ServiceTable = () => {
         array={data}
         search={"description"}
         keysToDisplay={["index", "name", "description", "price", "isValid"]}
-        label={["#", "Service Name", "Description", "Price", "Actions"]}
+        label={["#", "Service Name", "Description", "Price", "Status", "Actions"]}
         customBlocks={[
           {
             index: 4,

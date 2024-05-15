@@ -8,6 +8,7 @@ import UserDropdown from "../SelectDropdown/UserDropDownSelect";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import useAppointment from "../../Hooks/useAppointment";
 
 const dummyDoctors = [
   { name: "Dr. John Doe", id: 1 },
@@ -24,7 +25,7 @@ const dummyDoctors = [
 
 const AppointmentForm = () => {
   const navigate = useNavigate();
-
+  const { addAppointment } = useAppointment()
   const [selectedTime, setSelectedTime] = useState(null);
   const times = [
     "9:00 AM",
@@ -123,7 +124,7 @@ const AppointmentForm = () => {
             <Button
               type="primary"
               outlined
-              onClick={() => navigate("/admin/appointments")}
+              onClick={addAppointment}
             >
               Submit
             </Button>

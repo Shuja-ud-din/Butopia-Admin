@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "../Table/Table";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
@@ -10,33 +10,22 @@ import { PiHandCoins } from "react-icons/pi";
 import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
 import { MdCancel, MdSchedule } from "react-icons/md";
-const data = [
-  {
-    id: "1",
-    customerName: "John Doe",
-    phone: "09087654321",
-    provider: "Clinic 1",
-    date: "2015-03-25",
-  },
-  {
-    id: "2",
-    customerName: "John Doe",
-    phone: "09087654321",
-    provider: "Clinic 1",
-    date: "2015-03-25",
-  },
-  {
-    id: "3",
-    customerName: "John Doe",
-    phone: "09087654321",
-    provider: "Clinic 1",
-    date: "2015-03-25",
-  },
-];
+import useAppointment from "../../Hooks/useAppointment";
 
 const AppointmentsTable = () => {
   const navigate = useNavigate();
+  const { getAppointmentTableData, getAppointmentTable } = useAppointment()
+  useEffect(() => {
+    getAppointmentTable()
+  }, [])
+  console.log(getAppointmentTableData);
+  function convertToDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US');
+  }
 
+  const date = convertToDate("2024-05-15T15:22:06.354Z");
+  console.log(date);
   return (
     <>
       <div className="flex gap-4 grid grid-cols-12 my-5 ">
@@ -74,10 +63,18 @@ const AppointmentsTable = () => {
       </div>
 
       <Table
-        array={data}
-        search={"customerName"}
-        keysToDisplay={["id", "customerName", "phone", "provider", "date"]}
-        label={["#", "customer Name", "phone", "provider", "date", "Actions"]}
+        array={getAppointmentTableData}
+        search={"customer"}
+        keysToDisplay={["customer", "provider", "date"]}
+        label={["Customer Name", "Provider Name", "date", "Actions"]}
+        customBlocks={[
+          {
+            index: 2,
+            component: (date) => {
+              return convertToDate(date)
+            }
+          }
+        ]}
         filter={() => {
           return (
             <>
