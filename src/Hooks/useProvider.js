@@ -159,7 +159,7 @@ const useProvider = () => {
     }
   };
   ///////////////////////editProvider/////////////////
-  const [editLoading, setEditLoading] = useState(false);
+
   const [editSelectDay, setEditSelectedDay] = useState([]);
   const handleEditSelectedDay = (e, day) => {
     e.preventDefault();
@@ -192,7 +192,7 @@ const useProvider = () => {
     workingDays: editSelectDay,
     workingTimes: {
       start: `${editData.startTime}${" PM"}`,
-      end: `${editData.endTime}${" AM"}`,
+      end: `${editData.endTime}${" AM"}`
     },
   };
 
@@ -203,9 +203,10 @@ const useProvider = () => {
       [name]: value,
     });
   };
-  const editProvider = async (e) => {
+  const editProvider = async (e, id) => {
     e.preventDefault();
-    setEditLoading(true);
+    setLoading(true);
+
     try {
       if (
         editPayload.name === "" ||
@@ -234,7 +235,7 @@ const useProvider = () => {
       if (!editPayload.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
         throw new Error("Incorrect email format");
       }
-      const response = await api.post(`${"/api/provider/"}${id}`, editPayload, {
+      const response = await api.put(`${"/api/provider/"}${id}`, editPayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -243,10 +244,10 @@ const useProvider = () => {
       if (response.data.success) {
         console.log(response);
         showSuccessNotification("Provider Edited Successfully!");
-        setEditLoading(false);
+        setLoading(false);
       } else {
         showErrorNotification(e.message);
-        setEditLoading(false);
+        setLoading(false);
       }
     } catch (e) {
       console.error(e.message);
@@ -254,7 +255,7 @@ const useProvider = () => {
         (e.response ? e.response.data.message : e.message) ||
         "Something went wrong!"
       );
-      setEditLoading(false);
+      setLoading(false);
     }
   };
   ///////////////////getProvider/////////////
@@ -307,12 +308,12 @@ const useProvider = () => {
     getProviderData,
     providerDetailLoading,
     ///edit
-    editLoading,
     handleEditSelectedDay,
     editSelectDay,
     editChange,
     editProvider,
-    editData
+    editData,
+    editPayload
   };
 };
 

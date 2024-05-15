@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import ServiceDropDown from "../SelectDropdown/ServiceDropDownSelect";
@@ -11,6 +11,7 @@ import useProvider from "../../Hooks/useProvider";
 import Loader from "../Loader/Loader";
 import ImageUploader from "../ImageUploader/ImageUploader";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import { useLocation } from "react-router-dom";
 const ProviderEditForm = () => {
   const {
     editLoading,
@@ -19,8 +20,10 @@ const ProviderEditForm = () => {
     editChange,
     editProvider,
     editData,
+    loading,
+    editPayload
   } = useProvider();
-  // Function to handle time selection
+
   const days = [
     "Monday",
     "Tuesday",
@@ -30,14 +33,15 @@ const ProviderEditForm = () => {
     "Saturday",
     "Sunday",
   ];
-
+  const id = useLocation().pathname.split("/")[3]
+  console.log(editPayload);
   return (
     <>
       <div className="w-full">
         <h3 className="text-[25px] font-[500] ">Edit Providers</h3>
       </div>
       <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-        <form onSubmit={editProvider} className="p-7 px-[4rem]">
+        <form onSubmit={(e) => editProvider(e, id)} className="p-7 px-[4rem]">
           <div className=" mt-10 w-full grid grid-cols-12 ">
             <div className="h-[15rem] h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
               <ImageUploader profile />
@@ -176,9 +180,9 @@ const ProviderEditForm = () => {
             </div>
           </div>
           <div className="w-full mb-8 mt-[1.5rem] flex justify-start">
-            <Button onClick={editProvider} className="w-40" type="primary">
+            <Button onClick={(e) => editProvider(e, id)} className="w-40" type="primary">
               {" "}
-              {editLoading ? <ButtonLoader /> : "Save Provider"}
+              {loading ? <ButtonLoader /> : "Save Provider"}
             </Button>
           </div>
         </form>

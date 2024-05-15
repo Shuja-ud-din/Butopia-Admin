@@ -11,7 +11,6 @@ import Select from "../Dropdown/Select";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
 const ServiceTable = () => {
   const navigate = useNavigate("")
-  const { data, getServicesTable } = useServices();
   useEffect(() => {
     getServicesTable();
   }, [])
@@ -21,15 +20,15 @@ const ServiceTable = () => {
     setId(id)
     setIsAddModalVisible((prevState) => !prevState);
   };
-  const { handleEditServiceDataChange, editServiceData, editService } = useServices()
-  console.log(editServiceData);
+  const { data, getServicesTable, handleEditServiceDataChange, editServiceData, editService } = useServices()
+  console.log(id);
   return (
     <>
       {isAddModalVisible && (
         <Modal toggleModal={toggleAddModal}>
           <>
             <div className="w-full mb-3">
-              <h3 className="text-[23px] font-[500] ">Add Category</h3>
+              <h3 className="text-[23px] font-[500] ">Edit Service</h3>
             </div>
             <div>
               <label
@@ -117,8 +116,16 @@ const ServiceTable = () => {
       <Table
         array={data}
         search={"description"}
-        keysToDisplay={["index", "name", "description", "price"]}
+        keysToDisplay={["index", "name", "description", "price", "isValid"]}
         label={["#", "Service Name", "Description", "Price", "Actions"]}
+        customBlocks={[
+          {
+            index: 4,
+            component: (isValid) => {
+              return isValid ? "Valid" : "Invalid"
+            }
+          }
+        ]}
         extraColumns={[
           (record) => {
             return (

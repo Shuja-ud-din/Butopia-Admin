@@ -13,7 +13,7 @@ const CustomersTable = () => {
   useEffect(() => {
     getProviderTable();
   }, []);
-  console.log(getProviderData)
+  console.log(data)
   return (
     <>
       <div className="w-full flex justify-between mb-5">
@@ -31,13 +31,22 @@ const CustomersTable = () => {
         routes={["/admin/providers"]}
         array={data}
         search={"name"}
-        keysToDisplay={["index", "name", "email", "phoneNumber",]}
+        keysToDisplay={["index", "name", "email", "phoneNumber", "isValid"]}
         label={[
           "#",
           "Providers",
           "Email",
           "Phone Number",
+          "Status",
           "Actions",
+        ]}
+        customBlocks={[
+          {
+            index: 4,
+            component: (isValid) => {
+              return isValid ? "Valid" : "Invalid"
+            }
+          }
         ]}
         extraColumns={[
           (record) => {

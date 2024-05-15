@@ -42,15 +42,14 @@ const CustomersTable = () => {
     ///edit
     editCategory,
     handleEditDataChange,
-    btnLoading,
+
   } = useCategories();
 
   useEffect(() => {
     getCategoryTable();
   }, []);
 
-  console.log(getAllCategories);
-
+  console.log(editData);
   return (
     <>
       {isEditModalVisible && (
@@ -113,7 +112,7 @@ const CustomersTable = () => {
                 type="primary"
                 onClick={() => editCategory(id).then(() => toggleEditModal())}
               >
-                {btnLoading ? <ButtonLoader /> : "Edit"}
+                {loading ? <ButtonLoader /> : "Edit"}
               </Button>
             </div>
           </>

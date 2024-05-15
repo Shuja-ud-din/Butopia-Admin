@@ -100,7 +100,7 @@ const useCategories = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
@@ -119,7 +119,6 @@ const useCategories = () => {
     }
   };
   /////////////////////////EditCategory///////////////
-  const [btnLoading, setBtnLoading] = useState(false);
 
   const [editData, setEditData] = useState({
     title: "",
@@ -142,7 +141,7 @@ const useCategories = () => {
   const editCategory = async (id) => {
     console.log(id);
     console.log(editData);
-    setBtnLoading(true);
+    setLoading(true);
     try {
       if (PayLoad.name === "" || PayLoad.description === "") {
         throw new Error("Please fill in all the fields");
@@ -164,18 +163,18 @@ const useCategories = () => {
         console.log(response);
         getCategoryTable();
         showSuccessNotification("Category Edited Successfully!");
-        setBtnLoading(false);
+        setLoading(false);
       } else {
         showErrorNotification(e.message);
-        setBtnLoading(false);
+        setLoading(false);
       }
     } catch (e) {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
-      setBtnLoading(false);
+      setLoading(false);
     }
   };
   return {
@@ -192,7 +191,7 @@ const useCategories = () => {
     deleteCategory,
     editCategory,
     handleEditDataChange,
-    btnLoading,
+
   };
 };
 

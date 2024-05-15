@@ -116,7 +116,7 @@ const useAdmin = () => {
     }
   };
   ///////////////editAdmin/////////////
-  const [btnLoading, setBtnLoading] = useState(false)
+
   const [statusValue, setStatusValue] = useState(true)
   const handleStatusButtonChange = (value) => {
     setStatusValue(value)
@@ -139,7 +139,7 @@ const useAdmin = () => {
 
   const editAdmin = async (e, id) => {
     e.preventDefault();
-    setBtnLoading(true);
+    setLoading(true);
     try {
       if (data.name === "" || data.email === "" || data.phoneNumber === 0) {
         throw new Error("Please fill in all the fields");
@@ -162,10 +162,10 @@ const useAdmin = () => {
       if (response.data.success) {
         console.log(response);
         showSuccessNotification("Admin Edited Successfully!");
-        setBtnLoading(false);
+        setLoading(false);
       } else {
         showErrorNotification(e.message);
-        setBtnLoading(false);
+        setLoading(false);
       }
     } catch (e) {
       console.error(e.message);
@@ -173,7 +173,7 @@ const useAdmin = () => {
         (e.response ? e.response.data.message : e.message) ||
         "Something went wrong!"
       );
-      setBtnLoading(false);
+      setLoading(false);
     }
   };
   return {
@@ -190,7 +190,7 @@ const useAdmin = () => {
     data,
     handleEditDataChange,
     editAdmin,
-    btnLoading
+
   };
 };
 

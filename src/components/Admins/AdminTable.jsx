@@ -26,7 +26,7 @@ const AdminTable = () => {
     data,
     editAdmin,
     handleEditDataChange,
-    btnLoading
+    loading
   } = useAdmin();
   useEffect(() => {
     getProviderTable();
@@ -119,7 +119,7 @@ const AdminTable = () => {
                 type="primary"
                 onClick={(e) => editAdmin(e, id)}
               >
-                {btnLoading ? <ButtonLoader /> : "Add"}
+                {loading ? <ButtonLoader /> : "Add"}
               </Button>
               <Button className="m-2" onClick={toggleAddModal} type="secondary">
                 Cancel
@@ -139,8 +139,8 @@ const AdminTable = () => {
       <Table
         array={getAllAdminsTable}
         search={"name"}
-        keysToDisplay={["name", "phoneNumber", "email",]}
-        label={["Name", "Phone Number", "Email", "Actions"]}
+        keysToDisplay={["name", "phoneNumber", "email", "isValid"]}
+        label={["Name", "Phone Number", "Email", "Status", "Actions"]}
         routes={["/admin/admins"]}
         filter={() => {
           return (
@@ -154,7 +154,14 @@ const AdminTable = () => {
             </>
           );
         }}
-
+        customBlocks={[
+          {
+            index: 3,
+            component: (isValid) => {
+              return isValid ? "Active" : "Inactive"
+            }
+          }
+        ]}
         extraColumns={[
           (record) => {
             return <>
