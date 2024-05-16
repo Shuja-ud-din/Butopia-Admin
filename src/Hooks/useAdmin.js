@@ -177,6 +177,32 @@ const useAdmin = () => {
       setLoading(false);
     }
   };
+  /////////////handleStatusChange///////////
+  let selectedOption;
+  const handleChangeStatus = async (event, id) => {
+    selectedOption = event.target.value;
+    const isValid = selectedOption === "Valid";
+    const payLoad = {
+      isValid: isValid,
+    }
+    if (!window.confirm("Do you really want to change the status?")) {
+      return;
+    }
+
+    console.log(selectedOption)
+    try {
+      const response = await api.patch(`${"/api/admin/"}${id}`, payLoad, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      console.log(response);
+    }
+    catch (e) {
+      console.error(e.message);
+    }
+
+  }
   return {
     getProviderTable,
     getAllAdminsTable,
@@ -191,7 +217,8 @@ const useAdmin = () => {
     data,
     handleEditDataChange,
     editAdmin,
-
+    handleChangeStatus,
+    selectedOption
   };
 };
 

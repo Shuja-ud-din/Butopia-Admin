@@ -26,14 +26,16 @@ const AdminTable = () => {
     data,
     editAdmin,
     handleEditDataChange,
-    loading
+    loading,
+    handleChangeStatus,
+    selectedOption
   } = useAdmin();
+
   useEffect(() => {
     getProviderTable();
     getAdmin();
   }, []);
-  console.log(getAllAdminsTable);
-  console.log(getAdminData);
+  console.log(selectedOption);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [id, setId] = useState("")
   const toggleAddModal = (record) => {
@@ -41,8 +43,8 @@ const AdminTable = () => {
     setIsAddModalVisible((prevState) => !prevState);
   };
 
-  console.log(statusValue);
-  console.log(data);
+
+
   return (
     <>
       {isAddModalVisible && (
@@ -141,7 +143,7 @@ const AdminTable = () => {
         search={"name"}
         keysToDisplay={["name", "phoneNumber", "email", "isValid"]}
         label={["Name", "Phone Number", "Email", "Status", "Actions"]}
-        routes={["/admin/admins"]}
+        // routes={["/admin/admins"]}
         filter={() => {
           return (
             <>
@@ -158,7 +160,10 @@ const AdminTable = () => {
           {
             index: 3,
             component: (isValid) => {
-              return isValid ? "Active" : "Inactive"
+              return <select onChange={(e) => handleChangeStatus(e, id)} name="" id="" className="rounded-lg">
+                <option value="Valid">{isValid ? "Valid" : "Invalid"}</option>
+                <option value="Invalid">{isValid ? "Invalid" : "Valid"}</option>
+              </select>
             }
           }
         ]}
