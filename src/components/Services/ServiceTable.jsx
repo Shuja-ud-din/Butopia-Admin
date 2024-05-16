@@ -5,29 +5,31 @@ import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { MdDelete, MdEdit } from "react-icons/md";
 import useServices from "../../Hooks/useServices";
-import Modal from '../Modal/Modal'
+import Modal from "../Modal/Modal";
 import Input from "../Input/Input";
 import Select from "../Dropdown/Select";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
 const ServiceTable = () => {
-  const navigate = useNavigate("")
+  const navigate = useNavigate("");
   useEffect(() => {
     getServicesTable();
-  }, [])
-  const [id, setId] = useState("")
+  }, []);
+  const [id, setId] = useState("");
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const toggleAddModal = (id) => {
-    setId(id)
+    setId(id);
     setIsAddModalVisible((prevState) => !prevState);
   };
   console.log(id);
-  const { data,
+  const {
+    data,
     getServicesTable,
     handleEditServiceDataChange,
     editServiceData,
     editService,
     loading,
-  } = useServices()
+    setEditServiceData,
+  } = useServices();
   console.log(id);
   return (
     <>
@@ -38,28 +40,22 @@ const ServiceTable = () => {
               <h3 className="text-[23px] font-[500] ">Edit Service</h3>
             </div>
             <div>
-              <label
-                htmlFor="harvestingPeriod"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
               <Input
+                label={"Service Name"}
                 type="text"
                 name={"name"}
+                value={editServiceData.name}
+                placeholder={"Service Name"}
                 onChange={handleEditServiceDataChange}
               />
             </div>
             <div>
-              <label
-                htmlFor="harvestingPeriod"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Price
-              </label>
               <Input
-                type="text"
+                type="number"
+                value={editServiceData.price}
                 name={"price"}
+                label={"Price"}
+                placeholder={"Price"}
                 onChange={handleEditServiceDataChange}
               />
             </div>
@@ -74,6 +70,7 @@ const ServiceTable = () => {
               <textarea
                 name="description"
                 id="description"
+                value={editServiceData.description}
                 onChange={handleEditServiceDataChange}
                 rows={4}
                 className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -86,24 +83,21 @@ const ServiceTable = () => {
               >
                 Select Category
               </label>
-              <Select
-                className="w-full mb-3"
-                name="isActive"
-              >
+              <Select className="w-full mb-3" name="isActive">
                 <option value={true}>Category 1</option>
                 <option value={false}>Category 2</option>
               </Select>
             </div>
             <div className="w-full flex justify-end">
+              <Button className="m-2" onClick={toggleAddModal} type="secondary">
+                Cancel
+              </Button>
               <Button
                 className="m-2 w-[6rem]"
                 type="primary"
                 onClick={() => editService(id).then(toggleAddModal)}
               >
-                {loading ? <ButtonLoader /> : "Add"}
-              </Button>
-              <Button className="m-2" onClick={toggleAddModal} type="secondary">
-                Cancel
+                {loading ? <ButtonLoader /> : "Update"}
               </Button>
             </div>
           </>
@@ -124,23 +118,36 @@ const ServiceTable = () => {
         array={data}
         search={"description"}
         keysToDisplay={["index", "name", "description", "price", "isValid"]}
-        label={["#", "Service Name", "Description", "Price", "Status", "Actions"]}
+        label={[
+          "#",
+          "Service Name",
+          "Description",
+          "Price",
+          "Status",
+          "Actions",
+        ]}
         customBlocks={[
           {
             index: 4,
             component: (isValid) => {
-              return isValid ? "Valid" : "Invalid"
-            }
-          }
+              return isValid ? "Active" : "Inactive";
+            },
+          },
         ]}
         extraColumns={[
           (record) => {
             return (
               <div className="flex gap-[1rem]">
-                <MdEdit onClick={() => toggleAddModal(record.id)} className="text-[#ccccc] text-[1.3rem]" />
+                <MdEdit
+                  onClick={() => {
+                    toggleAddModal(record.id);
+                    setEditServiceData(record);
+                  }}
+                  className="text-[#ccccc] text-[1.3rem]"
+                />
               </div>
             );
-          }
+          },
         ]}
       />
     </>

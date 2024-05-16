@@ -41,6 +41,7 @@ const useAdmin = () => {
     email: "",
     phoneNumber: "",
     password: "",
+    confirmPassword: "",
   });
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -49,7 +50,8 @@ const useAdmin = () => {
       [name]: value,
     });
   };
-  const { name, email, phoneNumber, password } = addAdminDetail;
+  const { name, email, phoneNumber, password, confirmPassword } =
+    addAdminDetail;
   const addAdmin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -75,7 +77,17 @@ const useAdmin = () => {
       if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
         throw new Error("Incorrect email format");
       }
-      const response = await api.post("/api/admin", addAdminDetail, {
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
+      const payload = {
+        name,
+        email,
+        phoneNumber,
+        password,
+      };
+
+      const response = await api.post("/api/admin", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -93,7 +105,7 @@ const useAdmin = () => {
       console.error("Error encountered", error);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -117,9 +129,9 @@ const useAdmin = () => {
   };
   ///////////////editAdmin/////////////
 
-  const [statusValue, setStatusValue] = useState(true)
+  const [statusValue, setStatusValue] = useState(true);
   const handleStatusButtonChange = (value) => {
-    setStatusValue(value)
+    setStatusValue(value);
   };
   const [data, setData] = useState({
     name: "",
@@ -127,15 +139,14 @@ const useAdmin = () => {
     phoneNumber: "",
     profilePicture: null,
     isValid: statusValue,
-  })
+  });
   const handleEditDataChange = (e) => {
     const { value, name } = e.target;
     setData({
       ...data,
-      [name]: value
-    })
-  }
-
+      [name]: value,
+    });
+  };
 
   const editAdmin = async (e, id) => {
     e.preventDefault();
@@ -144,7 +155,6 @@ const useAdmin = () => {
       if (data.name === "" || data.email === "" || data.phoneNumber === 0) {
         throw new Error("Please fill in all the fields");
       }
-
 
       if (data.name < 3) {
         throw new Error("Name is too short");
@@ -160,7 +170,7 @@ const useAdmin = () => {
       });
       console.log(response);
       if (response.data.success) {
-        getProviderTable()
+        getProviderTable();
         console.log(response);
         showSuccessNotification("Admin Edited Successfully!");
         setLoading(false);
@@ -172,7 +182,7 @@ const useAdmin = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -191,7 +201,6 @@ const useAdmin = () => {
     data,
     handleEditDataChange,
     editAdmin,
-
   };
 };
 

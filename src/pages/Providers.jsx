@@ -11,7 +11,7 @@ const Services = () => {
       <Routes>
         <Route path="/" element={<ProviderTable />} />
         <Route path="/addproviders" element={<ProvidersForm />} />
-        <Route path={"/:id"} element={<ProviderEditForm />} />
+        <Route path={"/edit/:id"} element={<ProviderEditForm />} />
         <Route path={"/:id"} element={<ProviderDetails />} />
       </Routes>
     </>
