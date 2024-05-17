@@ -4,7 +4,7 @@ import SelectTabComponent from "../SelectTabComponent/SelectTabComponent";
 import { Avatar } from "@mui/material";
 import Select from "../Dropdown/Select";
 import useCustomer from "../../Hooks/useCustomer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import Loader2 from "../Loader/Loader2";
 import Button from "../Button/Button";
@@ -12,6 +12,7 @@ import Button from "../Button/Button";
 const CustomerDetails = () => {
   const [clientInfo, setClientData] = useState();
   const [activeInx, setActiveIndx] = useState(0);
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -47,7 +48,11 @@ const CustomerDetails = () => {
       ) : (
         <>
           <div className="flex items-center justify-end">
-            <Button>Book Appointment</Button>
+            <Button
+              onClick={() => navigate("/admin/appointments/addappointment")}
+            >
+              Book Appointment
+            </Button>
           </div>
           <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg p-8">
             {/* <div className="flex items-center justify-between">

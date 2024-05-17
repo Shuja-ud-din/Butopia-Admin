@@ -81,11 +81,16 @@ const ServiceTable = () => {
                 htmlFor="description"
                 className="block mb-[0.3rem] text-sm font-medium text-gray-700"
               >
-                Select Category
+                Status
               </label>
-              <Select className="w-full mb-3" name="isActive">
-                <option value={true}>Category 1</option>
-                <option value={false}>Category 2</option>
+              <Select
+                value={editServiceData.isValid}
+                onChange={handleEditServiceDataChange}
+                className="w-full mb-3"
+                name="isValid"
+              >
+                <option value={true}>Active</option>
+                <option value={false}>Inactive</option>
               </Select>
             </div>
             <div className="w-full flex justify-end">

@@ -28,7 +28,11 @@ const useAdmin = () => {
       });
       console.log(response);
       if (response.data.success) {
-        setGetAllAdminsTable(response.data.data);
+        setGetAllAdminsTable(
+          response.data.data.reverse().map((item, index) => {
+            return { ...item, index: index + 1 };
+          })
+        );
       }
     } catch (e) {
       console.error("Error message", e.message);
@@ -163,7 +167,15 @@ const useAdmin = () => {
         throw new Error("Invalid Email format");
       }
 
-      const response = await api.put(`${"/api/admin/"}${id}`, data, {
+      const payLoad = {
+        name: data.name,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        profilePicture: data.profilePicture,
+        isValid: data.isValid,
+      };
+
+      const response = await api.put(`${"/api/admin/"}${id}`, payLoad, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -207,8 +219,15 @@ const useAdmin = () => {
         },
       });
       console.log(response);
+      if (response.data.success) {
+        getProviderTable();
+        showSuccessNotification("Status Changed Successfully!");
+      } else {
+        showErrorNotification(response.data.error);
+      }
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
+      showErrorNotification(e.response.data.error);
     }
   };
   return {
@@ -223,6 +242,7 @@ const useAdmin = () => {
     handleStatusButtonChange,
     statusValue,
     data,
+    setData,
     handleEditDataChange,
     editAdmin,
     handleChangeStatus,

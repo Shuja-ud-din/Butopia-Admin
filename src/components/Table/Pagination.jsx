@@ -21,7 +21,7 @@ const Pagination = ({
 
     setTotlaPages(noOfPages);
     setPagination(tempPagination);
-  }, [noOfRecordsPerPage]);
+  }, [noOfRecordsPerPage, noOfTotalRecords]);
 
   const onPrevious = () => {
     if (currentPage > 1) {

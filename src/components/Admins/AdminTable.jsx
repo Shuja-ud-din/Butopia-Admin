@@ -17,18 +17,20 @@ import Profile from "../../assets/avatar.jpg";
 const AdminTable = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate("");
-  const { getProviderTable,
+  const {
+    getProviderTable,
     getAllAdminsTable,
     getAdminData,
     getAdmin,
     handleStatusButtonChange,
     statusValue,
     data,
+    setData,
     editAdmin,
     handleEditDataChange,
     loading,
     handleChangeStatus,
-    selectedOption
+    selectedOption,
   } = useAdmin();
 
   useEffect(() => {
@@ -37,13 +39,9 @@ const AdminTable = () => {
   }, []);
   console.log(selectedOption);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [id, setId] = useState("")
-  const toggleAddModal = (record) => {
-    setId(record.id)
+  const toggleAddModal = () => {
     setIsAddModalVisible((prevState) => !prevState);
   };
-
-
 
   return (
     <>
@@ -53,78 +51,76 @@ const AdminTable = () => {
             <div className="w-full mb-3">
               <h3 className="text-[23px] font-[500] ">Edit Admin</h3>
             </div>
-            <div className="w-full flex flex-col gap-[2rem]">
+            <div className="w-full flex flex-col ">
               <div className="max-h-[12rem] w-full flex items-center justify-center">
                 <div className=" ">
-                  <img alt="Remy Sharp" src={Profile} className="rounded-full" />
+                  <img
+                    alt="Remy Sharp"
+                    src={Profile}
+                    className="rounded-full"
+                  />
                 </div>
               </div>
               <div>
-                <div className="w-full flex gap-[2rem]">
-                  <div>
-                    <label
-                      htmlFor="harvestingPeriod"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Name
-                    </label>
-                    <Input
-                      onChange={handleEditDataChange}
-                      type="text"
-                      name={"name"}
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="harvestingPeriod"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Email
-                    </label>
-                    <Input
-                      type="text"
-                      onChange={handleEditDataChange}
-                      name={"email"}
-                    />
-                  </div></div>
-                <div className="w-full flex gap-[2rem]"> <div>
-                  <label
-                    htmlFor="harvestingPeriod"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Phone Number
-                  </label>
-                  <Input
-                    type="text"
-                    onChange={handleEditDataChange}
-                    name={"phoneNumber"}
-                  />
-                </div>
-
-
-
-                  <StatusDropdown
-                    options={[
-                      { value: 'Valid', label: 'Valid' },
-                      { value: 'Not Valid', label: 'Not Valid' },
-                    ]}
-                    initialValue="Valid"
-                    onChange={handleStatusButtonChange}
-                  /></div>
+                <Input
+                  label={"Name"}
+                  type="text"
+                  name={"name"}
+                  value={data.name}
+                  placeholder={"Name"}
+                  onChange={handleEditDataChange}
+                />
+              </div>
+              <div>
+                <Input
+                  type="number"
+                  value={data.phoneNumber}
+                  name={"phoneNumber"}
+                  label={"Phone Number"}
+                  placeholder={"PhoneNumber"}
+                  onChange={handleEditDataChange}
+                />
+              </div>
+              <div>
+                <Input
+                  type="email"
+                  value={data.email}
+                  name={"email"}
+                  label={"Email"}
+                  placeholder={"Email"}
+                  onChange={handleEditDataChange}
+                />
               </div>
 
+              <div className="">
+                <label
+                  htmlFor="description"
+                  className="block mb-[0.3rem] text-sm font-medium text-gray-700"
+                  value={data.isValid}
+                >
+                  Status
+                </label>
+                <Select
+                  value={data.isValid}
+                  onChange={handleEditDataChange}
+                  className="w-full mb-3"
+                  name="isValid"
+                >
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
+                </Select>
+              </div>
             </div>
-            <div className="w-full mt-[2rem] flex justify-end">
+            <div className="w-full flex justify-end">
+              <Button className="m-2" onClick={toggleAddModal} type="secondary">
+                Cancel
+              </Button>
               <Button
                 className="m-2 w-[6rem]"
                 type="primary"
-                onClick={(e) => editAdmin(e, id).then(toggleAddModal)}
+                onClick={(e) => editAdmin(e, data.id).then(toggleAddModal)}
               >
-                {loading ? <ButtonLoader /> : "Add"}
-              </Button>
-              <Button className="m-2" onClick={toggleAddModal} type="secondary">
-                Cancel
+                {loading ? <ButtonLoader /> : "Update"}
               </Button>
             </div>
           </>
@@ -141,8 +137,8 @@ const AdminTable = () => {
       <Table
         array={getAllAdminsTable}
         search={"name"}
-        keysToDisplay={["name", "phoneNumber", "email", "isValid"]}
-        label={["Name", "Phone Number", "Email", "Status", "Actions"]}
+        keysToDisplay={["index", "name", "phoneNumber", "email", null]}
+        label={["#", "Name", "Phone Number", "Email", "Status", "Actions"]}
         // routes={["/admin/admins"]}
         filter={() => {
           return (
@@ -158,23 +154,33 @@ const AdminTable = () => {
         }}
         customBlocks={[
           {
-            index: 3,
-            component: (isValid) => {
-              return <select onChange={(e) => handleChangeStatus(e, id)} name="" id="" className="rounded-lg">
-                <option value="Valid">{isValid ? "Valid" : "Invalid"}</option>
-                <option value="Invalid">{isValid ? "Invalid" : "Valid"}</option>
-              </select>
-            }
-          }
+            index: 4,
+            component: ({ isValid, id }) => {
+              return (
+                <Select onChange={(e) => handleChangeStatus(e, id)}>
+                  <option value="Valid">{isValid ? "Valid" : "Invalid"}</option>
+                  <option value="Invalid">
+                    {isValid ? "Invalid" : "Valid"}
+                  </option>
+                </Select>
+              );
+            },
+          },
         ]}
         extraColumns={[
           (record) => {
-            return <>
-              <MdEdit onClick={() => toggleAddModal(record)} className="text-[#ccccc] text-[1.3rem]" />
-            </>
-
+            return (
+              <>
+                <MdEdit
+                  onClick={() => {
+                    toggleAddModal(record);
+                    setData(record);
+                  }}
+                  className="text-[#ccccc] text-[1.3rem]"
+                />
+              </>
+            );
           },
-
         ]}
       />
     </>

@@ -42,7 +42,6 @@ const CustomersTable = () => {
     ///edit
     editCategory,
     handleEditDataChange,
-
   } = useCategories();
 
   useEffect(() => {
@@ -112,7 +111,7 @@ const CustomersTable = () => {
                 type="primary"
                 onClick={() => editCategory(id).then(() => toggleEditModal())}
               >
-                {loading ? <ButtonLoader /> : "Edit"}
+                {loading ? <ButtonLoader /> : "Update"}
               </Button>
             </div>
           </>
@@ -123,7 +122,7 @@ const CustomersTable = () => {
         <Button
           className=""
           onClick={toggleAddModal}
-        // onClick={() => navigate("/admin/categories/addcategory")}
+          // onClick={() => navigate("/admin/categories/addcategory")}
         >
           <FaPlus size={14} className="mr-2" />
           Add Categories
@@ -224,7 +223,7 @@ const CustomersTable = () => {
                     // setIsEditModalVisible(!isEditModalVisible);
                   }}
                 />
-                <MdDelete
+                {/* <MdDelete
                   className="text-[#FF6666] text-[1.3rem]"
                   onClick={() => {
                     if (
@@ -233,7 +232,7 @@ const CustomersTable = () => {
                       return;
                     deleteCategory(record.id);
                   }}
-                />
+                /> */}
               </div>
             );
           },

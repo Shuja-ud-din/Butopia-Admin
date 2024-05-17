@@ -111,6 +111,7 @@ const useServices = () => {
     name: "",
     description: "",
     price: "",
+    isValid: true,
   });
   const handleEditServiceDataChange = (e) => {
     const { value, name } = e.target;
@@ -124,6 +125,7 @@ const useServices = () => {
     description: editServiceData.description,
     price: parseInt(editServiceData.price),
     category: "6641eb3a3ceb90164ad18851",
+    isValid: editServiceData.isValid,
   };
 
   const editService = async (id) => {

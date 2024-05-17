@@ -9,23 +9,13 @@ import { Autocomplete, Box, TextField } from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import useAppointment from "../../Hooks/useAppointment";
-
-const dummyDoctors = [
-  { name: "Dr. John Doe", id: 1 },
-  { name: "Dr. Jane Doe", id: 2 },
-  { name: "Dr. John Doe", id: 3 },
-  { name: "Dr. Jane Doe", id: 4 },
-  { name: "Dr. John Doe", id: 5 },
-  { name: "Dr. Jane Doe", id: 6 },
-  { name: "Dr. John Doe", id: 7 },
-  { name: "Dr. Jane Doe", id: 8 },
-  { name: "Dr. John Doe", id: 9 },
-  { name: "Dr. Jane Doe", id: 10 },
-];
+import useProvider from "../../Hooks/useProvider";
 
 const AppointmentForm = () => {
   const navigate = useNavigate();
-  const { addAppointment } = useAppointment()
+  const { addAppointment } = useAppointment();
+  const { getProviderTable } = useProvider();
+
   const [selectedTime, setSelectedTime] = useState(null);
   const times = [
     "9:00 AM",
@@ -121,11 +111,7 @@ const AppointmentForm = () => {
             })}
           </div>
           <div className="my-3 w-full flex items-center justify-end">
-            <Button
-              type="primary"
-              outlined
-              onClick={addAppointment}
-            >
+            <Button type="primary" outlined onClick={addAppointment}>
               Submit
             </Button>
           </div>
