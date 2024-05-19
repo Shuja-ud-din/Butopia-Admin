@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { api } from "../api/api";
 import { notification } from "antd";
+import useCustomer from './useCustomer';
+import useServices from '../Hooks/useServices'
+import useProvider from './useProvider';
+import dayjs from 'dayjs';
 const useAppointment = () => {
     const token = localStorage.getItem("token");
     const showErrorNotification = (message) => {
@@ -36,29 +40,30 @@ const useAppointment = () => {
         }
     };
     ////////////////addAppointment//////////////
-    const [data, setData] = useState({
-        title: "",
-        description: "",
-    });
-    const handleChange = (e) => {
-        const { value, name } = e.target;
-        setData({
-            ...data,
-            [name]: value,
-        });
-    };
+    const { getCustomerTable, customerId } = useCustomer()
+    const { getProviderTable, providerId } = useProvider()
+    const { getServicesTable, serviceId } = useServices()
 
+    const [selectedDate, setSelectedDate] = useState(dayjs("2022-04-17"))
+    const handleDateChange = (date) => {
+        setSelectedDate(date ? date.toISOString() : 'Invalid Date')
+    }
     const payLoad = {
-        customer: "6645203e496b629a92500736",
-        provider: "6641192102f54fc4988c3f20",
-        service: "664200303ceb90164ad188df",
-        date: "2024-05-15T15:22:06.354Z",
-        id: "664533edf8702b241dafd05",
-        __v: 0,
+        customer: customerId,
+        provider: providerId,
+        service: serviceId,
+        date: selectedDate,
     };
 
 
     const addAppointment = async (e) => {
+        useEffect(() => {
+            getCustomerTable(),
+                getProviderTable(),
+                getServicesTable()
+        }, [])
+        console.log(customerId);
+
         setLoading(true);
         try {
             const response = await api.post("/api/appointment", payLoad, {
@@ -67,9 +72,9 @@ const useAppointment = () => {
                 },
             });
 
+            console.log(response);
             if (response.data.success) {
-                console.log(response);
-                showSuccessNotification("Category Added Successfully!");
+                showSuccessNotification("Appointment Added Successfully!");
                 getCategoryTable();
                 setLoading(false);
             } else {
@@ -89,7 +94,9 @@ const useAppointment = () => {
         loading,
         getAppointmentTableData,
         getAppointmentTable,
-        addAppointment
+        addAppointment,
+        handleDateChange,
+        selectedDate,
     }
 }
 

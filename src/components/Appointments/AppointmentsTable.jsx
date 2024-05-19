@@ -11,12 +11,16 @@ import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
 import { MdCancel, MdSchedule } from "react-icons/md";
 import useAppointment from "../../Hooks/useAppointment";
+import useCustomer from "../../Hooks/useCustomer";
 
 const AppointmentsTable = () => {
+
+
   const navigate = useNavigate();
   const { getAppointmentTableData, getAppointmentTable } = useAppointment()
   useEffect(() => {
     getAppointmentTable()
+
   }, [])
   console.log(getAppointmentTableData);
   function convertToDate(dateString) {

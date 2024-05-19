@@ -13,8 +13,12 @@ import useProvider from "../../Hooks/useProvider";
 
 const AppointmentForm = () => {
   const navigate = useNavigate();
-  const { addAppointment } = useAppointment();
-  const { getProviderTable } = useProvider();
+  const {
+    addAppointment,
+    handleDateChange,
+    selectedDate
+  } = useAppointment();
+
 
   const [selectedTime, setSelectedTime] = useState(null);
   const times = [
@@ -26,6 +30,13 @@ const AppointmentForm = () => {
     "11:30 AM",
     "12:00 PM",
   ];
+  const dummyDoctors = [
+    "doctor",
+    "doctor",
+    "doctor",
+    "doctor",
+    "doctor",
+  ]
   const eveningSlot = [
     "5:00 PM",
     "5:30 PM",
@@ -35,10 +46,11 @@ const AppointmentForm = () => {
     "7:30 PM",
     "8:00 PM",
   ];
-
   const handleSelectedTime = (time) => {
     setSelectedTime(time);
   };
+  console.log(selectedDate);
+
   return (
     <>
       <div className="w-full ">
@@ -73,7 +85,11 @@ const AppointmentForm = () => {
       <div className="w-full flex mt-3 flex">
         <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar defaultValue={dayjs("2022-04-17")} />
+            <DateCalendar
+              name="date"
+              defaultValue={dayjs("2022-04-17")}
+              onChange={handleDateChange}
+            />
           </LocalizationProvider>
         </div>
         <div className="w-70 flex  flex-col p-4 ml-2 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
@@ -111,7 +127,7 @@ const AppointmentForm = () => {
             })}
           </div>
           <div className="my-3 w-full flex items-center justify-end">
-            <Button type="primary" outlined onClick={addAppointment}>
+            <Button type="primary" onClick={addAppointment}>
               Submit
             </Button>
           </div>
