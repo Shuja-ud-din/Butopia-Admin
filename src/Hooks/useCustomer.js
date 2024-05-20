@@ -24,7 +24,7 @@ const useCustomer = () => {
   };
   /////////////getAllCustomers/////////////
   const [data, setData] = useState();
-  const [customerId, setCustomerId] = useState()
+  const [customerId, setCustomerId] = useState();
   const getCustomerTable = async () => {
     try {
       const response = await api.get(`/api/customer`, {
@@ -34,9 +34,7 @@ const useCustomer = () => {
       });
       console.log(response);
       if (response.data.success) {
-        setCustomerId(
-          response.data.data.id[0]
-        )
+        setCustomerId(response.data.data[0].id);
         setData(
           response.data.data.reverse().map((item, index) => {
             return {
@@ -50,7 +48,7 @@ const useCustomer = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
     }
   };
@@ -131,7 +129,7 @@ const useCustomer = () => {
       console.error("Error encountered", error);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -152,7 +150,7 @@ const useCustomer = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
     }
   };

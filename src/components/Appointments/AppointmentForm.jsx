@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CalendarComponent from "../Calendar/Calendar";
 import TimePickerComponent from "../TimePickerComponent/TimePickerComponent";
 import Button from "../Button/Button";
@@ -10,15 +10,21 @@ import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import useAppointment from "../../Hooks/useAppointment";
 import useProvider from "../../Hooks/useProvider";
+import useCustomer from "../../Hooks/useCustomer";
+import getAppointmentTime from "../../utils/getAppointmentTime";
+import { formatTime } from "../../utils/timeFormat";
+import useServices from "../../Hooks/useServices";
 
 const AppointmentForm = () => {
   const navigate = useNavigate();
-  const {
-    addAppointment,
-    handleDateChange,
-    selectedDate
-  } = useAppointment();
+  const { addAppointment, handleDateChange, selectedDate } = useAppointment();
 
+  const { data, getProviderTable } = useProvider();
+  const service = useServices();
+  const customer = useCustomer();
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedProvider, setSelectedProvider] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
 
   const [selectedTime, setSelectedTime] = useState(null);
   const times = [
@@ -30,13 +36,7 @@ const AppointmentForm = () => {
     "11:30 AM",
     "12:00 PM",
   ];
-  const dummyDoctors = [
-    "doctor",
-    "doctor",
-    "doctor",
-    "doctor",
-    "doctor",
-  ]
+
   const eveningSlot = [
     "5:00 PM",
     "5:30 PM",
@@ -49,7 +49,14 @@ const AppointmentForm = () => {
   const handleSelectedTime = (time) => {
     setSelectedTime(time);
   };
-  console.log(selectedDate);
+
+  useEffect(() => {
+    getProviderTable();
+    customer.getCustomerTable();
+    service.getServicesTable();
+  }, []);
+
+  console.log(service.data);
 
   return (
     <>
@@ -63,11 +70,24 @@ const AppointmentForm = () => {
             className="p-0 bg-[white]"
             size="small"
             id="combo-box-demo"
-            // onChange={(e, newValue) => setSelectedClient(newValue)}
-            options={dummyDoctors}
+            onChange={(e, newValue) => setSelectedProvider(newValue)}
+            options={data || [{ name: "Loading..." }]}
             sx={{ width: 300 }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => <TextField {...params} label="Doctor" />}
+          />
+        </div>
+        <div className="mr-5">
+          <Autocomplete
+            disablePortal
+            className="p-0 bg-[white]"
+            size="small"
+            id="combo-box-demo"
+            onChange={(e, newValue) => setSelectedClient(newValue)}
+            options={customer.data || [{ name: "Loading..." }]}
+            sx={{ width: 300 }}
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => <TextField {...params} label="Client" />}
           />
         </div>
         <Autocomplete
@@ -75,11 +95,11 @@ const AppointmentForm = () => {
           className="p-0 bg-[white]"
           size="small"
           id="combo-box-demo"
-          // onChange={(e, newValue) => setSelectedClient(newValue)}
-          options={dummyDoctors}
+          onChange={(e, newValue) => setSelectedService(newValue)}
+          options={service.data || [{ name: "Loading..." }]}
           sx={{ width: 300 }}
           getOptionLabel={(option) => option.name}
-          renderInput={(params) => <TextField {...params} label="Client" />}
+          renderInput={(params) => <TextField {...params} label="Service" />}
         />
       </div>
       <div className="w-full flex mt-3 flex">
@@ -87,7 +107,7 @@ const AppointmentForm = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
               name="date"
-              defaultValue={dayjs("2022-04-17")}
+              defaultValue={dayjs(new Date())}
               onChange={handleDateChange}
             />
           </LocalizationProvider>
@@ -127,7 +147,17 @@ const AppointmentForm = () => {
             })}
           </div>
           <div className="my-3 w-full flex items-center justify-end">
-            <Button type="primary" onClick={addAppointment}>
+            <Button
+              type="primary"
+              onClick={() =>
+                addAppointment(
+                  selectedClient.id,
+                  selectedProvider.id,
+                  selectedService.id,
+                  getAppointmentTime(selectedDate, selectedTime)
+                )
+              }
+            >
               Submit
             </Button>
           </div>

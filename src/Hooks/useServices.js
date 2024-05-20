@@ -31,7 +31,7 @@ const useServices = () => {
       });
       console.log(response);
       if (response.data.success) {
-        setServiceId(response.data.data.id[0])
+        setServiceId(response.data.data[0].id);
         setData(
           response.data.data.map((item, index) => {
             return {
@@ -103,7 +103,7 @@ const useServices = () => {
       console.log(response);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -165,7 +165,7 @@ const useServices = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -181,7 +181,7 @@ const useServices = () => {
     editServiceData,
     editService,
     setEditServiceData,
-    serviceId
+    serviceId,
   };
 };
 

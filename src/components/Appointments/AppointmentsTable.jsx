@@ -14,18 +14,15 @@ import useAppointment from "../../Hooks/useAppointment";
 import useCustomer from "../../Hooks/useCustomer";
 
 const AppointmentsTable = () => {
-
-
   const navigate = useNavigate();
-  const { getAppointmentTableData, getAppointmentTable } = useAppointment()
+  const { getAppointmentTableData, getAppointmentTable } = useAppointment();
   useEffect(() => {
-    getAppointmentTable()
-
-  }, [])
+    getAppointmentTable();
+  }, []);
   console.log(getAppointmentTableData);
   function convertToDate(dateString) {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US');
+    return date.toLocaleDateString("en-US");
   }
 
   const date = convertToDate("2024-05-15T15:22:06.354Z");
@@ -69,15 +66,15 @@ const AppointmentsTable = () => {
       <Table
         array={getAppointmentTableData}
         search={"customer"}
-        keysToDisplay={["customer", "provider", "date"]}
-        label={["Customer Name", "Provider Name", "date", "Actions"]}
+        keysToDisplay={["customer", "provider", "service", "date"]}
+        label={["Customer Name", "Provider Name", "service", "date"]}
         customBlocks={[
           {
-            index: 2,
+            index: 3,
             component: (date) => {
-              return convertToDate(date)
-            }
-          }
+              return convertToDate(date);
+            },
+          },
         ]}
         filter={() => {
           return (
@@ -92,17 +89,17 @@ const AppointmentsTable = () => {
             </>
           );
         }}
-        extraColumns={[
-          () => {
-            return (
-              <div className="flex gap-[1rem]">
-                <MdSchedule className="text-[1.3rem]" />
+        // extraColumns={[
+        //   () => {
+        //     return (
+        //       <div className="flex gap-[1rem]">
+        //         <MdSchedule className="text-[1.3rem]" />
 
-                <MdCancel className="text-[1.3rem]" />
-              </div>
-            );
-          },
-        ]}
+        //         <MdCancel className="text-[1.3rem]" />
+        //       </div>
+        //     );
+        //   },
+        // ]}
       />
     </>
   );

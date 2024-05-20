@@ -21,7 +21,7 @@ const useProvider = () => {
   };
   /////////////providersTable/////////////
   const [data, setData] = useState();
-  const [providerId, setProviderId] = useState()
+  const [providerId, setProviderId] = useState();
   const getProviderTable = async () => {
     try {
       const response = await api.get(`/api/provider`, {
@@ -30,7 +30,7 @@ const useProvider = () => {
         },
       });
       if (response.data.success) {
-        setProviderId(response.data.data.id[0])
+        setProviderId(response.data.data[0].id);
         setData(
           response.data.data.map((item, index) => {
             return {
@@ -155,7 +155,7 @@ const useProvider = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -194,7 +194,7 @@ const useProvider = () => {
     workingDays: editSelectDay,
     workingTimes: {
       start: `${editData.startTime}${" PM"}`,
-      end: `${editData.endTime}${" AM"}`
+      end: `${editData.endTime}${" AM"}`,
     },
   };
 
@@ -255,16 +255,16 @@ const useProvider = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
   };
   ///////////////////getProvider/////////////
   const [getProviderData, setGetProviderData] = useState([]);
-  const [providerDetailLoading, setProviderDetailLoading] = useState(false)
+  const [providerDetailLoading, setProviderDetailLoading] = useState(false);
   const getProvider = async (id) => {
-    setProviderDetailLoading(true)
+    setProviderDetailLoading(true);
     console.log(id);
     try {
       const response = await api.get(`${"/api/provider/"}${id}`, {
@@ -289,11 +289,11 @@ const useProvider = () => {
         reviews: data.reviews,
       });
       if (response) {
-        setProviderDetailLoading(false)
+        setProviderDetailLoading(false);
       }
     } catch (e) {
       console.error(e.message);
-      setProviderDetailLoading(false)
+      setProviderDetailLoading(false);
     }
   };
   return {
@@ -316,7 +316,7 @@ const useProvider = () => {
     editProvider,
     editData,
     editPayload,
-    providerId
+    providerId,
   };
 };
 
