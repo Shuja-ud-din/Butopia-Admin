@@ -86,6 +86,7 @@ const useAppointment = () => {
     getAppointmentTable,
     addAppointment,
     handleDateChange,
+    setGetAppointmentTableData,
     selectedDate,
   };
 };
