@@ -27,6 +27,8 @@ const AppointmentsTable = () => {
     getAppointmentTable();
   }, []);
 
+  console.log(getAppointmentTableData);
+
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [appointmentDetails, setAppointmentDetails] = useState();
   const [cancelReason, setCancelReason] = useState("");

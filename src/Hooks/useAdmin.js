@@ -3,6 +3,7 @@ import { api } from "../api/api";
 import { notification } from "antd";
 const useAdmin = () => {
   const token = localStorage.getItem("token");
+  const [profilePicture, setProfilePicture] = useState(null);
   const showErrorNotification = (message) => {
     notification.error({
       message: "Error",
@@ -171,7 +172,7 @@ const useAdmin = () => {
         name: data.name,
         email: data.email,
         phoneNumber: data.phoneNumber,
-        profilePicture: data.profilePicture,
+        profilePicture: profilePicture,
         isValid: data.isValid,
       };
 
@@ -246,6 +247,7 @@ const useAdmin = () => {
     handleEditDataChange,
     editAdmin,
     handleChangeStatus,
+    setProfilePicture,
     selectedOption,
   };
 };

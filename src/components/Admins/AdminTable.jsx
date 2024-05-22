@@ -16,6 +16,7 @@ import Profile from "../../assets/avatar.jpg";
 
 const AdminTable = () => {
   const token = localStorage.getItem("token");
+  const [admins, setAdmins] = useState();
   const navigate = useNavigate("");
   const {
     getProviderTable,
@@ -31,6 +32,7 @@ const AdminTable = () => {
     loading,
     handleChangeStatus,
     selectedOption,
+    setProfilePicture,
   } = useAdmin();
 
   useEffect(() => {
@@ -43,6 +45,10 @@ const AdminTable = () => {
     setIsAddModalVisible((prevState) => !prevState);
   };
 
+  useEffect(() => {
+    setAdmins(getAllAdminsTable);
+  }, [data]);
+
   return (
     <>
       {isAddModalVisible && (
@@ -52,12 +58,12 @@ const AdminTable = () => {
               <h3 className="text-[23px] font-[500] ">Edit Admin</h3>
             </div>
             <div className="w-full flex flex-col ">
-              <div className="max-h-[12rem] w-full flex items-center justify-center">
-                <div className=" ">
-                  <img
-                    alt="Remy Sharp"
-                    src={Profile}
-                    className="rounded-full"
+              <div className=" w-full flex items-center justify-center">
+                <div className="h-[200px] w-[200px]">
+                  <ImageUploader
+                    setUrl={setProfilePicture}
+                    image={data.profilePicture}
+                    profile
                   />
                 </div>
               </div>
@@ -135,7 +141,7 @@ const AdminTable = () => {
       </div>
 
       <Table
-        array={getAllAdminsTable}
+        array={admins}
         search={"name"}
         keysToDisplay={["index", "name", "phoneNumber", "email", null]}
         label={["#", "Name", "Phone Number", "Email", "Status", "Actions"]}

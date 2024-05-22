@@ -24,7 +24,6 @@ const useCustomer = () => {
   };
   /////////////getAllCustomers/////////////
   const [data, setData] = useState();
-  const [customerId, setCustomerId] = useState();
   const getCustomerTable = async () => {
     try {
       const response = await api.get(`/api/customer`, {
@@ -34,7 +33,6 @@ const useCustomer = () => {
       });
       console.log(response);
       if (response.data.success) {
-        setCustomerId(response.data.data[0].id);
         setData(
           response.data.data.reverse().map((item, index) => {
             return {
@@ -155,16 +153,83 @@ const useCustomer = () => {
     }
   };
 
+  // edit customer
+
+  const editCustomer = async () => {
+    setLoading(true);
+
+    console.log(addCustomerData);
+    try {
+      if (
+        addCustomerData.name === "" ||
+        addCustomerData.email === "" ||
+        addCustomerData.phoneNumber === ""
+      ) {
+        throw new Error("Please fill in all the fields");
+      }
+
+      if (addCustomerData.phoneNumber.length !== 12) {
+        throw new Error("Phone number must be of 12 digits");
+      }
+      if (!addCustomerData.phoneNumber.match(/^\d+$/)) {
+        throw new Error("Phone Number must be in digits");
+      }
+      if (!addCustomerData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        throw new Error("Incorrect email format");
+      }
+
+      const payLoad = {
+        name: addCustomerData.name,
+        email: addCustomerData.email,
+        phoneNumber: addCustomerData.phoneNumber,
+        profilePicture: imagePreview,
+        isValid: addCustomerData.isValid,
+      };
+
+      console.log(payLoad);
+
+      const response = await api.put(
+        `/api/customer/${addCustomerData.id}`,
+        payLoad,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        setLoading(false);
+        showSuccessNotification("Customer Updated Successfully!");
+        getCustomerTable();
+      } else {
+        showErrorNotification(response.data.error);
+        setLoading(false);
+      }
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error encountered", error);
+      showErrorNotification(
+        (error.response ? error.response.data.message : error.message) ||
+          "Something went wrong!"
+      );
+      setLoading(false);
+    }
+  };
+
   return {
     data,
+    setData,
     getCustomerTable,
     addCustomerData,
+    setAddCustomerData,
     handleChange,
     addCustomer,
     loading,
     setImagePreview,
     getCustomerById,
-    customerId,
+
+    editCustomer,
   };
 };
 

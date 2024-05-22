@@ -14,6 +14,7 @@ const data = [
     serviceName: "Service 1",
     date: "2015-03-25",
     amount: "2000",
+    paymentMethod: "Cash",
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const data = [
     serviceName: "Service 1",
     date: "2015-03-25",
     amount: "2000",
+    paymentMethod: "Card",
   },
 ];
 
@@ -49,6 +51,7 @@ const PaymentsTable = () => {
           "phone",
           "date",
           "amount",
+          "paymentMethod",
         ]}
         label={[
           "#",
@@ -57,6 +60,7 @@ const PaymentsTable = () => {
           "Phone Number",
           "Date",
           "Amount",
+          "Payment Method",
           "Actions",
         ]}
         filter={() => {

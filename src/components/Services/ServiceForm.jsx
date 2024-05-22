@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
-import ServiceDropDown from "../SelectDropdown/ServiceDropDownSelect";
-import ServiceProviderDropDown from "../SelectDropdown/ServiceProviderDropDown";
 import useServices from "../../Hooks/useServices";
 import ImageUploader from "../ImageUploader/ImageUploader";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import useCategories from "../../Hooks/useCategories";
+import { Autocomplete, TextField } from "@mui/material";
+import useProvider from "../../Hooks/useProvider";
 
 const ServiceForm = () => {
-  const { addService, handleChange, addServiceData, loading } = useServices();
+  const {
+    addService,
+    handleChange,
+    addServiceData,
+    loading,
+    setAddServiceData,
+    setImageUrl,
+  } = useServices();
+
+  const { getAllCategories, getCategoryTable } = useCategories();
+  const { data, getProviderTable } = useProvider();
+
+  useEffect(() => {
+    getCategoryTable();
+    getProviderTable();
+  }, []);
 
   return (
     <>
@@ -19,7 +35,7 @@ const ServiceForm = () => {
         <form className="p-7 " onSubmit={addService}>
           <div className="flex  mt-10 grid grid-cols-12">
             <div className="h-[15rem] h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
-              <ImageUploader />
+              <ImageUploader setUrl={setImageUrl} />
             </div>
             <div className=" col-span-8">
               <div>
@@ -32,24 +48,60 @@ const ServiceForm = () => {
                 <Input onChange={handleChange} name={"name"} type="text" />
               </div>
 
-              {/* <div>
-                                <label
-                                    htmlFor="scientificName"
-                                    className="block text-sm font-medium text-gray-700"
-                                >
-                                    Service Category
-                                </label>
-                                <div className='mt-2 mb-2'><ServiceDropDown /></div>
-                            </div>
-                            <div>
-                                <label
-                                    htmlFor="scientificName"
-                                    className="block text-sm font-medium text-gray-700"
-                                >
-                                    Service Provider
-                                </label>
-                                <div className='mt-2 mb-2'><ServiceProviderDropDown /></div>
-                            </div> */}
+              <div className="mt-4">
+                <label
+                  htmlFor="category"
+                  className="block text-sm font-medium mb-3 text-gray-700"
+                >
+                  Category
+                </label>
+                <Autocomplete
+                  disablePortal
+                  className="p-0 bg-[white]"
+                  size="small"
+                  id="combo-box-demo"
+                  onChange={(e, newValue) => {
+                    setAddServiceData({
+                      ...addServiceData,
+                      category: newValue.id,
+                    });
+                  }}
+                  options={getAllCategories || [{ name: "Loading..." }]}
+                  sx={{ width: "100%" }}
+                  getOptionLabel={(option) => option.title}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Category" />
+                  )}
+                />
+              </div>
+
+              <div className="mt-4">
+                <label
+                  htmlFor="category"
+                  className="block text-sm font-medium mb-3 text-gray-700"
+                >
+                  Provider
+                </label>
+                <Autocomplete
+                  disablePortal
+                  className="p-0 bg-[white]"
+                  size="small"
+                  id="combo-box-demo"
+                  onChange={(e, newValue) => {
+                    setAddServiceData({
+                      ...addServiceData,
+                      provider: newValue.id,
+                    });
+                  }}
+                  options={data || [{ name: "Loading..." }]}
+                  sx={{ width: "100%" }}
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Provider" />
+                  )}
+                />
+              </div>
+
               <label
                 htmlFor="description"
                 className="mt-5 block text-sm font-medium text-gray-700"

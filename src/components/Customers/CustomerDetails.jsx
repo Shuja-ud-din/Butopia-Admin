@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import Loader2 from "../Loader/Loader2";
 import Button from "../Button/Button";
+import Table from "../Table/Table";
 
 const CustomerDetails = () => {
   const [clientInfo, setClientData] = useState();
@@ -27,6 +28,11 @@ const CustomerDetails = () => {
     const response = await getCustomerById(id);
     setClientData(response);
   };
+
+  function convertToDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US");
+  }
 
   useEffect(() => {
     getCustomerData();
@@ -121,8 +127,34 @@ const CustomerDetails = () => {
                 </button>
               ))}
             </div>
-            <div className="mt-4 w-full min-h-[25rem] flex items-center justify-center ml-5 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg p-8">
-              {activeInx === 0 ? "Appointment Table" : "Payment Table"}
+
+            <div className="w-full px-9 py-2">
+              {activeInx === 0 ? (
+                <>
+                  <h3 className="mb-3 font-[600] text-[22px] ">Appointments</h3>
+                  <Table
+                    array={clientInfo.appointments}
+                    keysToDisplay={[
+                      "index",
+                      "provider",
+                      "service",
+                      "date",
+                      "status",
+                    ]}
+                    customBlocks={[
+                      {
+                        index: 3,
+                        component: (date) => {
+                          return convertToDate(date);
+                        },
+                      },
+                    ]}
+                    label={["#", "Provider", "Service", "Date", "Status"]}
+                  />
+                </>
+              ) : (
+                <h3 className="mb-3 font-[600] text-[22px] ">Payment Table</h3>
+              )}
             </div>
           </div>
         </>

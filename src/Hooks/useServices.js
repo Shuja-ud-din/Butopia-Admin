@@ -4,6 +4,9 @@ import { api } from "../api/api";
 
 const useServices = () => {
   const token = localStorage.getItem("token");
+
+  const [imageUrl, setImageUrl] = useState(null);
+
   const showErrorNotification = (message) => {
     notification.error({
       message: "Error",
@@ -21,7 +24,6 @@ const useServices = () => {
 
   /////////////servicesTable/////////////
   const [data, setData] = useState();
-  const [serviceId, setServiceId] = useState();
   const getServicesTable = async () => {
     try {
       const response = await api.get(`/api/service`, {
@@ -31,7 +33,6 @@ const useServices = () => {
       });
       console.log(response);
       if (response.data.success) {
-        setServiceId(response.data.data[0].id);
         setData(
           response.data.data.map((item, index) => {
             return {
@@ -52,19 +53,21 @@ const useServices = () => {
     description: "",
     price: "",
   });
-  const handleChange = (e) => {
+  const handleChange = (e, keyName) => {
     const { value, name } = e.target;
     setAddServiceData({
       ...addServiceData,
-      [name]: value,
+      [keyName || name]: value,
     });
-    console.log(addServiceData);
   };
+  console.log(addServiceData);
   const payLoad = {
     name: addServiceData.name,
     description: addServiceData.description,
     price: parseInt(addServiceData.price),
-    category: "6641eb3a3ceb90164ad18851",
+    category: addServiceData.category,
+    provider: addServiceData.provider,
+    image: imageUrl,
   };
   const { name, description, price, category } = payLoad;
 
@@ -95,17 +98,16 @@ const useServices = () => {
         setLoading(false);
       } else {
         console.log(response);
-        showErrorNotification(e.message);
+        showErrorNotification(response.data.error || "Something went wrong!");
         setLoading(false);
       }
     } catch (e) {
-      console.error(e.message);
-      console.log(response);
+      console.error(e);
+      setLoading(false);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
           "Something went wrong!"
       );
-      setLoading(false);
     }
   };
   /////////////////////////editService///////////////
@@ -126,8 +128,8 @@ const useServices = () => {
     name: editServiceData.name,
     description: editServiceData.description,
     price: parseInt(editServiceData.price),
-    category: "6641eb3a3ceb90164ad18851",
     isValid: editServiceData.isValid,
+    image: imageUrl,
   };
 
   const editService = async (id) => {
@@ -179,9 +181,10 @@ const useServices = () => {
     loading,
     handleEditServiceDataChange,
     editServiceData,
+    setAddServiceData,
     editService,
     setEditServiceData,
-    serviceId,
+    setImageUrl,
   };
 };
 

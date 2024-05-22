@@ -12,16 +12,13 @@ import ButtonLoader from "../ButtonLoader/ButtonLoader";
 import ImageUploader from "../ImageUploader/ImageUploader";
 const ServiceTable = () => {
   const navigate = useNavigate("");
-  useEffect(() => {
-    getServicesTable();
-  }, []);
+
   const [id, setId] = useState("");
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const toggleAddModal = (id) => {
     setId(id);
     setIsAddModalVisible((prevState) => !prevState);
   };
-  console.log(id);
   const {
     data,
     getServicesTable,
@@ -30,8 +27,15 @@ const ServiceTable = () => {
     editService,
     loading,
     setEditServiceData,
+    setImageUrl,
   } = useServices();
-  console.log(id);
+
+  useEffect(() => {
+    getServicesTable();
+  }, []);
+
+  console.log(data);
+
   return (
     <>
       {isAddModalVisible && (
@@ -40,9 +44,14 @@ const ServiceTable = () => {
             <div className="w-full mb-3">
               <h3 className="text-[23px] font-[500] ">Edit Service</h3>
             </div>
-            {/* <div className="div">
-              <ImageUploader />
-            </div> */}
+            <div className="flex items-center justify-center ">
+              <div className="h-[200px]">
+                <ImageUploader
+                  image={editServiceData.image}
+                  setUrl={setImageUrl}
+                />
+              </div>
+            </div>
             <div>
               <Input
                 label={"Service Name"}

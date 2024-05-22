@@ -43,7 +43,7 @@ const useAppointment = () => {
         );
       }
     } catch (e) {
-      console.error("Error message", e.message);
+      console.error("Error message", e);
     }
   };
   ////////////////addAppointment//////////////
