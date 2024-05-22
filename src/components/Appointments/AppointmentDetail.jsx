@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import doctorProfile from "../../assets/avatar.jpg";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import avatar from '../../assets/images/clientAvatar.png';
 import useAppointment from "../../Hooks/useAppointment";
@@ -10,7 +10,7 @@ import Button from "../Button/Button";
 const AppointmentDetail = () => {
     const { id } = useParams();
     const { getAppointment, getAppointmentDetail, loading } = useAppointment();
-
+    const navigate = useNavigate("")
     useEffect(() => {
         getAppointment(id);
     }, [id, getAppointment]);
@@ -43,7 +43,16 @@ const AppointmentDetail = () => {
     const service = appointmentDetail.service || {};
     const provider = appointmentDetail.provider || {};
     const customer = appointmentDetail.customer || {};
+    const handleServiceDetail = () => {
+        navigate(`${"/admin/services/"}${service.id}`)
 
+    }
+    const handleCustomerDetail = () => {
+        navigate(`${"/admin/customers/"}${customer.id}`)
+    }
+    const handleProviderClick = () => {
+        navigate(`${"/admin/providers/"}${provider.id}`)
+    }
     return (
         <>
             <div className="w-full flex justify-between mb-5">
@@ -75,9 +84,9 @@ const AppointmentDetail = () => {
                                 <div className="h-full w-[70%] flex gap-[2rem]">
                                     <div>
                                         {service.profilePicture !== null ? (
-                                            <img src={doctorProfile} alt="Profile" className="rounded-[50%] shadow-lg" />
+                                            <img onClick={handleServiceDetail} src={doctorProfile} alt="Profile" className="rounded-[50%] shadow-lg" />
                                         ) : (
-                                            <img src={avatar} alt="Profile" className="rounded-[50%] shadow-lg" />
+                                            <img onClick={handleServiceDetail} src={avatar} alt="Profile" className="rounded-[50%] shadow-lg" />
                                         )}
                                     </div>
                                     <div className="flex flex-col gap-[1rem]">
@@ -97,6 +106,7 @@ const AppointmentDetail = () => {
                             <div className="w--[30%]  mt-[2rem] justify-between flex items-center ">
                                 <div className="w-[40%]">
                                     <AppointmentDetailCard
+                                        onClick={handleProviderClick}
                                         profilePhoto={provider.profilePicture !== null ? doctorProfile : avatar}
                                         name={provider.name || "Loading..."}
                                         email={provider.email || "Loading..."}
@@ -106,9 +116,9 @@ const AppointmentDetail = () => {
                                 </div>
                                 <div className="w-[70%] text-[0.9rem] p-[2rem] font-[400]">
                                     {customer.profilePicture !== null ? (
-                                        <img src={doctorProfile} alt="Profile" className="mb-[1.5rem] h-[4rem] rounded-[50%] shadow-lg" />
+                                        <img onClick={handleCustomerDetail} src={doctorProfile} alt="Profile" className="mb-[1.5rem] h-[4rem] rounded-[50%] shadow-lg" />
                                     ) : (
-                                        <img src={avatar} alt="Profile" className="h-[4rem] mb-[1.5rem] rounded-[50%] shadow-lg" />
+                                        <img onClick={handleCustomerDetail} src={avatar} alt="Profile" className="h-[4rem] mb-[1.5rem] rounded-[50%] shadow-lg" />
                                     )}The name of the Customer is <b>{customer.name || "Loading..."}</b> has an appointment scheduled for <b>{appointmentDetail.date ? formatTime(appointmentDetail.date) : "Loading..."}</b>, which can
                                     be caught up through <b>{customer.email || "Loading..."}</b> and
                                     having <b>{customer.phoneNumber || "Loading..."}</b> phone number.

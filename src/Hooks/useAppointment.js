@@ -106,6 +106,9 @@ const useAppointment = () => {
       }
     } catch (e) {
       console.error(e.message);
+      showErrorNotification(
+        (e.response ? e.response.data.message : e.message) ||
+        "Something went wrong")
       setLoading(false);
     }
   };
