@@ -9,6 +9,7 @@ import Modal from "../Modal/Modal";
 import Input from "../Input/Input";
 import Select from "../Dropdown/Select";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import ImageUploader from "../ImageUploader/ImageUploader";
 const ServiceTable = () => {
   const navigate = useNavigate("");
   useEffect(() => {
@@ -39,6 +40,9 @@ const ServiceTable = () => {
             <div className="w-full mb-3">
               <h3 className="text-[23px] font-[500] ">Edit Service</h3>
             </div>
+            {/* <div className="div">
+              <ImageUploader />
+            </div> */}
             <div>
               <Input
                 label={"Service Name"}

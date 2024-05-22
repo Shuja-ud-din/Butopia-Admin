@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
@@ -12,25 +12,40 @@ import FilterButton from "../Button/FilterButton";
 import { MdOutlineCancel } from "react-icons/md";
 import useAppointment from "../../Hooks/useAppointment";
 import useCustomer from "../../Hooks/useCustomer";
+import Modal from "../Modal/Modal";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
 
 const AppointmentsTable = () => {
   const navigate = useNavigate();
   const {
     getAppointmentTableData,
     getAppointmentTable,
-    setGetAppointmentTableData,
+    cancelAppointment,
+    loading,
   } = useAppointment();
   useEffect(() => {
     getAppointmentTable();
   }, []);
+
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [appointmentDetails, setAppointmentDetails] = useState();
+  const [cancelReason, setCancelReason] = useState("");
+  const [appointments, setAppointments] = useState();
 
   function convertToDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US");
   }
 
-  const date = convertToDate("2024-05-15T15:22:06.354Z");
-  console.log(date);
+  const handleCancelAppointment = (appointment) => {
+    setShowCancelModal(true);
+    setAppointmentDetails(appointment);
+  };
+
+  useEffect(() => {
+    setAppointments(getAppointmentTableData);
+  }, [getAppointmentTableData]);
+
   return (
     <>
       <div className="flex gap-4 grid grid-cols-12 my-5 ">
@@ -88,10 +103,18 @@ const AppointmentsTable = () => {
       </div>
 
       <Table
-        array={getAppointmentTableData}
+        array={appointments}
         search={"customer"}
-        keysToDisplay={["customer", "provider", "service", "date", "status"]}
+        keysToDisplay={[
+          "index",
+          "customer",
+          "provider",
+          "service",
+          "date",
+          "status",
+        ]}
         label={[
+          "#",
           "Customer Name",
           "Provider Name",
           "service",
@@ -101,7 +124,7 @@ const AppointmentsTable = () => {
         ]}
         customBlocks={[
           {
-            index: 3,
+            index: 4,
             component: (date) => {
               return convertToDate(date);
             },
@@ -110,7 +133,17 @@ const AppointmentsTable = () => {
         filter={() => {
           return (
             <>
-              <Select className="mx-3" onChange={(e) => {}}>
+              <Select
+                className="mx-3"
+                onChange={(e) => {
+                  setAppointments(
+                    getAppointmentTableData.filter((item) => {
+                      if (e.target.value === "All") return item;
+                      return item.status === e.target.value;
+                    })
+                  );
+                }}
+              >
                 <option value="All">All</option>
                 <option value="Pending">Pending</option>
                 <option value="Conducted">Conducted</option>
@@ -121,15 +154,59 @@ const AppointmentsTable = () => {
           );
         }}
         extraColumns={[
-          () => {
+          (appointment) => {
             return (
-              <div className="flex gap-[1rem]">
+              <div
+                className="flex gap-[1rem]"
+                onClick={() => handleCancelAppointment(appointment)}
+              >
                 <MdOutlineCancel size={20} color="red" />
               </div>
             );
           },
         ]}
       />
+
+      {/* Modals */}
+
+      {showCancelModal && (
+        <Modal toggleModal={() => setShowCancelModal(false)}>
+          <div className="flex justify-between items-center">
+            <h2 className="text-[20px] font-[500] ">Cancel Appointment</h2>
+          </div>
+          <p className="my-3 text-[red]">
+            Are you sure you want to cancel this appointment?
+          </p>
+          <div className="my-3">
+            <textarea
+              id="reason"
+              className="w-full border border-[#c4c4c4] mb-3 rounded-[5px] p-2"
+              rows="4"
+              onChange={(e) => setCancelReason(e.target.value)}
+              placeholder="Type Your Reason Here..."
+            ></textarea>
+          </div>
+          <div className="flex justify-end gap-3">
+            <Button
+              type="secondary"
+              onClick={() => {
+                setShowCancelModal(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                cancelAppointment(appointmentDetails.id, cancelReason).then(
+                  () => setShowCancelModal(false)
+                );
+              }}
+            >
+              {loading ? <ButtonLoader /> : "Confirm"}
+            </Button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
