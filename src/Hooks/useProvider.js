@@ -267,7 +267,7 @@ const useProvider = () => {
     setProviderDetailLoading(true);
     console.log(id);
     try {
-      const response = await api.get(`${"/api/provider/"}${id}`, {
+      const response = await api.get(`/api/provider/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -275,18 +275,7 @@ const useProvider = () => {
       console.log(response);
       const data = response.data.data;
       setGetProviderData({
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        address: data.address,
-        speciality: data.speciality,
-        experience: data.experience,
-        about: data.about,
-        workingDays: data.workingDays,
-        workingTimes: data.workingTimes,
-        profilePicture: data.profilePicture,
-        reviews: data.reviews,
+        ...data,
       });
       if (response) {
         setProviderDetailLoading(false);

@@ -9,18 +9,29 @@ import heart from "../../assets/heart.png";
 import { FaHeart } from "react-icons/fa";
 import ReviewDetail from "../ReviewDetail/ReviewDetail";
 import ServiceCard from "../ServiceCard/ServiceCard";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useProvider from "../../Hooks/useProvider";
 import Loader from "../Loader/Loader";
+import Select from "../Dropdown/Select";
+import { Avatar } from "@mui/material";
+
+import { FiPhone } from "react-icons/fi";
+import { IoMailOutline } from "react-icons/io5";
+import { IoLocationOutline } from "react-icons/io5";
+import { GrUserExpert } from "react-icons/gr";
+import { CiMedicalCase } from "react-icons/ci";
+import { TbFileDescription } from "react-icons/tb";
 
 const ProviderDetails = () => {
+  const navigate = useNavigate();
+
   const { getProvider, getProviderData, providerDetailLoading } = useProvider();
   const url = useLocation();
   const { id } = useParams();
   useEffect(() => {
     getProvider(id);
   }, []);
-  console.log(getProviderData);
+
   return (
     <>
       <div className="w-full flex justify-between mb-5">
@@ -32,114 +43,147 @@ const ProviderDetails = () => {
         </div>
       ) : (
         <>
-          <div className="min-h-[78vh] w-full bg-[white] p-[1rem]  flex gap-[1rem] flex-col  mt-4   border border-[#c4c4c4]  rounded-[9px]  shadow-lg">
-            <div className="w-full flex ">
-              <div className="w-[40%]">
-                <DetailCard
-                  icon={heart}
-                  profilePhoto={getProviderData?.profilePhoto || doctorProfile}
-                  name={getProviderData && getProviderData.name}
-                  profession={getProviderData && getProviderData.speciality}
-                  location={getProviderData && getProviderData.address}
-                  starRates={5}
+          <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg p-8">
+            {/* <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-[25px] font-[500] ">Customer Details</h3>
+                  </div>
+                  <div>
+                    <SelectTabComponent />
+                  </div>
+                </div> */}
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[20px] font-[500] ">
+                {getProviderData?.name}
+              </h3>
+              <Select value={getProviderData?.isValid ? "1" : "0"}>
+                <option value="1">Active</option>
+                <option value="0">Deactive</option>
+              </Select>
+            </div>
+            <div className="flex items-center grid grid-cols-12">
+              <div className="col-span-3">
+                <Avatar
+                  src={getProviderData?.profilePicture}
+                  sx={{ width: 160, height: 160 }}
+                  alt="Client Avatar"
                 />
               </div>
-              <div className="flex w-[60%] items-center   gap-[4rem] justify-center">
-                <ExperiencePanel
-                  img={Profile}
-                  type="patients"
-                  numberOfType="2,000+"
-                />
-                <ExperiencePanel
-                  img={Profile}
-                  type="experience"
-                  numberOfType={`${
-                    getProviderData?.experience || "0"
-                  } ${"years"}`}
-                />
-                <ExperiencePanel
-                  img={Profile}
-                  type="rating"
-                  numberOfType="4.8"
-                />
-                <ExperiencePanel
-                  img={Profile}
-                  type="reviews"
-                  numberOfType="1872"
-                />
+              <div className="col-span-9 py-3">
+                <div className="grid grid-cols-12">
+                  <div className="col-span-6">
+                    <div className="flex items-center">
+                      <FiPhone size={18} />
+                      <p className="font-[500] ml-3 text-[#758296]">
+                        {getProviderData?.phoneNumber}
+                      </p>
+                    </div>
+                    <div className="flex items-center mt-2 ">
+                      <IoMailOutline size={18} />
+                      <p className="font-[500]  ml-3 text-[#758296]">
+                        {getProviderData?.email}
+                      </p>
+                    </div>
+                    <div className="flex items-center  mt-2 ">
+                      <IoLocationOutline size={18} />
+                      <p className="font-[500]  ml-3 text-[#758296]">
+                        {getProviderData?.address}
+                      </p>
+                    </div>
+                    <div className="flex items-center  mt-2 ">
+                      <GrUserExpert size={18} />
+                      <p className="font-[500]  ml-3 text-[#758296]">
+                        {getProviderData?.experience} years
+                      </p>
+                    </div>
+
+                    <div className="flex items-center  mt-2 ">
+                      <CiMedicalCase size={20} />
+                      <p className="font-[500]  ml-3 text-[#758296]">
+                        {getProviderData?.speciality}
+                      </p>
+                    </div>
+                    <div className="flex items-center  mt-2 ">
+                      <TbFileDescription size={20} fontWeight={200} />
+                      <p className="font-[500]  ml-3 text-[#758296]">
+                        {getProviderData?.about}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-span-6">
+                    <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
+                      Working Time
+                    </div>
+                    <div className="text-[0.93rem] font-[400] flex justify-between ">
+                      <p>Starting Time:</p>
+                      <p className="font-[500] text-[#909aaa]">
+                        {getProviderData.workingTimes?.start || "Loading..."}
+                      </p>
+                    </div>
+                    <div className="text-[0.93rem] font-[400] flex justify-between ">
+                      <p> Ending Time:</p>
+                      <p className="font-[500] text-[#909aaa]">
+                        {getProviderData.workingTimes?.end || "Loading..."}
+                      </p>
+                    </div>
+                    <div className="text-[1.2rem] font-primary font-[600] my-[0.5rem]">
+                      Working Days
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      {getProviderData.workingDays?.map((day) => (
+                        <div className="text-[0.88rem] shadow-lg cursor-pointer font-[400] flex justify-between border border-[#909aaa] rounded-full py-1 px-3">
+                          <p>{day}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="w-[90%] h-full mt-[2rem]">
-              <div className="w-full">
+          </div>
+
+          <div className="">
+            <p className="text-[1.2rem] font-primary font-[600] my-[1rem]">
+              Services
+            </p>
+            <div className="flex flex-wrap gap-5">
+              {getProviderData?.services?.length > 0
+                ? getProviderData?.services?.map((service) => {
+                    return (
+                      <div
+                        className="w-[30%]"
+                        onClick={() => navigate(`/admin/services`)}
+                      >
+                        <ServiceCard
+                          name={service.name}
+                          img={service.image}
+                          description={service.description}
+                          price={service.price}
+                        />
+                      </div>
+                    );
+                  })
+                : "No services available yet."}
+            </div>
+          </div>
+
+          <div className="w-[90%] h-full mt-[2rem]">
+            <div className=" w-full flex  mt-[2rem]">
+              <div className="w-[50%] ">
                 <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
-                  About me
+                  Reviews
                 </div>
-                <div className="text-[0.93rem] font-[400] ">
-                  {getProviderData && getProviderData.about}
-                </div>
-              </div>
-              <div className="w-full mt-[2rem]">
-                <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
-                  Working Time
-                </div>
-                <div className="text-[0.93rem] font-[400] ">
-                  Starting Time:{" "}
-                  {getProviderData.workingTimes?.start || (
-                    <span className="font-[500] text-[#808080]">Loading</span>
-                  )}
-                </div>
-                <div className="text-[0.93rem] font-[400] ">
-                  Ending Time:{" "}
-                  {getProviderData.workingTimes?.end || (
-                    <span className="font-[500] text-[#808080]">Loading</span>
-                  )}
-                </div>
-              </div>
-              <div className=" w-full flex  mt-[2rem]">
-                <div className="w-[50%] ">
-                  <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
-                    Reviews
-                  </div>
-                  {getProviderData === true ? (
-                    getProviderData.reviews.length < 1 ? (
-                      "No reviews yet"
-                    ) : (
-                      <ReviewDetail />
-                    )
+                {getProviderData === true ? (
+                  getProviderData.reviews.length < 1 ? (
+                    "No reviews yet"
                   ) : (
-                    <div className="font-[500] text-[#808080]">
-                      No reviews yet
-                    </div>
-                  )}
-                </div>
-                <div className="w-[60%]  flex flex-col">
-                  <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
-                    Services
+                    <ReviewDetail />
+                  )
+                ) : (
+                  <div className="font-[500] text-[#808080]">
+                    No reviews yet
                   </div>
-                  <div className="flex justify-between">
-                    <div className="">
-                      <ServiceCard
-                        name="Beauty App Clinics"
-                        img={doctorProfile}
-                        description="288 McClure Court Arkans"
-                      />
-                    </div>
-                    <div className="">
-                      <ServiceCard
-                        name="Skin Care"
-                        img={doctorProfile}
-                        description="What to do have to be best"
-                      />
-                    </div>
-                    <div className="">
-                      <ServiceCard
-                        name="Acne Solution"
-                        img={doctorProfile}
-                        description="Curing in a good way to do"
-                      />
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
