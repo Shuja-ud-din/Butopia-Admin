@@ -34,6 +34,7 @@ const ProviderDetails = () => {
         <>
           <div className="min-h-[78vh] w-full bg-[white] p-[1rem]  flex gap-[1rem] flex-col  mt-4   border border-[#c4c4c4]  rounded-[9px]  shadow-lg">
             <div className="w-full flex ">
+
               <div className="w-[40%]">
                 <DetailCard
                   icon={heart}
@@ -53,9 +54,8 @@ const ProviderDetails = () => {
                 <ExperiencePanel
                   img={Profile}
                   type="experience"
-                  numberOfType={`${
-                    getProviderData?.experience || "0"
-                  } ${"years"}`}
+                  numberOfType={`${getProviderData?.experience || "0"
+                    } ${"years"}`}
                 />
                 <ExperiencePanel
                   img={Profile}

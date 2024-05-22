@@ -30,7 +30,7 @@ const DetailCard = ({ profilePhoto, name, profession, location, icon, starRates 
                     <div className='flex flex-col'>
                         <div className='text-[0.9rem] font-[600]'>{profession}</div>
                         <div className='text-[0.9rem] flex items-center gap-[0.5rem]'>
-                            {location}<div><IoLocationOutline /></div>
+                            {location}<div> <IoLocationOutline /> </div>
                         </div>
                     </div>
                 </div>

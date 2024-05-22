@@ -75,8 +75,37 @@ const useAppointment = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
+      setLoading(false);
+    }
+  };
+
+  ///////////////getAppointment///////////////////////
+  const [getAppointmentDetail, setGetAppointmentDetail] = useState([]);
+  const getAppointment = async (id) => {
+    setLoading(true)
+    try {
+      const response = await api.get(`${"/api/appointment/"}${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      const data = response.data.data;
+      setGetAppointmentDetail({
+        id: data.id,
+        customer: data.customer,
+        provider: data.provider,
+        service: data.service,
+        date: data.date,
+        status: data.status,
+      });
+      if (response) {
+        setLoading(false);
+      }
+    } catch (e) {
+      console.error(e.message);
       setLoading(false);
     }
   };
@@ -88,6 +117,9 @@ const useAppointment = () => {
     handleDateChange,
     setGetAppointmentTableData,
     selectedDate,
+    getAppointment,
+    getAppointmentDetail,
+    loading
   };
 };
 

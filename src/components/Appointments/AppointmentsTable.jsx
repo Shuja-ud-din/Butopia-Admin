@@ -88,6 +88,7 @@ const AppointmentsTable = () => {
       </div>
 
       <Table
+        routes={["/admin/appointments"]}
         array={getAppointmentTableData}
         search={"customer"}
         keysToDisplay={["customer", "provider", "service", "date", "status"]}
@@ -110,7 +111,7 @@ const AppointmentsTable = () => {
         filter={() => {
           return (
             <>
-              <Select className="mx-3" onChange={(e) => {}}>
+              <Select className="mx-3" onChange={(e) => { }}>
                 <option value="All">All</option>
                 <option value="Pending">Pending</option>
                 <option value="Conducted">Conducted</option>
