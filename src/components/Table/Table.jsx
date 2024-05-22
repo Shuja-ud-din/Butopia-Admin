@@ -86,47 +86,58 @@ const Table = ({
           </thead>
           <tbody>
             {recordsPerPage ? (
-              recordsPerPage.map((obj, mainIndex) => {
-                return (
-                  <tr
-                    key={obj.id}
-                    onClick={() => {
-                      if (setRecord) setRecord(obj);
-                    }}
-                    className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
+              recordsPerPage.length > 0 ? (
+                recordsPerPage.map((obj, mainIndex) => {
+                  return (
+                    <tr
+                      key={obj.id}
+                      onClick={() => {
+                        if (setRecord) setRecord(obj);
+                      }}
+                      className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
+                    >
+                      {keysToDisplay.map((key, index) => {
+                        const blocksList = renderComponent(index, customBlocks);
+                        return (
+                          <td
+                            onClick={() => {
+                              if (routes.length > 0)
+                                navigate(`${routes[0]}/${obj.id}`);
+                            }}
+                            className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
+                              index === label.length - 1
+                                ? "text-right pr-9 "
+                                : "text-left pl-9 "
+                            }`}
+                          >
+                            {blocksList
+                              ? blocksList.component(key ? obj[key] : obj)
+                              : obj[key]}
+                          </td>
+                        );
+                      })}
+                      {extraColumns.map((item) => {
+                        return (
+                          <td
+                            className={`py-4 font-[400] text-[14px] text-[#858992] flex justify-end pr-9 whitespace-nowrap`}
+                          >
+                            {item(obj)}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td
+                    colSpan={label.length}
+                    className="px-6 py-4 text-center border-b border-[#F2F2F2]"
                   >
-                    {keysToDisplay.map((key, index) => {
-                      const blocksList = renderComponent(index, customBlocks);
-                      return (
-                        <td
-                          onClick={() => {
-                            if (routes.length > 0)
-                              navigate(`${routes[0]}/${obj.id}`);
-                          }}
-                          className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
-                            index === label.length - 1
-                              ? "text-right pr-9 "
-                              : "text-left pl-9 "
-                          }`}
-                        >
-                          {blocksList
-                            ? blocksList.component(key ? obj[key] : obj)
-                            : obj[key]}
-                        </td>
-                      );
-                    })}
-                    {extraColumns.map((item) => {
-                      return (
-                        <td
-                          className={`py-4 font-[400] text-[14px] text-[#858992] flex justify-end pr-9 whitespace-nowrap`}
-                        >
-                          {item(obj)}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })
+                    No Records Found
+                  </td>
+                </tr>
+              )
             ) : (
               <tr>
                 <td colSpan={label.length} className="px-6 py-4">

@@ -33,7 +33,14 @@ const useAppointment = () => {
       });
       console.log(response);
       if (response.data.success) {
-        setGetAppointmentTableData(response.data.data);
+        setGetAppointmentTableData(
+          response.data.data.map((item, index) => {
+            return {
+              ...item,
+              index: index + 1,
+            };
+          })
+        );
       }
     } catch (e) {
       console.error("Error message", e.message);
@@ -81,34 +88,42 @@ const useAppointment = () => {
     }
   };
 
-  ///////////////getAppointment///////////////////////
-  const [getAppointmentDetail, setGetAppointmentDetail] = useState([]);
-  const getAppointment = async (id) => {
-    setLoading(true)
+  const cancelAppointment = async (appointmentId, reason) => {
+    setLoading(true);
     try {
-      const response = await api.get(`${"/api/appointment/"}${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.put(
+        `/api/appointment/cancel/${appointmentId}`,
+        {
+          reason,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       console.log(response);
-      const data = response.data.data;
-      setGetAppointmentDetail({
-        id: data.id,
-        customer: data.customer,
-        provider: data.provider,
-        service: data.service,
-        date: data.date,
-        status: data.status,
-      });
-      if (response) {
+      if (response.data.success) {
+        showSuccessNotification("Appointment Cancelled Successfully!");
+        setLoading(false);
+        getAppointmentTable();
+      } else {
+        showErrorNotification(
+          response.data.message || "Error in Cancelling Appointment!"
+        );
         setLoading(false);
       }
     } catch (e) {
       console.error(e.message);
+      showErrorNotification(
+        (e.response ? e.response.data.message : e.message) ||
+        "Something went wrong!"
+      );
       setLoading(false);
     }
   };
+
   return {
     loading,
     getAppointmentTableData,
@@ -116,6 +131,7 @@ const useAppointment = () => {
     addAppointment,
     handleDateChange,
     setGetAppointmentTableData,
+    cancelAppointment,
     selectedDate,
     getAppointment,
     getAppointmentDetail,
