@@ -103,6 +103,7 @@ const AppointmentsTable = () => {
       </div>
 
       <Table
+        routes={["/admin/appointments"]}
         array={appointments}
         search={"customer"}
         keysToDisplay={[
