@@ -1,40 +1,19 @@
-import React, { useEffect } from "react";
-import { socket } from "../views/Dashboard";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
+import { SocketContext } from "../context/Socket";
 
 const Chat = () => {
-  const basURL = import.meta.env.VITE_BASE_URL;
+  const { socket } = useContext(SocketContext);
+
   const sendMessage = () => {
-    socket.emit("message", "Hello from client");
-  };
-
-  const getProvders = async () => {
-    try {
-      const response = await axios.post(
-        `https://chilly-beans-bathe.loca.lt/api/admin`,
-        {
-          name: "hi",
-        },
-        {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjM1M2M1YjU2ZGE3OTllNDdmYmI0YTUiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MTQ5MzQwNzh9.8qWvlCUHt9xAyz-hlZ1cwZIjHAMPHx1Yf38qdBqpbnY`,
-          },
-        }
-      );
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
-
-    // const data = await response.json();
-    // console.log(data);
+    socket.emit("message", "Hello world");
   };
 
   return (
     <div className="bg-[white]  rounded-lg w-full grid grid-cols-12 min-h-[70vh] shadow-lg p-5 ">
       <div className="col-span-3">chats</div>
       <div className="col-span-9"></div>
-      <button onClick={getProvders}>Send message</button>
+      <button onClick={sendMessage}>Send message</button>
     </div>
   );
 };

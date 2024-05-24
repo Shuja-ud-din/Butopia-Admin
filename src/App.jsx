@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Registration from "./views/Login/index";
+import SocketProvider from "./context/Socket";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -18,7 +19,9 @@ function App() {
             element={
               <>
                 {/* <ProtectedRoute isAuthenticated={true}> */}
-                <Dashboard />
+                <SocketProvider>
+                  <Dashboard />
+                </SocketProvider>
                 {/* </ProtectedRoute> */}
               </>
             }

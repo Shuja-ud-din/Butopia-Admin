@@ -6,7 +6,7 @@ const Select = ({ className, children, onChange, value, name = "" }) => {
       onChange={onChange}
       value={value}
       name={name}
-      className={` rounded-lg h-[40px] px-2  ${className}`}
+      className={` rounded-lg bg-[#e9e9ed] h-[40px] px-2  ${className}`}
     >
       {children}
     </select>

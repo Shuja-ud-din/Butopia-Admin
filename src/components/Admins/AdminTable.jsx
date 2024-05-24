@@ -47,7 +47,7 @@ const AdminTable = () => {
 
   useEffect(() => {
     setAdmins(getAllAdminsTable);
-  }, [data]);
+  }, [getAllAdminsTable]);
 
   return (
     <>

@@ -52,6 +52,7 @@ const useLogin = () => {
       }
       if (response.data.success) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.user.id);
         setLoading(false);
         navigate("/admin");
       } else {
@@ -62,7 +63,7 @@ const useLogin = () => {
       console.error("Error Encounrtered", error.message);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
     }
   };
