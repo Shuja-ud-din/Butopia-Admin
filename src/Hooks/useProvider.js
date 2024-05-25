@@ -21,7 +21,6 @@ const useProvider = () => {
   };
   /////////////providersTable/////////////
   const [data, setData] = useState();
-  const [providerId, setProviderId] = useState();
   const getProviderTable = async () => {
     try {
       const response = await api.get(`/api/provider`, {
@@ -30,7 +29,6 @@ const useProvider = () => {
         },
       });
       if (response.data.success) {
-        setProviderId(response.data.data[0].id);
         setData(
           response.data.data.map((item, index) => {
             return {
@@ -305,7 +303,6 @@ const useProvider = () => {
     editProvider,
     editData,
     editPayload,
-    providerId,
   };
 };
 
