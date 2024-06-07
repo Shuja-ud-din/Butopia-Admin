@@ -17,7 +17,7 @@ export default {
       // => @media (max-width: 480px) { ... }
     },
     colors: {
-      primary: "#8d338b",
+      primary: "#0b343d",
       secondary: "#acbabf",
       light: "F8F8F8",
     },

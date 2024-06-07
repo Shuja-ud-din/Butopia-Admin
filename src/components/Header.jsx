@@ -5,7 +5,7 @@ import { GoBell } from "react-icons/go";
 import avatar from "../assets/avatar.jpg";
 import ProfileBox from "./ProfileBox/ProfileBox";
 import { GoChevronDown } from "react-icons/go";
-import logo from "../assets/mainNewLogo.png";
+import logo from "../assets/logo.jpg";
 import { Avatar, Badge } from "@mui/material";
 import NotificationsBox from "./NotificationsBox/NotificationsBox";
 
@@ -60,8 +60,8 @@ const Header = () => {
   }, [showNotificationsBox]);
 
   return (
-    <div className="w-full grid grid-cols-12 h-[60px] bg-[white] ">
-      <div className="col-span-2 flex items-center justify-center ">
+    <div className="w-full grid grid-cols-12 h-[60px] bg-[primary] ">
+      <div className="col-span-2 flex items-center justify-center bg-[#0b343d] ">
         <img src={logo} className="h-[60px]" />
       </div>
       <div className="col-span-10 shadow-md">

@@ -4,7 +4,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
 import "./Login.css";
-import logo from "../../assets/mainNewLogo.png";
+import logo from "../../assets/logos/logo2.jpg";
 import VerifyOtp from "./VerifyOtp";
 
 const Registration = () => {
