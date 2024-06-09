@@ -134,7 +134,7 @@ const ServiceTable = () => {
 
       <Table
         array={data}
-        search={"description"}
+        search={"name"}
         keysToDisplay={["index", "name", "description", "price", "isValid"]}
         label={[
           "#",

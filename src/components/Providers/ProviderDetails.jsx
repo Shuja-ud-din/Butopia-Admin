@@ -21,6 +21,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GrUserExpert } from "react-icons/gr";
 import { CiMedicalCase } from "react-icons/ci";
 import { TbFileDescription } from "react-icons/tb";
+import { Rate } from "antd";
 
 const ProviderDetails = () => {
   const navigate = useNavigate();
@@ -45,23 +46,18 @@ const ProviderDetails = () => {
         <>
           <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg p-8">
             {/* <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-[25px] font-[500] ">Customer Details</h3>
-                  </div>
-                  <div>
-                    <SelectTabComponent />
-                  </div>
-                </div> */}
+              <div></div>
+            </div> */}
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[20px] font-[500] ">
                 {getProviderData?.name}
               </h3>
-              <Select value={getProviderData?.isValid ? "1" : "0"}>
-                <option value="1">Active</option>
-                <option value="0">Deactive</option>
+              <Select value={getProviderData?.isValid}>
+                <option value={true}>Active</option>
+                <option value={false}>Deactive</option>
               </Select>
             </div>
-            <div className="flex items-center grid grid-cols-12">
+            <div className="flex grid grid-cols-12">
               <div className="col-span-3">
                 <Avatar
                   src={getProviderData?.profilePicture}
@@ -103,14 +99,25 @@ const ProviderDetails = () => {
                         {getProviderData?.speciality}
                       </p>
                     </div>
-                    <div className="flex items-center  mt-2 ">
-                      <TbFileDescription size={20} fontWeight={200} />
-                      <p className="font-[500]  ml-3 text-[#758296]">
+                    <div className="flex   mt-2 ">
+                      <div className="w-[22px]">
+                        <TbFileDescription size={20} fontWeight={200} />
+                      </div>
+                      <p className="font-[500]  mx-3 text-[#758296]">
                         {getProviderData?.about}
                       </p>
                     </div>
                   </div>
                   <div className="col-span-6">
+                    <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
+                      Rating
+                    </div>
+                    <div className="text-[0.93rem] font-[400] flex justify-between mb-3">
+                      <Rate disabled value={getProviderData.rating} />
+                      <p className="font-[500] text-[#909aaa]">
+                        {getProviderData.rating || "Loading..."}
+                      </p>
+                    </div>
                     <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
                       Working Time
                     </div>
