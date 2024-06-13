@@ -60,8 +60,8 @@ const Header = () => {
   }, [showNotificationsBox]);
 
   return (
-    <div className="w-full grid grid-cols-12 h-[60px] bg-[white] ">
-      <div className="col-span-2 flex items-center justify-center bg-[#09373d] ">
+    <div className="w-full grid grid-cols-12 h-[60px] bg-[primary] ">
+      <div className="col-span-2 flex items-center justify-center bg-[#0b343d] ">
         <img src={logo} className="h-[60px]" />
       </div>
       <div className="col-span-10 shadow-md">
