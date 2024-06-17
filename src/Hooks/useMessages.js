@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { api } from "../api/api";
-import { notification } from "antd";
 
-const useChat = () => {
+const useMessages = () => {
   const token = localStorage.getItem("token");
 
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState();
+  const [messages, setMessages] = useState([]);
 
-  const getSupportChats = async () => {
+  const getMessagesById = async (chatId) => {
     try {
-      const response = await api.get("/api/chat/support", {
+      const response = await api.get(`/api/messages/${chatId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -18,7 +17,7 @@ const useChat = () => {
       console.log(response);
       setLoading(false);
       if (response.data.success) {
-        setChats(
+        setMessages(
           response.data.data.reverse().map((item, index) => {
             return { ...item, index: index + 1 };
           })
@@ -31,10 +30,10 @@ const useChat = () => {
   };
 
   return {
-    getSupportChats,
-    chats,
+    getMessagesById,
+    messages,
     loading,
   };
 };
 
-export default useChat;
+export default useMessages;

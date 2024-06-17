@@ -35,22 +35,12 @@ const Message = ({ chat }) => {
       <div className="w-full inline-block min-h-[70vh]  flex flex-col justify-between gap-[2rem]">
         <div className=" w-[100%]  pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary">
           <img
-            src={
-              chat
-                ? (chat.user1.id === currentAdmin
-                    ? chat.user2.profilePicture
-                    : chat.user1.profilePicture) || profilePhoto
-                : profilePhoto
-            }
+            src={chat ? chat.user.profilePicture || profilePhoto : profilePhoto}
             alt=""
             className="h-[3rem] rounded-full"
           />
           <div className="text-center text-lg font-semibold  text-[white]">
-            {chat
-              ? chat.user1.id === currentAdmin
-                ? chat.user2.name
-                : chat.user1.name
-              : "User"}
+            {chat ? chat.user.name : ""}
           </div>
           {/* <h3 className="text-[25px] font-[500] mb-5 ">Messages</h3> */}
         </div>

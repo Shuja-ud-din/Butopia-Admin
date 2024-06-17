@@ -37,8 +37,8 @@ const useLogin = () => {
         throw new Error("Please fill in all the fields");
       }
 
-      if (phoneNumber.length !== 12) {
-        throw new Error("Phone number must be of 12 digits");
+      if (phoneNumber.length < 10) {
+        throw new Error("Phone number must be greater than 12 digits");
       }
       if (!phoneNumber.match(/^\d+$/)) {
         throw new Error("Phone Number must be in digits");
@@ -47,8 +47,13 @@ const useLogin = () => {
         throw new Error("Password must be at least 8 characters long");
       }
       const response = await api.post("/api/auth/login", formData);
-      if (response.data.user.role !== "Admin") {
-        throw new Error("Admin role must be used for successful login!");
+      if (
+        !(
+          response.data.user.role === "Admin" ||
+          response.data.user.role === "Super Admin"
+        )
+      ) {
+        throw new Error("Only Admins can login!");
       }
       if (response.data.success) {
         localStorage.setItem("token", response.data.token);

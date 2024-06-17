@@ -9,6 +9,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import useAdmin from "../Hooks/useAdmin";
 import useChat from "../Hooks/useChat";
 import ButtonLoader from "../components/ButtonLoader/ButtonLoader";
+import Select from "../components/Dropdown/Select";
 
 const dummyChat = [
   {
@@ -46,7 +47,7 @@ const Support = () => {
   const navigate = useNavigate();
 
   const { getProviderTable, getAllAdminsTable } = useAdmin();
-  const { chats, getAllChats, addChat, loading } = useChat();
+  const { chats, getSupportChats, addChat, loading } = useChat();
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -54,7 +55,7 @@ const Support = () => {
 
   useEffect(() => {
     getProviderTable();
-    getAllChats();
+    getSupportChats();
   }, []);
 
   useEffect(() => {
@@ -74,23 +75,21 @@ const Support = () => {
         <div className="p-3 col-span-4 bg-[white]  border border-[#c4c4c4]  rounded-[9px] h-full  flex flex-col">
           <div className="flex">
             <SearchBar placeholder="search here.." />
-            <Button className="ml-3" onClick={toggleModal}>
-              Add
-            </Button>
+            <Select className={"ml-3"}>
+              <option value="all">All</option>
+              <option value="customers">Customers</option>
+              <option value="providers">Providers</option>
+            </Select>
           </div>
           <div className="max-h-[62vh] overflow-auto mt-4 pr-2">
             {chats && chats.length > 0
               ? chats.map((chat, index) => {
                   return (
                     <ChatBox
-                      name={
-                        chat.user1.id === currentAdmin
-                          ? chat.user2.name
-                          : chat.user1.name
-                      }
+                      name={chat.user.name}
                       isActive={chat.id === activeChat.id}
-                      profilePhoto={chat.profilePhoto}
-                      // lastMessage="Hey, how are you?"
+                      profilePhoto={chat.user.profilePicture}
+                      lastMessage={chat.lastMessage}
                       // unread={chat.unread}
                       // lastMsgTime={chat.lastMessageTime}
                       onClick={() => setActiveChat(chat)}
