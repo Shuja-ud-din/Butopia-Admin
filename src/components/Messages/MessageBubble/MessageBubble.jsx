@@ -3,7 +3,9 @@ import { formatTime } from "../../../utils/timeFormat";
 
 const MessageBubble = ({ message, isMine, time }) => {
   return (
-    <div className={`flex ${isMine ? "justify-start" : "justify-end"} mb-2`}>
+    <div
+      className={`flex ${isMine ? "justify-start" : "justify-end"} w-full mb-2`}
+    >
       <div
         className={`flex flex-col items-end border border-primary shadow-lg rounded-lg p-2 max-w-[70%] ${
           isMine ? "bg-primary text-[white]" : ""

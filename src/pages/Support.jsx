@@ -42,6 +42,7 @@ const Support = () => {
   const currentAdmin = localStorage.getItem("userId");
 
   const [showModal, setShowModal] = useState(false);
+  const [chatsToDisplay, setChatsToDisplay] = useState();
 
   // const { chatId } = useParams();
   const navigate = useNavigate();
@@ -53,6 +54,14 @@ const Support = () => {
     setShowModal(!showModal);
   };
 
+  const handleSearchChats = (e) => {
+    const searchValue = e.target.value;
+    const filteredChats = chats.filter((chat) =>
+      chat.user.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setChatsToDisplay(filteredChats);
+  };
+
   useEffect(() => {
     getProviderTable();
     getSupportChats();
@@ -62,6 +71,8 @@ const Support = () => {
     if (chats?.length > 0) {
       setActiveChat(chats[0]);
     }
+
+    setChatsToDisplay(chats);
   }, [chats]);
 
   console.log(activeChat);
@@ -74,7 +85,10 @@ const Support = () => {
       <div className="h-[72vh] flex gap-[1rem] grid grid-cols-12 mt-4 ">
         <div className="p-3 col-span-4 bg-[white]  border border-[#c4c4c4]  rounded-[9px] h-full  flex flex-col">
           <div className="flex">
-            <SearchBar placeholder="search here.." />
+            <SearchBar
+              onChange={handleSearchChats}
+              placeholder="search here.."
+            />
             <Select className={"ml-3"}>
               <option value="all">All</option>
               <option value="customers">Customers</option>
@@ -82,16 +96,17 @@ const Support = () => {
             </Select>
           </div>
           <div className="max-h-[62vh] overflow-auto mt-4 pr-2">
-            {chats && chats.length > 0
-              ? chats.map((chat, index) => {
+            {chatsToDisplay && chatsToDisplay.length > 0
+              ? chatsToDisplay.map((chat, index) => {
+                  console.log(chat);
                   return (
                     <ChatBox
                       name={chat.user.name}
                       isActive={chat.id === activeChat.id}
                       profilePhoto={chat.user.profilePicture}
-                      lastMessage={chat.lastMessage}
-                      // unread={chat.unread}
-                      // lastMsgTime={chat.lastMessageTime}
+                      lastMessage={chat.lastMessage.message}
+                      unread={chat.unread}
+                      lastMsgTime={chat.lastMessage.date}
                       onClick={() => setActiveChat(chat)}
                     />
                   );

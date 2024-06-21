@@ -25,7 +25,7 @@ const Input = ({
         </label>
       )}
       <div
-        className={`flex items-center  w-full custom_input px-[13px] py-[8px] border border-primary rounded-lg mb-3 ${className}`}
+        className={`${className} flex items-center  w-full custom_input px-[13px] py-[8px] border border-primary rounded-lg mb-3 `}
       >
         {type === "password" && (
           <>

@@ -6,11 +6,13 @@ import profilePhoto from "../../assets/user_profile.png";
 import Button from "../Button/Button";
 import { FiSend } from "react-icons/fi";
 import { SocketContext } from "../../context/Socket";
+import useMessages from "../../Hooks/useMessages";
 
 const Message = ({ chat }) => {
-  const [value, setValue] = useState("");
+  const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
 
-  const { socket, messages, setMessages } = useContext(SocketContext);
+  const [value, setValue] = useState("");
+  const { messages, setMessages } = useContext(SocketContext);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -23,16 +25,23 @@ const Message = ({ chat }) => {
       };
       setMessages([...messages, newMsg]);
       setValue("");
-      socket.emit("sendMessage", newMsg);
+      sendMessage(chat.id, value);
     }
   };
-  console.log(messages);
 
-  const currentAdmin = localStorage.getItem("userId");
+  useEffect(() => {
+    getMessagesById(chat.id);
+  }, [chat.id]);
+
+  useEffect(() => {
+    setMessages(chatMsgs);
+  }, [chatMsgs]);
+
+  console.log(chatMsgs);
 
   return (
     <>
-      <div className="w-full inline-block min-h-[70vh]  flex flex-col justify-between gap-[2rem]">
+      <div className="w-full min-h-[70vh] flex flex-col justify-between">
         <div className=" w-[100%]  pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary">
           <img
             src={chat ? chat.user.profilePicture || profilePhoto : profilePhoto}
@@ -44,27 +53,28 @@ const Message = ({ chat }) => {
           </div>
           {/* <h3 className="text-[25px] font-[500] mb-5 ">Messages</h3> */}
         </div>
-        <div className="h-full w-full  flex items-center">
+        <div className="h-full w-full min-h-[23rem] flex items-end">
           {messages.length === 0 ? (
             <div className="w-full  text-[1.5rem] text-[#CCCCCC] font-[400]  flex items-center justify-center">
               No Messages yet
             </div>
           ) : (
             <MessageArea>
-              {messages.map((message, index) => (
-                <MessageBubble
-                  key={index}
-                  isMine={message.sender !== currentAdmin}
-                  message={message.message}
-                  time={message.date}
-                />
-              ))}
+              {messages.length > 0 &&
+                messages.map((message, index) => (
+                  <MessageBubble
+                    key={index}
+                    isMine={chat?.user?.id !== message.sender}
+                    message={message.message}
+                    time={message.date}
+                  />
+                ))}
             </MessageArea>
           )}
         </div>
         <form
           onSubmit={handleSend}
-          className="w-full flex items-center justify-center px-5 py-2 "
+          className="w-full flex items-center justify-center px-5 py-2"
         >
           <InputBar
             className="bg-[#f8fafb] rounded-[25px] flex items-center justify-center mb-0"
@@ -73,7 +83,7 @@ const Message = ({ chat }) => {
             placeholder={"Type Your Message here..."}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Button className="ml-3 ">
+          <Button className="ml-3 mb-3 ">
             Send
             <FiSend className="ml-2" />
           </Button>

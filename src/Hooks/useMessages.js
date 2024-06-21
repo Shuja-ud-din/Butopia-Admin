@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { api } from "../api/api";
+import { toast } from "react-toastify";
 
 const useMessages = () => {
   const token = localStorage.getItem("token");
@@ -18,7 +19,7 @@ const useMessages = () => {
       setLoading(false);
       if (response.data.success) {
         setMessages(
-          response.data.data.reverse().map((item, index) => {
+          response.data.data.map((item, index) => {
             return { ...item, index: index + 1 };
           })
         );
@@ -29,10 +30,29 @@ const useMessages = () => {
     }
   };
 
+  const sendMessage = async (chatId, message) => {
+    try {
+      const response = await api.post(
+        `/api/messages/${chatId}`,
+        {
+          message,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return {
     getMessagesById,
     messages,
     loading,
+    sendMessage,
   };
 };
 
