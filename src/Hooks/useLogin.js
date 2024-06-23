@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
+import { axiosInstance } from "../api/api";
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const useLogin = () => {
       if (password.length < 8) {
         throw new Error("Password must be at least 8 characters long");
       }
-      const response = await api.post("/api/auth/login", formData);
+      const response = await axiosInstance.post("/api/auth/login", formData);
       if (
         !(
           response.data.user.role === "Admin" ||
@@ -58,6 +58,7 @@ const useLogin = () => {
       if (response.data.success) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.user.id);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         setLoading(false);
         navigate("/admin");
       } else {

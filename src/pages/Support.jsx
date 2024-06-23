@@ -104,9 +104,13 @@ const Support = () => {
                       name={chat.user.name}
                       isActive={chat.id === activeChat.id}
                       profilePhoto={chat.user.profilePicture}
-                      lastMessage={chat.lastMessage.message}
+                      lastMessage={
+                        chat.lastMessage ? chat.lastMessage.message : ""
+                      }
                       unread={chat.unread}
-                      lastMsgTime={chat.lastMessage.date}
+                      lastMsgTime={
+                        chat.lastMessage ? chat.lastMessage.date : ""
+                      }
                       onClick={() => setActiveChat(chat)}
                     />
                   );

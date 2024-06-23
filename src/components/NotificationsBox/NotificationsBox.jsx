@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { IoMailOpenOutline } from "react-icons/io5";
+import { useGetNotifications } from "../../Hooks/useNotifications";
+import moment from "moment";
 
-const NotificationsBox = ({ ref }) => {
+const NotificationsBox = ({ ref, notifications }) => {
   return (
     <>
       <div
         ref={ref}
-        className=" absolute top-[60px] right-[8rem] rounded-md bg-[white] border border-secondary w-[400px] z-[999]"
+        className=" absolute top-[60px] right-[8rem] rounded-md bg-[white] border border-secondary w-[400px] z-[999] shadow-lg "
       >
         <div className="profile_head bg-[#f9f9f9] flex p-4 rounded-tl-md rounded-tr-md border-b border-secondary  ">
           <div>
@@ -16,17 +20,42 @@ const NotificationsBox = ({ ref }) => {
         </div>
         <div className="profile_body">
           <ul className="">
-            <li className="border-b border-secondary">
-              <div className="p-4 flex items-start border-b border-[#dedada] grid grid-cols-12">
-                <div className="mt-2 rounded-full bg-[#1976d2] w-[10px] h-[10px] col-span-1"></div>
-                <div className="flex flex-col col-span-11">
-                  <p className="text-[15px] font-[400]">
-                    Lorem, ipsum dolor sit amet elit. Quia, corporis!
-                  </p>
-                  <p className="mt-2 text-[14px] text-[grey]">Now</p>
-                </div>
-              </div>
-            </li>
+            {notifications.length > 0 ? (
+              notifications.map((notification) => {
+                return (
+                  <li className="border-b border-secondary">
+                    <div className="p-4 py-2 flex items-start border-b border-[#dedada] grid grid-cols-12">
+                      <div className="mt-2 rounded-full bg-[#1976d2] w-[10px] h-[10px] col-span-1"></div>
+                      <div className="flex flex-col col-span-9">
+                        <p className="text-[18px] font-[600]">
+                          {notification.title}
+                        </p>
+                        <p className="text-[15px] font-[400]">
+                          {notification.message}
+                        </p>
+                      </div>
+                      <div className="col-span-2 flex flex-col justify-end items-end">
+                        <IoMailOpenOutline
+                          className="cursor-pointer"
+                          style={{ fontSize: "22px" }}
+                          // onClick={() =>
+                          //   readNotification(notification.NotificationId)
+                          // }
+                        />
+                        {/* <MdOutlineMarkEmailRead style={{ fontSize: "22px" }} /> */}
+                        <p className="mt-2 text-[14px] text-[grey]">
+                          {moment(notification.createdAt).format("LT")}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })
+            ) : (
+              <p className="text-center py-3 border-b border-secondary">
+                No notifications available
+              </p>
+            )}
 
             <li>
               <div className="p-4 flex ">

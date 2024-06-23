@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
 import useLogin from "../../Hooks/useLogin";
-import Loader from "../../components/Loader/Loader";
 import { notification } from "antd";
 import ButtonLoader from "../../components/ButtonLoader/ButtonLoader";
+
 const Login = () => {
   const { login, handleChange, loading, ErrorMessage } = useLogin();
   return (

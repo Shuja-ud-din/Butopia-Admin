@@ -1,5 +1,5 @@
 // import { Avatar, Badge } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FiAlignLeft } from "react-icons/fi";
 import { GoBell } from "react-icons/go";
 import avatar from "../assets/avatar.jpg";
@@ -8,8 +8,20 @@ import { GoChevronDown } from "react-icons/go";
 import logo from "../assets/logo.jpg";
 import { Avatar, Badge } from "@mui/material";
 import NotificationsBox from "./NotificationsBox/NotificationsBox";
+import { AppContext } from "../context/AppData";
+import { useGetNotifications } from "../Hooks/useNotifications";
+import { SocketContext } from "../context/Socket";
 
 const Header = () => {
+  const { user } = useContext(AppContext);
+  const {
+    unreadNotifications,
+    setUnreadNotifications,
+    notifications,
+    setNotifications,
+  } = useContext(SocketContext);
+  const { data } = useGetNotifications();
+
   const [showProfileBox, setShowProfileBox] = useState(false);
   const [showNotificationsBox, setShowNotificationsBox] = useState(false);
 
@@ -59,6 +71,11 @@ const Header = () => {
     };
   }, [showNotificationsBox]);
 
+  useEffect(() => {
+    setUnreadNotifications(data?.unreadNotifications);
+    setNotifications(data?.data);
+  }, [data]);
+
   return (
     <div className="w-full grid grid-cols-12 h-[60px] bg-[primary] ">
       <div className="col-span-2 flex items-center justify-center bg-[#0b343d] ">
@@ -76,7 +93,7 @@ const Header = () => {
               ref={bell_ref}
             >
               <Badge
-                badgeContent={4}
+                badgeContent={unreadNotifications}
                 color="primary"
                 className="cursor-pointer"
               >
@@ -88,14 +105,31 @@ const Header = () => {
               onClick={() => setShowProfileBox(!showProfileBox)}
               ref={profile_ref}
             >
-              <Avatar alt="Remy Sharp" src={avatar} className="mx-3" />
+              <Avatar
+                alt="profilePic"
+                src={user?.profilePicture}
+                className="mx-3"
+              />
+              <div className="pr-3">
+                <h3 className="text-[14px]  font-[500] ">{user?.name || ""}</h3>
+                <p className="text-[13px] text-[#757575] font-[400] ">
+                  {user?.phoneNumber || ""}
+                </p>
+              </div>
               <GoChevronDown size={22} />
             </div>
             {showProfileBox && (
-              <ProfileBox name={"John"} role={"Admin"} image={avatar} />
+              <ProfileBox
+                name={user.name}
+                role={user.role}
+                image={user.profilePicture}
+              />
             )}
             {showNotificationsBox && (
-              <NotificationsBox ref={notifications_box_ref} />
+              <NotificationsBox
+                ref={notifications_box_ref}
+                notifications={notifications}
+              />
             )}
           </div>
         </div>

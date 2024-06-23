@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { sendNotification } from "../utils/sendNotification";
 
 const SocketContext = createContext();
 
@@ -8,6 +9,8 @@ const SocketProvider = ({ children }) => {
   const socket = io(baseURL);
 
   const [messages, setMessages] = useState([]);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [notifications, setNotifications] = useState([]);
 
   const setupSocket = useCallback(() => {
     socket.connect();
@@ -24,8 +27,12 @@ const SocketProvider = ({ children }) => {
     });
 
     socket.on("newMessage", (data) => {
-      // console.log(data);
       setMessages((prev) => [...prev, data]);
+    });
+
+    socket.on("notification", (data) => {
+      setUnreadNotifications(data.unreadNotifications);
+      sendNotification(data.notification.title, data.notification.message);
     });
 
     return () => {
@@ -42,7 +49,17 @@ const SocketProvider = ({ children }) => {
   }, [setupSocket]);
 
   return (
-    <SocketContext.Provider value={{ socket, messages, setMessages }}>
+    <SocketContext.Provider
+      value={{
+        socket,
+        messages,
+        setMessages,
+        unreadNotifications,
+        setUnreadNotifications,
+        notifications,
+        setNotifications,
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
@@ -12,8 +12,18 @@ import Admins from "../pages/Admins";
 import Payments from "../pages/Payments";
 import Support from "../pages/Support";
 import Chats from "../pages/Chats";
+import { AppContext } from "../context/AppData";
+import { notification } from "antd";
 
 const Dashboard = () => {
+  const { setUser } = useContext(AppContext);
+  const user = localStorage.getItem("user");
+
+  useEffect(() => {
+    console.log(JSON.parse(user));
+    setUser(JSON.parse(user));
+  }, []);
+
   return (
     <>
       {/* <Routes>

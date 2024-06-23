@@ -2,17 +2,25 @@ import React from "react";
 import { useState } from "react";
 import { createContext } from "react";
 
-const DataContext = createContext();
+const AppContext = createContext();
 
 const AppData = ({ children }) => {
-  const [singleObj, setSingleObj] = useState("hi there");
+  const [user, setUser] = useState({
+    name: null,
+    email: null,
+    phoneNumber: null,
+    profilePicture: null,
+    roleId: null,
+    role: null,
+    id: null,
+  });
 
   return (
-    <DataContext.Provider value={{ singleObj, setSingleObj }}>
+    <AppContext.Provider value={{ user, setUser }}>
       {children}
-    </DataContext.Provider>
+    </AppContext.Provider>
   );
 };
 
 export default AppData;
-export { DataContext };
+export { AppContext };
