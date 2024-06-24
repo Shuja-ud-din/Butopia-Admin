@@ -10,18 +10,15 @@ import { Avatar, Badge } from "@mui/material";
 import NotificationsBox from "./NotificationsBox/NotificationsBox";
 import { AppContext } from "../context/AppData";
 import { useGetNotifications } from "../Hooks/useNotifications";
-import { SocketContext } from "../context/Socket";
+import { socket } from "../utils/socket";
+import { sendNotification } from "../utils/sendNotification";
 
 const Header = () => {
   const { user } = useContext(AppContext);
-  const {
-    unreadNotifications,
-    setUnreadNotifications,
-    notifications,
-    setNotifications,
-  } = useContext(SocketContext);
-  const { data } = useGetNotifications();
 
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [notifications, setNotifications] = useState([]);
+  const { data } = useGetNotifications();
   const [showProfileBox, setShowProfileBox] = useState(false);
   const [showNotificationsBox, setShowNotificationsBox] = useState(false);
 
@@ -53,8 +50,6 @@ const Header = () => {
     }
   };
 
-  console.log(showProfileBox);
-
   useEffect(() => {
     document.addEventListener("click", toggleProfileBox);
 
@@ -75,6 +70,14 @@ const Header = () => {
     setUnreadNotifications(data?.unreadNotifications);
     setNotifications(data?.data);
   }, [data]);
+
+  useEffect(() => {
+    socket.on("notification", (data) => {
+      console.log("listen notification called", data);
+      sendNotification(data.notification.title, data.notification.message);
+      setUnreadNotifications(data.unreadNotifications);
+    });
+  }, []);
 
   return (
     <div className="w-full grid grid-cols-12 h-[60px] bg-[primary] ">

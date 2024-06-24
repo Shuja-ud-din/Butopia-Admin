@@ -1,31 +1,61 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 import Registration from "./views/Login/index";
+import { useEffect, useState } from "react";
 import SocketProvider from "./context/Socket";
-
 function App() {
-  const isAuthenticated = !!localStorage.getItem("token");
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsAuthenticated(!!localStorage.getItem("token"));
+  }, [location.pathname]);
+
+  if (!isAuthenticated) {
+    return (
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !isAuthenticated ? (
+              <Registration />
+            ) : (
+              <Navigate to="/admin/dashboard" />
+            )
+          }
+        />
+        <Route path="/admin/*" element={<Navigate to="/" />} />
+      </Routes>
+    );
+  }
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<Registration />} />
-          <Route
-            path="/admin/*"
-            element={
-              <>
-                {/* <ProtectedRoute isAuthenticated={true}> */}
-                <SocketProvider>
-                  <Dashboard />
-                </SocketProvider>
-                {/* </ProtectedRoute> */}
-              </>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !isAuthenticated ? (
+              <Registration />
+            ) : (
+              <Navigate to="/admin/dashboard" />
+            )
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <>
+              {/* <SocketProvider> */}
+              <Dashboard />
+              {/* </SocketProvider> */}
+            </>
+          }
+        />
+      </Routes>
     </>
   );
 }

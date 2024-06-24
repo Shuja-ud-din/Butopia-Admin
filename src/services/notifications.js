@@ -1,6 +1,11 @@
-import { api } from "../api/api";
+import { api, axiosInstance } from "../api/api";
 
 export const getAllNotifications = async () => {
-  const { data } = await api.get("/api/notifications/admin/");
+  const { data } = await axiosInstance.get("/api/notifications/admin/", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
   return data;
 };

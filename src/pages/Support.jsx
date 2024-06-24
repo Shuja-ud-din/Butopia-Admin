@@ -11,30 +11,6 @@ import useChat from "../Hooks/useChat";
 import ButtonLoader from "../components/ButtonLoader/ButtonLoader";
 import Select from "../components/Dropdown/Select";
 
-const dummyChat = [
-  {
-    name: "John Doe",
-    lastMessage: "Hey, how are you?",
-    profilePhoto: null,
-    unread: 4,
-    lastMessageTime: "12:30 PM",
-  },
-  {
-    name: "John Doe",
-    lastMessage: "Hey, how are you?",
-    profilePhoto: null,
-    unread: 4,
-    lastMessageTime: "12:30 PM",
-  },
-  {
-    name: "John Doe",
-    lastMessage: "Hey, how are you?",
-    profilePhoto: null,
-    unread: 4,
-    lastMessageTime: "12:30 PM",
-  },
-];
-
 const Support = () => {
   const [activeChat, setActiveChat] = useState(0);
   const [selectedAdmin, setSelectedAdmin] = useState(null);

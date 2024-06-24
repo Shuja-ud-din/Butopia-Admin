@@ -19,7 +19,7 @@ const NotificationsBox = ({ ref, notifications }) => {
           </div>
         </div>
         <div className="profile_body">
-          <ul className="">
+          <ul className="max-h-[20rem] overflow-auto">
             {notifications.length > 0 ? (
               notifications.map((notification) => {
                 return (
@@ -56,15 +56,14 @@ const NotificationsBox = ({ ref, notifications }) => {
                 No notifications available
               </p>
             )}
-
-            <li>
-              <div className="p-4 flex ">
-                <h4 className="text-[15px] text-[#353535] font-[600] cursor-pointer">
-                  Mark all as read
-                </h4>
-              </div>
-            </li>
           </ul>
+          <div>
+            <div className="p-4 flex ">
+              <h4 className="text-[15px] text-[#353535] font-[600] cursor-pointer">
+                Mark all as read
+              </h4>
+            </div>
+          </div>
         </div>
       </div>
     </>

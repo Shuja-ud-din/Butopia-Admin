@@ -1,9 +1,21 @@
 import { Avatar } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppData";
+import { socket } from "../../utils/socket";
 
 const ProfileBox = ({ name, role, image }) => {
   const navigate = useNavigate();
+  const { setUser } = useContext(AppContext);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("user");
+    socket.disconnect();
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <div className="z-[999] absolute top-[60px] right-2 rounded-md bg-[white] border border-secondary w-[200px] shadow-lg">
@@ -23,7 +35,7 @@ const ProfileBox = ({ name, role, image }) => {
             Settings
           </li>
           <li
-            onClick={() => navigate("/")}
+            onClick={logout}
             className="p-2 transition duration-200 cursor-pointer hover:bg-primary hover:text-[white] rounded-bl-md  rounded-br-md "
           >
             Logout

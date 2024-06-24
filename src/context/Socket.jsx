@@ -13,39 +13,14 @@ const SocketProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
   const setupSocket = useCallback(() => {
-    socket.connect();
-
-    socket.on("connect", () => {
-      console.log("Connected to server");
-      socket.emit("join", {
-        token: localStorage.getItem("token"),
-      });
-    });
-
-    socket.on("disconnect", () => {
-      console.log("Disconnected from server");
-    });
-
-    socket.on("newMessage", (data) => {
-      setMessages((prev) => [...prev, data]);
-    });
-
     socket.on("notification", (data) => {
       setUnreadNotifications(data.unreadNotifications);
       sendNotification(data.notification.title, data.notification.message);
     });
-
-    return () => {
-      socket.disconnect();
-    };
   }, [socket]);
 
   useEffect(() => {
     const cleanUp = setupSocket();
-
-    return () => {
-      cleanUp();
-    };
   }, [setupSocket]);
 
   return (

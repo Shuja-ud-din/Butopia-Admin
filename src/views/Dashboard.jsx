@@ -14,22 +14,24 @@ import Support from "../pages/Support";
 import Chats from "../pages/Chats";
 import { AppContext } from "../context/AppData";
 import { notification } from "antd";
+import NotFound from "../pages/NotFound";
+import { socket } from "../utils/socket";
+import { sendNotification } from "../utils/sendNotification";
 
 const Dashboard = () => {
-  const { setUser } = useContext(AppContext);
-  const user = localStorage.getItem("user");
+  const { user, setUser } = useContext(AppContext);
+  const userObj = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    console.log(JSON.parse(user));
-    setUser(JSON.parse(user));
+    socket.connect();
+    socket.emit("join", { token });
+
+    setUser(JSON.parse(userObj));
   }, []);
 
   return (
     <>
-      {/* <Routes>
-        <Route path="/" element={<>Hi admin</>} />
-      </Routes> */}
-
       <div className="w-full min-h-screen">
         <Header />
         <div
@@ -41,17 +43,39 @@ const Dashboard = () => {
           </div>
           <div className="col-span-10 bg-[#f8f9fa] overflow-y-auto p-10">
             <Routes>
-              <Route path="/" element={<>Admin</>} />
-              <Route path="/dashboard/" element={<DashboardPage />} />
-              <Route path="/appointments/*" element={<Appoinments />} />
-              <Route path="/customers/*" element={<Customers />} />
-              <Route path="/categories/*" element={<Categories />} />
-              <Route path="/services/*" element={<Services />} />
-              <Route path="/providers/*" element={<Providers />} />
-              <Route path="/admins/*" element={<Admins />} />
-              <Route path="/payments/*" element={<Payments />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/chats" element={<Chats />} />
+              {user?.role === "Admin" ? (
+                <>
+                  <Route path="/" element={<>Admin</>} />
+                  <Route path="/dashboard/" element={<DashboardPage />} />
+                  <Route path="/appointments/*" element={<Appoinments />} />
+                  <Route path="/customers/*" element={<Customers />} />
+                  <Route path="/categories/*" element={<Categories />} />
+                  <Route path="/services/*" element={<Services />} />
+                  <Route path="/providers/*" element={<Providers />} />
+                  <Route path="/support" element={<Support />} />
+                  <Route path="/chats" element={<Chats />} />
+                  <Route path="*" element={<NotFound />} />
+                </>
+              ) : user?.role === "Super Admin" ? (
+                <>
+                  <Route path="/" element={<>Admin</>} />
+                  <Route path="/dashboard/" element={<DashboardPage />} />
+                  <Route path="/appointments/*" element={<Appoinments />} />
+                  <Route path="/customers/*" element={<Customers />} />
+                  <Route path="/categories/*" element={<Categories />} />
+                  <Route path="/services/*" element={<Services />} />
+                  <Route path="/providers/*" element={<Providers />} />
+                  <Route path="/admins/*" element={<Admins />} />
+                  <Route path="/payments/*" element={<Payments />} />
+                  <Route path="/support" element={<Support />} />
+                  <Route path="/chats" element={<Chats />} />
+                  <Route path="*" element={<NotFound />} />
+                </>
+              ) : (
+                <>
+                  <Route path="*" element={<NotFound />} />
+                </>
+              )}
             </Routes>
           </div>
         </div>

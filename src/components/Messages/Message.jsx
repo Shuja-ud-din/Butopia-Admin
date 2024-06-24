@@ -5,14 +5,13 @@ import MessageArea from "./MessageArea/MessageArea";
 import profilePhoto from "../../assets/user_profile.png";
 import Button from "../Button/Button";
 import { FiSend } from "react-icons/fi";
-import { SocketContext } from "../../context/Socket";
 import useMessages from "../../Hooks/useMessages";
 
 const Message = ({ chat }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
 
   const [value, setValue] = useState("");
-  const { messages, setMessages } = useContext(SocketContext);
+  const [messages, setMessages] = useState([]);
 
   const handleSend = (e) => {
     e.preventDefault();
