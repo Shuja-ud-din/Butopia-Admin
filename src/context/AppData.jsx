@@ -5,6 +5,7 @@ import { createContext } from "react";
 const AppContext = createContext();
 
 const AppData = ({ children }) => {
+  const [messages, setMessages] = useState([]);
   const [user, setUser] = useState({
     name: null,
     email: null,
@@ -16,7 +17,7 @@ const AppData = ({ children }) => {
   });
 
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ user, setUser, messages, setMessages }}>
       {children}
     </AppContext.Provider>
   );

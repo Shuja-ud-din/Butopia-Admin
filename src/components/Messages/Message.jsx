@@ -6,12 +6,16 @@ import profilePhoto from "../../assets/user_profile.png";
 import Button from "../Button/Button";
 import { FiSend } from "react-icons/fi";
 import useMessages from "../../Hooks/useMessages";
+import { socket } from "../../utils/socket";
+import { AppContext } from "../../context/AppData";
+import { sendNotification } from "../../utils/sendNotification";
 
 const Message = ({ chat }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
 
   const [value, setValue] = useState("");
-  const [messages, setMessages] = useState([]);
+
+  const { messages, setMessages } = useContext(AppContext);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -27,6 +31,19 @@ const Message = ({ chat }) => {
       sendMessage(chat.id, value);
     }
   };
+
+  useEffect(() => {
+    const handleMessage = (data) => {
+      sendNotification(chat.user.name, data.message);
+      setMessages((prevMessages) => [...prevMessages, data]);
+    };
+
+    socket.on("newMessage", handleMessage);
+
+    return () => {
+      socket.off("newMessage", handleMessage);
+    };
+  }, []);
 
   useEffect(() => {
     getMessagesById(chat.id);
