@@ -25,9 +25,26 @@ const Dashboard = () => {
 
   useEffect(() => {
     socket.connect();
-    socket.emit("join", { token });
+
+    socket.on("connect", () => {
+      const token = localStorage.getItem("token");
+      socket.emit("join", { token });
+      console.log("Connected to server");
+    });
+
+    socket.on("onlineUsers", (data) => {
+      console.log("onlineUsers: ", data);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
 
     setUser(JSON.parse(userObj));
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (

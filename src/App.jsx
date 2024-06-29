@@ -3,7 +3,6 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import Registration from "./views/Login/index";
 import { useEffect, useState } from "react";
-import SocketProvider from "./context/Socket";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")

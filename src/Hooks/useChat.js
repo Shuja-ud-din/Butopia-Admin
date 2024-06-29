@@ -15,7 +15,6 @@ const useChat = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       setLoading(false);
       if (response.data.success) {
         setChats(

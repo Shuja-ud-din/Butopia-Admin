@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FiAlignLeft } from "react-icons/fi";
 import { GoBell } from "react-icons/go";
-import avatar from "../assets/avatar.jpg";
 import ProfileBox from "./ProfileBox/ProfileBox";
 import { GoChevronDown } from "react-icons/go";
 import logo from "../assets/logo.jpg";

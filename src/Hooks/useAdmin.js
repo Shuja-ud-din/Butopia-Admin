@@ -27,7 +27,7 @@ const useAdmin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+
       if (response.data.success) {
         setGetAllAdminsTable(
           response.data.data.reverse().map((item, index) => {
@@ -104,8 +104,6 @@ const useAdmin = () => {
         showErrorNotification(response.data.error);
         setLoading(false);
       }
-
-      console.log(response);
     } catch (error) {
       console.error("Error encountered", error);
       showErrorNotification(
@@ -127,7 +125,6 @@ const useAdmin = () => {
       // if (response.data.success) {
       setGetAdminData(response);
       // }
-      console.log(response);
     } catch (e) {
       console.error("Error encountered", e.message);
     }
@@ -181,10 +178,10 @@ const useAdmin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+
       if (response.data.success) {
         getProviderTable();
-        console.log(response);
+
         showSuccessNotification("Admin Edited Successfully!");
         setLoading(false);
       } else {
@@ -219,7 +216,7 @@ const useAdmin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+
       if (response.data.success) {
         getProviderTable();
         showSuccessNotification("Status Changed Successfully!");

@@ -14,7 +14,7 @@ const Message = ({ chat }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
 
   const [value, setValue] = useState("");
-
+  const [currentChat, setCurrentChat] = useState(chat);
   const { messages, setMessages } = useContext(AppContext);
 
   const handleSend = (e) => {
@@ -34,7 +34,7 @@ const Message = ({ chat }) => {
 
   useEffect(() => {
     const handleMessage = (data) => {
-      sendNotification(chat.user.name, data.message);
+      console.log(data);
       setMessages((prevMessages) => [...prevMessages, data]);
     };
 
@@ -53,7 +53,9 @@ const Message = ({ chat }) => {
     setMessages(chatMsgs);
   }, [chatMsgs]);
 
-  console.log(chatMsgs);
+  useEffect(() => {
+    setCurrentChat(chat);
+  }, [chat]);
 
   return (
     <>

@@ -51,8 +51,6 @@ const Support = () => {
     setChatsToDisplay(chats);
   }, [chats]);
 
-  console.log(activeChat);
-
   return (
     <>
       <div>
@@ -74,7 +72,6 @@ const Support = () => {
           <div className="max-h-[62vh] overflow-auto mt-4 pr-2">
             {chatsToDisplay && chatsToDisplay.length > 0
               ? chatsToDisplay.map((chat, index) => {
-                  console.log(chat);
                   return (
                     <ChatBox
                       name={chat.user.name}
@@ -85,7 +82,9 @@ const Support = () => {
                       }
                       unread={chat.unread}
                       lastMsgTime={
-                        chat.lastMessage ? chat.lastMessage.date : ""
+                        chat.lastMessage
+                          ? chat.lastMessage.date
+                          : chat.createdAt
                       }
                       onClick={() => setActiveChat(chat)}
                     />

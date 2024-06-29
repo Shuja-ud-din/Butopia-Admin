@@ -12,8 +12,6 @@ const ChatBox = ({
   lastMsgTime,
   onClick = () => {},
 }) => {
-  console.log(lastMessage);
-
   return (
     <div
       className={`flex px-2 items-center border-b border-[#ccc] cursor-pointer  py-[0.5rem] ${
@@ -28,9 +26,11 @@ const ChatBox = ({
       /> */}
       <Avatar src={profilePhoto || dummyProfile} />
       <div className="ml-3 flex justify-between w-full">
-        <div className="flex flex-col">
+        <div className="flex justify-center flex-col">
           <h3 className="text-[15px] font-semibold">{name}</h3>
-          <p className="text-[13px] text-gray-600">{lastMessage}</p>
+          {lastMessage && (
+            <p className="text-[13px] text-gray-600">{lastMessage}</p>
+          )}
         </div>
         <div className="flex flex-col h-full justify-end">
           <div className="flex items-end  justify-end h-[1.4rem] ">
