@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import InputBar from "../Input/Input";
 import MessageBubble from "./MessageBubble/MessageBubble";
 import MessageArea from "./MessageArea/MessageArea";
@@ -9,13 +15,20 @@ import useMessages from "../../Hooks/useMessages";
 import { socket } from "../../utils/socket";
 import { AppContext } from "../../context/AppData";
 import { sendNotification } from "../../utils/sendNotification";
+import { isSameDay } from "../../utils/timeFormat";
+import MessageBadge from "./MessageBadge";
+import { Avatar } from "antd";
+import { data } from "autoprefixer";
 
 const Message = ({ chat }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
+  const { activeChat, chatsToDisplay, setChatsToDisplay } =
+    useContext(AppContext);
 
+  const [messages, setMessages] = useState([]);
   const [value, setValue] = useState("");
   const [currentChat, setCurrentChat] = useState(chat);
-  const { messages, setMessages } = useContext(AppContext);
+  const messagesBoxRef = useRef();
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -32,10 +45,45 @@ const Message = ({ chat }) => {
     }
   };
 
+  const scrollToBottom = () => {
+    messagesBoxRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     const handleMessage = (data) => {
-      console.log(data);
-      setMessages((prevMessages) => [...prevMessages, data]);
+      if (activeChat.id === data.chatId) {
+        const updatedChats = chatsToDisplay.map((chat) => {
+          if (chat.id === data.chatId) {
+            return {
+              ...chat,
+              lastMessage: {
+                date: data.date,
+                message: data.message,
+              },
+            };
+          } else {
+            return chat;
+          }
+        });
+        setChatsToDisplay(updatedChats);
+        setMessages((prevMessages) => [...prevMessages, data]);
+      } else {
+        const updatedChats = chatsToDisplay.map((chat) => {
+          if (chat.id === data.chatId) {
+            return {
+              ...chat,
+              unread: chat.unread + 1,
+              lastMessage: {
+                date: data.date,
+                message: data.message,
+              },
+            };
+          } else {
+            return chat;
+          }
+        });
+        setChatsToDisplay(updatedChats);
+      }
     };
 
     socket.on("newMessage", handleMessage);
@@ -43,7 +91,7 @@ const Message = ({ chat }) => {
     return () => {
       socket.off("newMessage", handleMessage);
     };
-  }, []);
+  }, [activeChat, chatsToDisplay]);
 
   useEffect(() => {
     getMessagesById(chat.id);
@@ -57,14 +105,17 @@ const Message = ({ chat }) => {
     setCurrentChat(chat);
   }, [chat]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <>
       <div className="w-full min-h-[70vh] flex flex-col justify-between">
         <div className=" w-[100%]  pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary">
-          <img
+          <Avatar
             src={chat ? chat.user.profilePicture || profilePhoto : profilePhoto}
-            alt=""
-            className="h-[3rem] rounded-full"
+            size={50}
           />
           <div className="text-center text-lg font-semibold  text-[white]">
             {chat ? chat.user.name : ""}
@@ -79,14 +130,35 @@ const Message = ({ chat }) => {
           ) : (
             <MessageArea>
               {messages.length > 0 &&
-                messages.map((message, index) => (
-                  <MessageBubble
-                    key={index}
-                    isMine={chat?.user?.id !== message.sender}
-                    message={message.message}
-                    time={message.date}
-                  />
-                ))}
+                messages.map((message, index) => {
+                  return (
+                    <>
+                      {/* {(messages[index - 1]
+                        ? messages[index - 1].isRead
+                        : true) &&
+                        !messages[index].isRead && (
+                          <MessageBadge text="Unread Messages" />
+                        )} */}
+
+                      {index === 0 && (
+                        <MessageBadge date={messages[index].date} />
+                      )}
+                      <MessageBubble
+                        key={index}
+                        isMine={chat?.user?.id !== message.sender}
+                        message={message.message}
+                        time={message.date}
+                      />
+                      {isSameDay(
+                        messages[index].date,
+                        messages[index + 1]?.date
+                      ) ? null : (
+                        <MessageBadge date={messages[index + 1]?.date} />
+                      )}
+                    </>
+                  );
+                })}
+              <div ref={messagesBoxRef} />
             </MessageArea>
           )}
         </div>

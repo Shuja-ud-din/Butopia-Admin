@@ -76,6 +76,10 @@ const Header = () => {
       sendNotification(data.notification.title, data.notification.message);
       setUnreadNotifications(data.unreadNotifications);
     });
+
+    socket.on("messageNotification", (data) => {
+      sendNotification(data.title, data.message);
+    });
   }, []);
 
   return (

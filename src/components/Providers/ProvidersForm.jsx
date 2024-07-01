@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import ServiceDropDown from "../SelectDropdown/ServiceDropDownSelect";
@@ -20,8 +20,9 @@ const ProvidersForm = () => {
     selectedDay,
     addProvider,
     payLoad,
+    setAddProviderData,
   } = useProvider();
-  const [imagePreview, setImagePreview] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
 
   // Function to handle time selection
@@ -38,7 +39,14 @@ const ProvidersForm = () => {
     "Sunday",
   ];
 
-  console.log(selectedDay);
+  useEffect(() => {
+    setAddProviderData((prev) => {
+      return {
+        ...prev,
+        profilePicture: imageUrl,
+      };
+    });
+  }, [imageUrl]);
 
   return (
     <>
@@ -53,7 +61,7 @@ const ProvidersForm = () => {
 
           <div className=" mt-10 w-full grid grid-cols-12 ">
             <div className="h-[15rem] h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
-              <ImageUploader profile />
+              <ImageUploader setUrl={setImageUrl} profile />
             </div>
             <div className=" col-span-8">
               <div>

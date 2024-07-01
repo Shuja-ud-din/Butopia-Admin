@@ -5,7 +5,9 @@ import { createContext } from "react";
 const AppContext = createContext();
 
 const AppData = ({ children }) => {
-  const [messages, setMessages] = useState([]);
+  const [chatsToDisplay, setChatsToDisplay] = useState();
+  const [activeChat, setActiveChat] = useState(0);
+
   const [user, setUser] = useState({
     name: null,
     email: null,
@@ -17,7 +19,16 @@ const AppData = ({ children }) => {
   });
 
   return (
-    <AppContext.Provider value={{ user, setUser, messages, setMessages }}>
+    <AppContext.Provider
+      value={{
+        user,
+        setUser,
+        chatsToDisplay,
+        setChatsToDisplay,
+        activeChat,
+        setActiveChat,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -56,6 +56,7 @@ const useProvider = () => {
   const [addProviderData, setAddProviderData] = useState({
     name: "",
     email: "",
+    profilePicture: null,
     phoneNumber: "",
     password: "",
     address: "",
@@ -70,6 +71,7 @@ const useProvider = () => {
     email: addProviderData.email,
     phoneNumber: addProviderData.phoneNumber,
     password: addProviderData.password,
+    profilePicture: addProviderData.profilePicture,
     address: addProviderData.address,
     speciality: addProviderData.speciality,
     about: addProviderData.about,
@@ -303,6 +305,7 @@ const useProvider = () => {
     editProvider,
     editData,
     editPayload,
+    setAddProviderData,
   };
 };
 
