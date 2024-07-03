@@ -71,7 +71,9 @@ const Chat = ({ chats }) => {
                           : chat.createdAt
                       }
                       onClick={() => {
-                        // readAllMessages(activeChat.id);
+                        if (activeChat.unread > 0) {
+                          readAllMessages(activeChat.id);
+                        }
                         setActiveChat(chat);
                       }}
                     />
