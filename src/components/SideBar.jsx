@@ -48,11 +48,11 @@ const adminSideBarItems = [
     title: "Support",
     path: "/support",
   },
-  {
-    icon: <IoMdChatbubbles />,
-    title: "Chats",
-    path: "/chats",
-  },
+  // {
+  //   icon: <IoMdChatbubbles />,
+  //   title: "Chats",
+  //   path: "/chats",
+  // },
 ];
 
 const superAdminSideBarItems = [

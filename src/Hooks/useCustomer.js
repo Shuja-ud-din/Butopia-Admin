@@ -82,8 +82,8 @@ const useCustomer = () => {
         throw new Error("Please fill in all the fields");
       }
 
-      if (phoneNumber.length !== 12) {
-        throw new Error("Phone number must be of 12 digits");
+      if (phoneNumber.length < 10) {
+        throw new Error("Phone number must be at least 10 digits");
       }
       if (!phoneNumber.match(/^\d+$/)) {
         throw new Error("Phone Number must be in digits");
