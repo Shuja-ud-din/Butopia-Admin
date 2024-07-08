@@ -6,10 +6,16 @@ import Message from "../components/Messages/Message";
 import ChatBox from "../components/ChatBox/ChatBox";
 import { socket } from "../utils/socket";
 import useChat from "../Hooks/useChat";
+import { toUnix } from "../utils/timeFormat";
 
 const Chat = ({ chats }) => {
-  const { activeChat, setActiveChat, chatsToDisplay, setChatsToDisplay } =
-    useContext(AppContext);
+  const {
+    activeChat,
+    setActiveChat,
+    chatsToDisplay,
+    setChatsToDisplay,
+    onlineUsers,
+  } = useContext(AppContext);
 
   const { readAllMessages } = useChat();
 
@@ -61,6 +67,9 @@ const Chat = ({ chats }) => {
                       name={chat.user.name}
                       isActive={chat.id === activeChat.id}
                       profilePhoto={chat.user.profilePicture}
+                      isOnline={onlineUsers.find(
+                        (user) => user.userId === chat.user.id
+                      )}
                       lastMessage={
                         chat.lastMessage ? chat.lastMessage.message : ""
                       }
@@ -80,11 +89,16 @@ const Chat = ({ chats }) => {
                   );
                 })
               : "No chats available"
-            : "Loadig..."}
+            : "Loading..."}
         </div>
       </div>
       <div className="col-span-8 bg-[white]  border  rounded-[9px] rounded-tr-[9px]  border-[#c4c4c4] shadow-lg ">
-        <Message chat={activeChat} />
+        <Message
+          chat={activeChat}
+          isOnline={onlineUsers.find(
+            (user) => user.userId === activeChat?.user?.id
+          )}
+        />
       </div>
     </div>
   );

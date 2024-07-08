@@ -1,7 +1,9 @@
 import React from "react";
 import dummyProfile from "../../assets/user_profile.png";
-import { Avatar } from "@mui/material";
 import moment from "moment";
+import { Avatar, Badge } from "@mui/material";
+import ChatAvatar from "./ChatAvatar";
+import { formatChatDate } from "../../utils/timeFormat";
 
 const ChatBox = ({
   name,
@@ -10,6 +12,7 @@ const ChatBox = ({
   unread = 0,
   isActive = false,
   lastMsgTime,
+  isOnline = false,
   onClick = () => {},
 }) => {
   return (
@@ -24,7 +27,7 @@ const ChatBox = ({
         alt={`${name}'s profile`}
         className="h-[2rem] w--[2rem] rounded-full mr-4"
       /> */}
-      <Avatar src={profilePhoto || dummyProfile} />
+      <ChatAvatar profileImage={profilePhoto} isOnline={isOnline} />
       <div className="ml-3 flex justify-between w-full">
         <div className="flex justify-center flex-col">
           <h3 className="text-[15px] font-semibold">{name}</h3>
@@ -41,7 +44,7 @@ const ChatBox = ({
             )}
           </div>
           <p className="text-[13px] text-gray-600 mb-1">
-            {lastMsgTime && moment(lastMsgTime).format("LT")}
+            {lastMsgTime && formatChatDate(lastMsgTime)}
           </p>
         </div>
       </div>

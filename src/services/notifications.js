@@ -9,3 +9,9 @@ export const getAllNotifications = async () => {
   });
   return data;
 };
+
+export const readAllNotifications = async () => {
+  const { data } = await api.patch("/api/notifications/readAll");
+
+  return data;
+};

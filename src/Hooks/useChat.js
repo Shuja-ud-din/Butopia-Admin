@@ -9,7 +9,8 @@ const useChat = () => {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState();
 
-  const { setChatsToDisplay, chatsToDisplay } = useContext(AppContext);
+  const { setChatsToDisplay, chatsToDisplay, setOnlineUsers } =
+    useContext(AppContext);
 
   const getSupportChats = async () => {
     try {
@@ -66,9 +67,21 @@ const useChat = () => {
     }
   };
 
+  const getOnlineUsers = async () => {
+    try {
+      const response = await api.get("/api/chat/onlineUsers");
+      if (response.data.success) {
+        setOnlineUsers(response.data.data);
+      }
+    } catch (e) {
+      console.error("Error message", e.message);
+    }
+  };
+
   return {
     getSupportChats,
     readAllMessages,
+    getOnlineUsers,
     chats,
     loading,
   };
