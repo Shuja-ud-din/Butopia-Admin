@@ -48,7 +48,7 @@ const Chat = ({ chats }) => {
   }, [chats]);
 
   return (
-    <div className="h-[72vh] flex gap-[1rem] grid grid-cols-12 mt-4 ">
+    <div className="h-[72vh] gap-[1rem] grid grid-cols-12 mt-4 ">
       <div className="p-3 col-span-4 bg-[white]  border border-[#c4c4c4]  rounded-[9px] h-full  flex flex-col">
         <div className="flex">
           <SearchBar onChange={handleSearchChats} placeholder="search here.." />

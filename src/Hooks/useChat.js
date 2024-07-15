@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { api } from "../api/api";
+import { api, axiosInstance } from "../api/api";
 import { notification } from "antd";
 import { AppContext } from "../context/AppData";
 
@@ -69,7 +69,11 @@ const useChat = () => {
 
   const getOnlineUsers = async () => {
     try {
-      const response = await api.get("/api/chat/onlineUsers");
+      const response = await axiosInstance.get("/api/chat/onlineUsers", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.data.success) {
         setOnlineUsers(response.data.data);
       }
