@@ -60,7 +60,7 @@ const ProvidersForm = () => {
           </div>
 
           <div className=" mt-10 w-full grid grid-cols-12 ">
-            <div className="h-[15rem] h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
+            <div className="h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
               <ImageUploader setUrl={setImageUrl} profile />
             </div>
             <div className=" col-span-8">
@@ -130,6 +130,16 @@ const ProvidersForm = () => {
                   type="number"
                 />
               </div>
+              <div>
+                <Input
+                  label={"SWARM Link"}
+                  name="swarmLink"
+                  placeholder={"SWARM Link"}
+                  onChange={handleChange}
+                  value={addProviderData.swarmLink}
+                  type="text"
+                />
+              </div>
             </div>
           </div>
           <label
@@ -145,7 +155,7 @@ const ProvidersForm = () => {
             name="about"
             type="text"
             rows={4}
-            className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
           <label
             htmlFor="name"

@@ -62,13 +62,14 @@ const Table = ({
         {filter && filter()}
       </div>
       <div className="bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-        <table className="w-full">
-          <thead className="rounded-tr-[9px] rounded-tl-[9px] ">
-            <tr className="uppercase border-b border-[#c4c4c4]">
-              {label.map((text, index) => {
-                return (
-                  <th
-                    className={`py-4 bg-[#F9FAFB] font-[600] text-[15px] text-[#1D2939] whitespace-nowrap 
+        <div className="overflow-auto">
+          <table className="w-full">
+            <thead className="rounded-tr-[9px] rounded-tl-[9px] ">
+              <tr className="uppercase border-b border-[#c4c4c4]">
+                {label.map((text, index) => {
+                  return (
+                    <th
+                      className={`py-4 bg-[#F9FAFB] font-[600] text-[15px] text-[#1D2939] whitespace-nowrap 
                         ${
                           index === label.length - 1
                             ? "text-right pr-9 rounded-tr-[9px]"
@@ -77,78 +78,82 @@ const Table = ({
                             : "text-left pl-9"
                         }
                         `}
-                  >
-                    {text}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {recordsPerPage ? (
-              recordsPerPage.length > 0 ? (
-                recordsPerPage.map((obj, mainIndex) => {
-                  return (
-                    <tr
-                      key={obj.id}
-                      onClick={() => {
-                        if (setRecord) setRecord(obj);
-                      }}
-                      className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
                     >
-                      {keysToDisplay.map((key, index) => {
-                        const blocksList = renderComponent(index, customBlocks);
-                        return (
-                          <td
-                            onClick={() => {
-                              if (routes.length > 0)
-                                navigate(`${routes[0]}/${obj.id}`);
-                            }}
-                            className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
-                              index === label.length - 1
-                                ? "text-right pr-9 "
-                                : "text-left pl-9 "
-                            }`}
-                          >
-                            {blocksList
-                              ? blocksList.component(key ? obj[key] : obj)
-                              : obj[key]}
-                          </td>
-                        );
-                      })}
-                      {extraColumns.map((item) => {
-                        return (
-                          <td
-                            className={`py-4 font-[400] text-[14px] text-[#858992] flex justify-end pr-9 whitespace-nowrap`}
-                          >
-                            {item(obj)}
-                          </td>
-                        );
-                      })}
-                    </tr>
+                      {text}
+                    </th>
                   );
-                })
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {recordsPerPage ? (
+                recordsPerPage.length > 0 ? (
+                  recordsPerPage.map((obj, mainIndex) => {
+                    return (
+                      <tr
+                        key={obj.id}
+                        onClick={() => {
+                          if (setRecord) setRecord(obj);
+                        }}
+                        className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
+                      >
+                        {keysToDisplay.map((key, index) => {
+                          const blocksList = renderComponent(
+                            index,
+                            customBlocks
+                          );
+                          return (
+                            <td
+                              onClick={() => {
+                                if (routes.length > 0)
+                                  navigate(`${routes[0]}/${obj.id}`);
+                              }}
+                              className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
+                                index === label.length - 1
+                                  ? "text-right pr-9 "
+                                  : "text-left pl-9 "
+                              }`}
+                            >
+                              {blocksList
+                                ? blocksList.component(key ? obj[key] : obj)
+                                : obj[key]}
+                            </td>
+                          );
+                        })}
+                        {extraColumns.map((item) => {
+                          return (
+                            <td
+                              className={`py-4 font-[400] text-[14px] text-[#858992] flex justify-end pr-9 whitespace-nowrap`}
+                            >
+                              {item(obj)}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={label.length}
+                      className="px-6 py-4 text-center border-b border-[#F2F2F2]"
+                    >
+                      No Records Found
+                    </td>
+                  </tr>
+                )
               ) : (
                 <tr>
-                  <td
-                    colSpan={label.length}
-                    className="px-6 py-4 text-center border-b border-[#F2F2F2]"
-                  >
-                    No Records Found
+                  <td colSpan={label.length} className="px-6 py-4">
+                    {label.map((item, index) => {
+                      return <Skeleton height={50} />;
+                    })}
                   </td>
                 </tr>
-              )
-            ) : (
-              <tr>
-                <td colSpan={label.length} className="px-6 py-4">
-                  {label.map((item, index) => {
-                    return <Skeleton height={50} />;
-                  })}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           noOfRecordsPerPage={noOfRecordsPerPage}
           setNoOfRecordsPerPage={setNoOfRecordsPerPage}

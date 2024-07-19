@@ -30,7 +30,7 @@ const Message = ({ chat, isOnline = false }) => {
         message: value,
         chatId: chat.id,
         sender: localStorage.getItem("userId"),
-        isRead: true,
+        isRead: false,
         date: new Date(),
       };
       setMessages([...messages, newMsg]);

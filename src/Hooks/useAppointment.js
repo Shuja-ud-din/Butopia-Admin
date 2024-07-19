@@ -53,10 +53,9 @@ const useAppointment = () => {
     setSelectedDate(date ? date.toISOString() : "Invalid Date");
   };
 
-  const addAppointment = async (customerId, providerId, serviceId, date) => {
+  const addAppointment = async (customerId, serviceId, date) => {
     const payLoad = {
       customer: customerId,
-      provider: providerId,
       service: serviceId,
       date,
     };
@@ -103,7 +102,6 @@ const useAppointment = () => {
         }
       );
 
-      console.log(response);
       if (response.data.success) {
         showSuccessNotification("Appointment Cancelled Successfully!");
         setLoading(false);
@@ -117,7 +115,7 @@ const useAppointment = () => {
     } catch (e) {
       console.error(e.message);
       showErrorNotification(
-        (e.response ? e.response.data.message : e.message) ||
+        (e.response ? e.response.data.error : e.message) ||
           "Something went wrong!"
       );
       setLoading(false);

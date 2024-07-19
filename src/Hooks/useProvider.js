@@ -65,6 +65,7 @@ const useProvider = () => {
     experience: "",
     startTime: "",
     endTime: "",
+    swarmLink: "",
   });
   const payLoad = {
     name: addProviderData.name,
@@ -75,6 +76,7 @@ const useProvider = () => {
     address: addProviderData.address,
     speciality: addProviderData.speciality,
     about: addProviderData.about,
+    swarmLink: addProviderData.swarmLink,
     experience: parseInt(addProviderData.experience, 10),
     workingDays: selectedDay,
     workingTimes: {
@@ -93,6 +95,8 @@ const useProvider = () => {
     experience,
     workingDays,
     workingTimes,
+    swarmLink,
+    profilePicture,
   } = payLoad;
 
   const handleChange = (e) => {
@@ -117,13 +121,18 @@ const useProvider = () => {
         experience.length === 0 ||
         workingDays.length === 0 ||
         workingTimes.start === "" ||
-        workingTimes.end === ""
+        workingTimes.end === "" ||
+        swarmLink === ""
       ) {
         throw new Error("Please fill in all the fields");
       }
 
-      if (phoneNumber.length !== 12) {
-        throw new Error("Phone number must be of 12 digits");
+      if (profilePicture === null) {
+        throw new Error("Please upload a profile picture");
+      }
+
+      if (phoneNumber.length < 10) {
+        throw new Error("Phone number must be at least 10 digits");
       }
       if (!phoneNumber.match(/^\d+$/)) {
         throw new Error("Phone Number must be in digits");
@@ -152,9 +161,9 @@ const useProvider = () => {
         setLoading(false);
       }
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
       showErrorNotification(
-        (e.response ? e.response.data.message : e.message) ||
+        (e.response ? e.response.data.error : e.message) ||
           "Something went wrong!"
       );
       setLoading(false);

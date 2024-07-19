@@ -24,9 +24,9 @@ const useServices = () => {
 
   /////////////servicesTable/////////////
   const [data, setData] = useState();
-  const getServicesTable = async () => {
+  const getServicesTable = async (providerId) => {
     try {
-      const response = await api.get(`/api/service`, {
+      const response = await api.get(`/api/service?provider=${providerId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -69,7 +69,7 @@ const useServices = () => {
     provider: addServiceData.provider,
     image: imageUrl,
   };
-  const { name, description, price, category } = payLoad;
+  const { name, description, price, image } = payLoad;
 
   const addService = async (e) => {
     e.preventDefault();
@@ -84,6 +84,9 @@ const useServices = () => {
       }
       if (description.length < 8) {
         throw new Error("This is too short to describe");
+      }
+      if (!image) {
+        throw new Error("Please upload an image");
       }
 
       const response = await api.post("/api/service", payLoad, {

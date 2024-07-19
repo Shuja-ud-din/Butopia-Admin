@@ -11,8 +11,6 @@ const getAppointmentTime = (appointmentDate, appointmentTime) => {
   }
 
   return date;
-
-  return;
 };
 
 export default getAppointmentTime;

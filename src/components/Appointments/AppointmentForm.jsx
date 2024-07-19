@@ -12,7 +12,7 @@ import useAppointment from "../../Hooks/useAppointment";
 import useProvider from "../../Hooks/useProvider";
 import useCustomer from "../../Hooks/useCustomer";
 import getAppointmentTime from "../../utils/getAppointmentTime";
-import { formatTime } from "../../utils/timeFormat";
+import moment from "moment";
 import useServices from "../../Hooks/useServices";
 
 const AppointmentForm = () => {
@@ -53,10 +53,14 @@ const AppointmentForm = () => {
   useEffect(() => {
     getProviderTable();
     customer.getCustomerTable();
-    service.getServicesTable();
+    // service.getServicesTable();
   }, []);
 
-  console.log(service.data);
+  useEffect(() => {
+    if (selectedProvider) {
+      service.getServicesTable(selectedProvider.id);
+    }
+  }, [selectedProvider]);
 
   return (
     <>
@@ -96,13 +100,17 @@ const AppointmentForm = () => {
           size="small"
           id="combo-box-demo"
           onChange={(e, newValue) => setSelectedService(newValue)}
-          options={service.data || [{ name: "Loading..." }]}
+          options={
+            !selectedProvider
+              ? [{ name: "Select Doctor First" }]
+              : service.data || [{ name: "Loading..." }]
+          }
           sx={{ width: 300 }}
           getOptionLabel={(option) => option.name}
           renderInput={(params) => <TextField {...params} label="Service" />}
         />
       </div>
-      <div className="w-full flex mt-3 flex">
+      <div className="w-full flex mt-3">
         <div className="w-30   flex flex-col p-3 h-80 mr-3 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
@@ -149,14 +157,15 @@ const AppointmentForm = () => {
           <div className="my-3 w-full flex items-center justify-end">
             <Button
               type="primary"
-              onClick={() =>
+              onClick={() => {
                 addAppointment(
                   selectedClient.id,
-                  selectedProvider.id,
                   selectedService.id,
-                  getAppointmentTime(selectedDate, selectedTime)
-                )
-              }
+                  moment(
+                    getAppointmentTime(selectedDate, selectedTime)
+                  ).format()
+                );
+              }}
             >
               Submit
             </Button>
