@@ -57,7 +57,7 @@ const ProviderDetails = () => {
                 <option value={false}>Deactive</option>
               </Select>
             </div>
-            <div className="flex grid grid-cols-12">
+            <div className="grid grid-cols-12">
               <div className="col-span-3">
                 <Avatar
                   src={getProviderData?.profilePicture}
@@ -116,6 +116,22 @@ const ProviderDetails = () => {
                       <Rate disabled value={getProviderData.rating} />
                       <p className="font-[500] text-[#909aaa]">
                         {getProviderData.rating || "Loading..."}
+                      </p>
+                    </div>
+                    <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
+                      SWARM Link
+                    </div>
+                    <div className="text-[0.93rem] font-[400] flex justify-between mb-3">
+                      <p className="font-[500] text-[#909aaa]">
+                        {getProviderData.swarmLink && (
+                          <a
+                            target="_blank"
+                            className="cursor-pointer hover:text-[blue]"
+                            href={getProviderData.swarmLink}
+                          >
+                            {getProviderData.swarmLink}
+                          </a>
+                        )}
                       </p>
                     </div>
                     <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">

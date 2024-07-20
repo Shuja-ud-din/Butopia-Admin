@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { api } from "../api/api";
+import { api, axiosInstance } from "../api/api";
 import { notification } from "antd";
 import { AppContext } from "../context/AppData";
 
@@ -9,7 +9,8 @@ const useChat = () => {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState();
 
-  const { setChatsToDisplay, chatsToDisplay } = useContext(AppContext);
+  const { setChatsToDisplay, chatsToDisplay, setOnlineUsers } =
+    useContext(AppContext);
 
   const getSupportChats = async () => {
     try {
@@ -66,9 +67,25 @@ const useChat = () => {
     }
   };
 
+  const getOnlineUsers = async () => {
+    try {
+      const response = await axiosInstance.get("/api/chat/onlineUsers", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.success) {
+        setOnlineUsers(response.data.data);
+      }
+    } catch (e) {
+      console.error("Error message", e.message);
+    }
+  };
+
   return {
     getSupportChats,
     readAllMessages,
+    getOnlineUsers,
     chats,
     loading,
   };

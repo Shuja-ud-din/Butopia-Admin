@@ -1,26 +1,18 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import InputBar from "../Input/Input";
 import MessageBubble from "./MessageBubble/MessageBubble";
 import MessageArea from "./MessageArea/MessageArea";
-import profilePhoto from "../../assets/user_profile.png";
 import Button from "../Button/Button";
 import { FiSend } from "react-icons/fi";
 import useMessages from "../../Hooks/useMessages";
 import { socket } from "../../utils/socket";
 import { AppContext } from "../../context/AppData";
-import { sendNotification } from "../../utils/sendNotification";
 import { isSameDay } from "../../utils/timeFormat";
 import MessageBadge from "./MessageBadge";
-import { Avatar } from "antd";
-import { data } from "autoprefixer";
+import useChat from "../../Hooks/useChat";
+import ChatAvatar from "../ChatBox/ChatAvatar";
 
-const Message = ({ chat }) => {
+const Message = ({ chat, isOnline = false }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
   const { activeChat, chatsToDisplay, setChatsToDisplay } =
     useContext(AppContext);
@@ -37,6 +29,7 @@ const Message = ({ chat }) => {
         message: value,
         chatId: chat.id,
         sender: localStorage.getItem("userId"),
+        isRead: false,
         date: new Date(),
       };
       setMessages([...messages, newMsg]);
@@ -113,9 +106,9 @@ const Message = ({ chat }) => {
     <>
       <div className="w-full min-h-[70vh] flex flex-col justify-between">
         <div className=" w-[100%]  pl-[1rem] h-[4.3rem] bg-primary gap-[1rem]   flex justify-start items-center  rounded-tl-[9px] rounded-tr-[9px]  border-b border-primary">
-          <Avatar
-            src={chat ? chat.user.profilePicture || profilePhoto : profilePhoto}
-            size={50}
+          <ChatAvatar
+            profileImage={chat?.user?.profilePicture}
+            isOnline={isOnline}
           />
           <div className="text-center text-lg font-semibold  text-[white]">
             {chat ? chat.user.name : ""}

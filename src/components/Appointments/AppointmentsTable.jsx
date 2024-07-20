@@ -14,6 +14,7 @@ import useAppointment from "../../Hooks/useAppointment";
 import useCustomer from "../../Hooks/useCustomer";
 import Modal from "../Modal/Modal";
 import ButtonLoader from "../ButtonLoader/ButtonLoader";
+import moment from "moment";
 
 const AppointmentsTable = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const AppointmentsTable = () => {
 
   return (
     <>
-      <div className="flex gap-4 grid grid-cols-12 my-5 ">
+      <div className="gap-4 grid grid-cols-12 my-5 ">
         <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
           <FiUsers size={25} className="mb-4" />
           <p className="my-2">Total Appointments</p>
@@ -71,11 +72,11 @@ const AppointmentsTable = () => {
         </div>
         <div className="col-span-3  p-5 bg-[white] rounded-[1rem] shadow-lg">
           <IoCalendarOutline size={25} className="mb-4" />
-          <p className="my-2">Pending Appointments</p>
+          <p className="my-2">Scheduled Appointments</p>
           <h2 className="font-[600] text-[23px] ">
             {
               getAppointmentTableData?.filter(
-                (item) => item.status === "Pending"
+                (item) => item.status === "Scheduled"
               ).length
             }
           </h2>
@@ -113,6 +114,7 @@ const AppointmentsTable = () => {
           "provider",
           "service",
           "date",
+          "date",
           "status",
         ]}
         label={[
@@ -121,6 +123,7 @@ const AppointmentsTable = () => {
           "Provider Name",
           "service",
           "date",
+          "time",
           "Status",
           "Actions",
         ]}
@@ -129,6 +132,14 @@ const AppointmentsTable = () => {
             index: 4,
             component: (date) => {
               return convertToDate(date);
+              // Today at 11:10 AM(date);
+            },
+          },
+          {
+            index: 5,
+            component: (date) => {
+              return moment(date).format("LT");
+              // Today at 11:10 AM(date);
             },
           },
         ]}
@@ -147,7 +158,7 @@ const AppointmentsTable = () => {
                 }}
               >
                 <option value="All">All</option>
-                <option value="Pending">Pending</option>
+                <option value="Scheduled">Scheduled</option>
                 <option value="Conducted">Conducted</option>
                 <option value="Cancelled">Cancelled</option>
               </Select>

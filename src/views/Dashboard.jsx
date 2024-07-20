@@ -13,15 +13,14 @@ import Payments from "../pages/Payments";
 import Support from "../pages/Support";
 import Chats from "../pages/Chats";
 import { AppContext } from "../context/AppData";
-import { notification } from "antd";
 import NotFound from "../pages/NotFound";
 import { socket } from "../utils/socket";
-import { sendNotification } from "../utils/sendNotification";
+import useChat from "../Hooks/useChat";
 
 const Dashboard = () => {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser, setOnlineUsers } = useContext(AppContext);
   const userObj = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
+  const { getOnlineUsers } = useChat();
 
   useEffect(() => {
     socket.connect();
@@ -34,11 +33,14 @@ const Dashboard = () => {
 
     socket.on("onlineUsers", (data) => {
       console.log("onlineUsers: ", data);
+      setOnlineUsers(data);
     });
 
     socket.on("disconnect", () => {
       console.log("Disconnected from server");
     });
+
+    getOnlineUsers();
 
     setUser(JSON.parse(userObj));
 

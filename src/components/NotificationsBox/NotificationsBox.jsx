@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { IoMailOpenOutline } from "react-icons/io5";
-import { useGetNotifications } from "../../Hooks/useNotifications";
 import moment from "moment";
+import { useReadAllNotifications } from "../../Hooks/useNotifications";
 
 const NotificationsBox = ({ ref, notifications }) => {
+  const { readAllNotifications } = useReadAllNotifications();
+
   return (
     <>
       <div
@@ -21,11 +23,19 @@ const NotificationsBox = ({ ref, notifications }) => {
         <div className="profile_body">
           <ul className="max-h-[20rem] overflow-auto">
             {notifications.length > 0 ? (
-              notifications.map((notification) => {
+              notifications.reverse().map((notification) => {
                 return (
                   <li className="border-b border-secondary">
-                    <div className="p-4 py-2 flex items-start border-b border-[#dedada] grid grid-cols-12">
-                      <div className="mt-2 rounded-full bg-[#1976d2] w-[10px] h-[10px] col-span-1"></div>
+                    <div
+                      className={`p-4 py-2 flex items-start border-b border-[#dedada] grid grid-cols-12 ${
+                        notification.isRead ? "opacity-[0.4]" : ""
+                      } `}
+                    >
+                      <div
+                        className={`mt-2 rounded-full ${
+                          notification.isRead ? "bg-[#d2c619] " : "bg-[#1976d2]"
+                        } w-[10px] h-[10px] col-span-1`}
+                      ></div>
                       <div className="flex flex-col col-span-9">
                         <p className="text-[18px] font-[600]">
                           {notification.title}
@@ -35,14 +45,19 @@ const NotificationsBox = ({ ref, notifications }) => {
                         </p>
                       </div>
                       <div className="col-span-2 flex flex-col justify-end items-end">
-                        <IoMailOpenOutline
-                          className="cursor-pointer"
-                          style={{ fontSize: "22px" }}
-                          // onClick={() =>
-                          //   readNotification(notification.NotificationId)
-                          // }
-                        />
-                        {/* <MdOutlineMarkEmailRead style={{ fontSize: "22px" }} /> */}
+                        {notification.isRead ? (
+                          <MdOutlineMarkEmailRead
+                            style={{ fontSize: "22px" }}
+                          />
+                        ) : (
+                          <IoMailOpenOutline
+                            className="cursor-pointer"
+                            style={{ fontSize: "22px" }}
+                            // onClick={() =>
+                            //   readNotification(notification.NotificationId)
+                            // }
+                          />
+                        )}
                         <p className="mt-2 text-[14px] text-[grey]">
                           {moment(notification.createdAt).format("LT")}
                         </p>
@@ -58,7 +73,7 @@ const NotificationsBox = ({ ref, notifications }) => {
             )}
           </ul>
           <div>
-            <div className="p-4 flex ">
+            <div className="p-4 flex " onClick={readAllNotifications}>
               <h4 className="text-[15px] text-[#353535] font-[600] cursor-pointer">
                 Mark all as read
               </h4>
