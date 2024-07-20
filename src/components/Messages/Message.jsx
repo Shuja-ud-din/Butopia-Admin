@@ -19,11 +19,9 @@ import { isSameDay } from "../../utils/timeFormat";
 import MessageBadge from "./MessageBadge";
 import { Avatar } from "antd";
 import { data } from "autoprefixer";
-import useChat from "../../Hooks/useChat";
 
 const Message = ({ chat }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
-  const { readAllMessages } = useChat();
   const { activeChat, chatsToDisplay, setChatsToDisplay } =
     useContext(AppContext);
 
@@ -39,7 +37,6 @@ const Message = ({ chat }) => {
         message: value,
         chatId: chat.id,
         sender: localStorage.getItem("userId"),
-        isRead: true,
         date: new Date(),
       };
       setMessages([...messages, newMsg]);
@@ -112,14 +109,6 @@ const Message = ({ chat }) => {
     scrollToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    return () => {
-      if (activeChat.unread > 0) {
-        readAllMessages(activeChat.id);
-      }
-    };
-  }, []);
-
   return (
     <>
       <div className="w-full min-h-[70vh] flex flex-col justify-between">
@@ -144,12 +133,12 @@ const Message = ({ chat }) => {
                 messages.map((message, index) => {
                   return (
                     <>
-                      {(messages[index - 1]
+                      {/* {(messages[index - 1]
                         ? messages[index - 1].isRead
                         : true) &&
                         !messages[index].isRead && (
                           <MessageBadge text="Unread Messages" />
-                        )}
+                        )} */}
 
                       {index === 0 && (
                         <MessageBadge date={messages[index].date} />
