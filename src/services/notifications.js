@@ -13,7 +13,7 @@ export const getAllNotifications = async () => {
 export const readAllNotifications = async () => {
   const { data } = await axiosInstance.patch(
     "/api/notifications/readAll",
-    null,
+    {},
     {
       headers: {
         "Content-Type": "application/json",
