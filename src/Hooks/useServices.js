@@ -26,11 +26,14 @@ const useServices = () => {
   const [data, setData] = useState();
   const getServicesTable = async (providerId) => {
     try {
-      const response = await api.get(`/api/service?provider=${providerId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get(
+        `/api/service?${providerId ? `provider=${providerId}` : ""}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response);
       if (response.data.success) {
         setData(

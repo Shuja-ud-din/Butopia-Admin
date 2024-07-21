@@ -86,7 +86,7 @@ const ServiceTable = () => {
                 value={editServiceData.description}
                 onChange={handleEditServiceDataChange}
                 rows={4}
-                className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
             <div className="mt-4">
@@ -145,6 +145,14 @@ const ServiceTable = () => {
           "Actions",
         ]}
         customBlocks={[
+          {
+            index: 2,
+            component: (description) => {
+              return description.length > 20
+                ? description.slice(0, 20) + "..."
+                : description;
+            },
+          },
           {
             index: 4,
             component: (isValid) => {
