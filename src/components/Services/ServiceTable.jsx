@@ -135,10 +135,18 @@ const ServiceTable = () => {
       <Table
         array={data}
         search={"name"}
-        keysToDisplay={["index", "name", "description", "price", "isValid"]}
+        keysToDisplay={[
+          "index",
+          "name",
+          "provider",
+          "description",
+          "price",
+          "isValid",
+        ]}
         label={[
           "#",
           "Service Name",
+          "Provider",
           "Description",
           "Price",
           "Status",
@@ -146,7 +154,7 @@ const ServiceTable = () => {
         ]}
         customBlocks={[
           {
-            index: 2,
+            index: 3,
             component: (description) => {
               return description.length > 20
                 ? description.slice(0, 20) + "..."
@@ -154,7 +162,7 @@ const ServiceTable = () => {
             },
           },
           {
-            index: 4,
+            index: 5,
             component: (isValid) => {
               return isValid ? "Active" : "Inactive";
             },
