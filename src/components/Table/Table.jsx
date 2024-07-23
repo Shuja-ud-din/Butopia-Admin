@@ -25,12 +25,12 @@ const Table = ({
   useEffect(() => {
     setRecordsPerPage(
       array &&
-        array.filter((obj) => {
-          return (
-            searchedData === "" ||
-            obj[search].toLowerCase().includes(searchedData.toLowerCase())
-          );
-        })
+      array.filter((obj) => {
+        return (
+          searchedData === "" ||
+          obj[search].toLowerCase().includes(searchedData.toLowerCase())
+        );
+      })
     );
   }, [searchedData]);
 
@@ -61,19 +61,19 @@ const Table = ({
         )}
         {filter && filter()}
       </div>
-      <div className="bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-        <div className="overflow-auto">
+      <div className="bg-[white] rounded-[9px] border border-[#c4c4c4] shadow-lg">
+        <div className="table-container">
           <table className="w-full">
-            <thead className="rounded-tr-[9px] rounded-tl-[9px] ">
+            <thead className="rounded-tr-[9px] rounded-tl-[9px]">
               <tr className="uppercase border-b border-[#c4c4c4]">
                 {label.map((text, index) => {
                   return (
                     <th
+                      key={index}
                       className={`py-4 bg-[#F9FAFB] font-[600] text-[15px] text-[#1D2939] whitespace-nowrap 
-                        ${
-                          index === label.length - 1
-                            ? "text-right pr-9 rounded-tr-[9px]"
-                            : index == 0
+                        ${index === label.length - 1
+                          ? "text-right pr-9 rounded-tr-[9px]"
+                          : index === 0
                             ? "text-left pl-9 rounded-tl-[9px]"
                             : "text-left pl-9"
                         }
@@ -98,21 +98,17 @@ const Table = ({
                         className="cursor-pointer hover:bg-[#D0D5DD] border-b border-[#F2F2F2]"
                       >
                         {keysToDisplay.map((key, index) => {
-                          const blocksList = renderComponent(
-                            index,
-                            customBlocks
-                          );
+                          const blocksList = renderComponent(index, customBlocks);
                           return (
                             <td
+                              key={index}
                               onClick={() => {
-                                if (routes.length > 0)
-                                  navigate(`${routes[0]}/${obj.id}`);
+                                if (routes.length > 0) navigate(`${routes[0]}/${obj.id}`);
                               }}
-                              className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${
-                                index === label.length - 1
-                                  ? "text-right pr-9 "
-                                  : "text-left pl-9 "
-                              }`}
+                              className={`py-4 font-[400] text-[14px] text-[#858992] text-left pl-9 whitespace-nowrap ${index === label.length - 1
+                                  ? "text-right pr-9"
+                                  : "text-left pl-9"
+                                }`}
                             >
                               {blocksList
                                 ? blocksList.component(key ? obj[key] : obj)
@@ -120,10 +116,11 @@ const Table = ({
                             </td>
                           );
                         })}
-                        {extraColumns.map((item) => {
+                        {extraColumns.map((item, index) => {
                           return (
                             <td
-                              className={`py-4 font-[400] text-[14px] text-[#858992] flex justify-end pr-9 whitespace-nowrap`}
+                              key={index}
+                              className="py-4 font-[400] text-[14px] text-[#858992] flex justify-end pr-9 whitespace-nowrap"
                             >
                               {item(obj)}
                             </td>
@@ -146,7 +143,7 @@ const Table = ({
                 <tr>
                   <td colSpan={label.length} className="px-6 py-4">
                     {label.map((item, index) => {
-                      return <Skeleton height={50} />;
+                      return <Skeleton height={50} key={index} />;
                     })}
                   </td>
                 </tr>
@@ -165,4 +162,5 @@ const Table = ({
     </>
   );
 };
+
 export default Table;

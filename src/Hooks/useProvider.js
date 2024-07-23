@@ -154,6 +154,7 @@ const useProvider = () => {
 
       if (response.data.success) {
         console.log(response);
+        getProviderTable()
         showSuccessNotification("Provider Added Successfully!");
         setLoading(false);
       } else {
@@ -164,7 +165,7 @@ const useProvider = () => {
       console.error(e);
       showErrorNotification(
         (e.response ? e.response.data.error : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
@@ -264,7 +265,7 @@ const useProvider = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
@@ -294,6 +295,37 @@ const useProvider = () => {
       setProviderDetailLoading(false);
     }
   };
+  //////////handleChangeStatus/////////////
+
+  const handleChangeStatus = async (isValid, id) => {
+
+    const payLoad = {
+      isValid,
+    };
+    if (!window.confirm("Do you really want to change the status?")) {
+      return;
+    }
+
+    console.log(selectedOption);
+    try {
+      const response = await api.patch(`${"/api/provider/"}${id}`, payLoad, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        getProvider()
+        showSuccessNotification("Status Changed Successfully!");
+      } else {
+        showErrorNotification(response.data.error);
+      }
+    } catch (e) {
+      console.error(e);
+      showErrorNotification(e.response.data.error);
+    }
+  };
+
   return {
     getProviderTable,
     data,
@@ -315,6 +347,7 @@ const useProvider = () => {
     editData,
     editPayload,
     setAddProviderData,
+    handleChangeStatus,
   };
 };
 

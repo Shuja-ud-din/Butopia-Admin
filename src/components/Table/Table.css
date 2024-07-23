@@ -26,6 +26,7 @@
 .table_head {
   width: 100%;
 }
+
 .order_paginationBox {
   width: 100%;
   display: flex;
@@ -89,4 +90,9 @@
   outline: none;
   color: #999999;
   background-color: transparent;
+}
+
+.table-container {
+  max-height: 60vh;
+  overflow-x: auto;
 }

@@ -17,7 +17,7 @@ const CustomerDetails = () => {
 
   const { id } = useParams();
 
-  const { getCustomerById } = useCustomer();
+  const { getCustomerById, handleChangeStatus } = useCustomer();
 
   const buttonsTxt = ["Appointment", "Payment Details"];
   const showContent = (index) => {
@@ -70,9 +70,9 @@ const CustomerDetails = () => {
           </div>
         </div> */}
             <div className="flex items-center justify-end">
-              <Select value={clientInfo?.isValid ? "1" : "0"}>
-                <option value="1">Active</option>
-                <option value="0">Deactive</option>
+              <Select value={clientInfo?.isValid ? true : false} onChange={(e) => handleChangeStatus(e.target.value, id)}>
+                <option value={true}>Active</option>
+                <option value={false}>Deactive</option>
               </Select>
             </div>
             <div className="flex items-center grid grid-cols-12">
@@ -118,9 +118,8 @@ const CustomerDetails = () => {
               {buttonsTxt.map((text, index) => (
                 <button
                   key={index}
-                  className={`px-4 w-40 py-2  rounded-md text-white ${
-                    activeInx === index ? "text-[white] bg-primary" : "bg-white"
-                  } border border-gray-300`}
+                  className={`px-4 w-40 py-2  rounded-md text-white ${activeInx === index ? "text-[white] bg-primary" : "bg-white"
+                    } border border-gray-300`}
                   onClick={() => showContent(index)}
                 >
                   {text}

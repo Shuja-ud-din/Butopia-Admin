@@ -46,7 +46,7 @@ const useCustomer = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
     }
   };
@@ -127,7 +127,7 @@ const useCustomer = () => {
       console.error("Error encountered", error);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }
@@ -148,7 +148,7 @@ const useCustomer = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
     }
   };
@@ -211,9 +211,38 @@ const useCustomer = () => {
       console.error("Error encountered", error);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
+    }
+  };
+  //////////handleChangeStatus/////////////
+
+  const handleChangeStatus = async (isValid, id) => {
+
+    const payLoad = {
+      isValid,
+    };
+    if (!window.confirm("Do you really want to change the status?")) {
+      return;
+    }
+
+    console.log(selectedOption);
+    try {
+      const response = await api.patch(`${"/api/provider/"}${id}`, payLoad, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.success) {
+        getCustomerById()
+        showSuccessNotification("Status Changed Successfully!");
+      } else {
+        showErrorNotification(response.data.error);
+      }
+    } catch (e) {
+      console.error(e);
+      showErrorNotification(e.response.data.error);
     }
   };
 
@@ -228,7 +257,7 @@ const useCustomer = () => {
     loading,
     setImagePreview,
     getCustomerById,
-
+    handleChangeStatus,
     editCustomer,
   };
 };

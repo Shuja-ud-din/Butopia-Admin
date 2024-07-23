@@ -22,11 +22,12 @@ import { GrUserExpert } from "react-icons/gr";
 import { CiMedicalCase } from "react-icons/ci";
 import { TbFileDescription } from "react-icons/tb";
 import { Rate } from "antd";
+import useAdmin from "../../Hooks/useAdmin";
 
 const ProviderDetails = () => {
   const navigate = useNavigate();
 
-  const { getProvider, getProviderData, providerDetailLoading } = useProvider();
+  const { getProvider, getProviderData, providerDetailLoading, handleChangeStatus } = useProvider();
   const url = useLocation();
   const { id } = useParams();
   useEffect(() => {
@@ -52,7 +53,7 @@ const ProviderDetails = () => {
               <h3 className="text-[20px] font-[500] ">
                 {getProviderData?.name}
               </h3>
-              <Select value={getProviderData?.isValid}>
+              <Select value={getProviderData?.isValid} onChange={(e) => handleChangeStatus(e.target.value, id)}>
                 <option value={true}>Active</option>
                 <option value={false}>Deactive</option>
               </Select>
@@ -172,20 +173,20 @@ const ProviderDetails = () => {
             <div className="flex flex-wrap gap-5">
               {getProviderData?.services?.length > 0
                 ? getProviderData?.services?.map((service) => {
-                    return (
-                      <div
-                        className="w-[30%]"
-                        onClick={() => navigate(`/admin/services`)}
-                      >
-                        <ServiceCard
-                          name={service.name}
-                          img={service.image}
-                          description={service.description}
-                          price={service.price}
-                        />
-                      </div>
-                    );
-                  })
+                  return (
+                    <div
+                      className="w-[30%]"
+                      onClick={() => navigate(`/admin/services`)}
+                    >
+                      <ServiceCard
+                        name={service.name}
+                        img={service.image}
+                        description={service.description}
+                        price={service.price}
+                      />
+                    </div>
+                  );
+                })
                 : "No services available yet."}
             </div>
           </div>
