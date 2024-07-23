@@ -27,7 +27,7 @@ const NotificationsBox = ({ ref, notifications }) => {
                 return (
                   <li className="border-b border-secondary">
                     <div
-                      className={`p-4 py-2 flex items-start border-b border-[#dedada] grid grid-cols-12 ${
+                      className={`p-4 py-2 items-start border-b border-[#dedada] grid grid-cols-12 ${
                         notification.isRead ? "opacity-[0.4]" : ""
                       } `}
                     >

@@ -26,6 +26,8 @@ const ServiceForm = () => {
     getProviderTable();
   }, []);
 
+  console.log(getAllCategories);
+
   return (
     <>
       <div className="w-full">
@@ -33,8 +35,8 @@ const ServiceForm = () => {
       </div>
       <div className="mt-4 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
         <form className="p-7 " onSubmit={addService}>
-          <div className="flex  mt-10 grid grid-cols-12">
-            <div className="h-[15rem] h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
+          <div className=" mt-10 grid grid-cols-12">
+            <div className="h-[15rem] flex  flex-col col-span-4 pr-[5rem] ">
               <ImageUploader setUrl={setImageUrl} />
             </div>
             <div className=" col-span-8">
@@ -66,7 +68,11 @@ const ServiceForm = () => {
                       category: newValue.id,
                     });
                   }}
-                  options={getAllCategories || [{ name: "Loading..." }]}
+                  options={
+                    getAllCategories?.filter(
+                      (category) => category.isActive
+                    ) || [{ name: "Loading..." }]
+                  }
                   sx={{ width: "100%" }}
                   getOptionLabel={(option) => option.title}
                   renderInput={(params) => (
@@ -93,7 +99,11 @@ const ServiceForm = () => {
                       provider: newValue.id,
                     });
                   }}
-                  options={data || [{ name: "Loading..." }]}
+                  options={
+                    data?.filter((doctor) => doctor.isValid) || [
+                      { name: "Loading..." },
+                    ]
+                  }
                   sx={{ width: "100%" }}
                   getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
@@ -112,7 +122,7 @@ const ServiceForm = () => {
                 onChange={handleChange}
                 name={"description"}
                 rows={4}
-                className="mt-1 block w-full px-3 py-2 border border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-primary rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
               <div>
                 <label

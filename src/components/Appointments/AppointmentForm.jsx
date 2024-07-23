@@ -62,6 +62,8 @@ const AppointmentForm = () => {
     }
   }, [selectedProvider]);
 
+  console.log(customer.data);
+
   return (
     <>
       <div className="w-full ">
@@ -75,7 +77,11 @@ const AppointmentForm = () => {
             size="small"
             id="combo-box-demo"
             onChange={(e, newValue) => setSelectedProvider(newValue)}
-            options={data || [{ name: "Loading..." }]}
+            options={
+              data?.filter((doctor) => doctor.isValid) || [
+                { name: "Loading..." },
+              ]
+            }
             sx={{ width: 300 }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => <TextField {...params} label="Doctor" />}
@@ -88,7 +94,11 @@ const AppointmentForm = () => {
             size="small"
             id="combo-box-demo"
             onChange={(e, newValue) => setSelectedClient(newValue)}
-            options={customer.data || [{ name: "Loading..." }]}
+            options={
+              customer.data?.filter((customer) => customer.isValid) || [
+                { name: "Loading..." },
+              ]
+            }
             sx={{ width: 300 }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => <TextField {...params} label="Client" />}
@@ -103,7 +113,9 @@ const AppointmentForm = () => {
           options={
             !selectedProvider
               ? [{ name: "Select Doctor First" }]
-              : service.data || [{ name: "Loading..." }]
+              : service?.data?.filter((service) => service.isValid) || [
+                  { name: "Loading..." },
+                ]
           }
           sx={{ width: 300 }}
           getOptionLabel={(option) => option.name}

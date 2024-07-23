@@ -11,7 +11,16 @@ export const getAllNotifications = async () => {
 };
 
 export const readAllNotifications = async () => {
-  const { data } = await api.patch("/api/notifications/readAll");
+  const { data } = await axiosInstance.patch(
+    "/api/notifications/readAll",
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
 
   return data;
 };

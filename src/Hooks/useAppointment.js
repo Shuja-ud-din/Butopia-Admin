@@ -34,7 +34,7 @@ const useAppointment = () => {
       console.log(response);
       if (response.data.success) {
         setGetAppointmentTableData(
-          response.data.data.map((item, index) => {
+          response.data.data.reverse().map((item, index) => {
             return {
               ...item,
               index: index + 1,
