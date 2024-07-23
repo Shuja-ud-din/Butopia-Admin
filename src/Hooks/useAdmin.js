@@ -231,10 +231,14 @@ const useAdmin = () => {
 
   //////////////////handleAdminDashboard////////////////
   const [adminDashboardData, setAdminDashboardData] = useState([])
+  // const [recentAppointment, setRecentAppointments] = useState([])
   const handleGetAdminDashboard = async () => {
     try {
       const response = await api.get("/api/admin/dashboard/details")
       setAdminDashboardData(response.data.data)
+      // setRecentAppointments(response.data.data.recentAppointment.map((item, index) => {
+      //   return { ...item, index: index + 1 }
+      // }))
     } catch (e) {
       console.error(e.response.data.message)
     }
@@ -249,6 +253,7 @@ const useAdmin = () => {
     addAdmin,
     loading,
     getAdminData,
+    // recentAppointment,
     getAdmin,
     handleStatusButtonChange,
     statusValue,

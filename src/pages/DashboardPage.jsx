@@ -26,7 +26,6 @@ const DashboardPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  console.log(adminDashboardData);
 
   function convertToDate(dateString) {
     const date = new Date(dateString);
@@ -101,11 +100,11 @@ const DashboardPage = () => {
             ) : (
               <Table
                 array={adminDashboardData.recentAppointments}
-                keysToDisplay={["id", "customer", "provider", "service", "date"]}
-                label={["#", "Customer Name", "Provider Name", "Service Name", "Time"]}
+                keysToDisplay={["customer", "provider", "service", "date"]}
+                label={["Customer Name", "Provider Name", "Service Name", "Time"]}
                 customBlocks={[
                   {
-                    index: 4,
+                    index: 3,
                     component: (date) => {
                       return moment(date).format("LT");
                     },

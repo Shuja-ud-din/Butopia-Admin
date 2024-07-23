@@ -36,7 +36,7 @@ const Header = () => {
       setShowNotificationsBox(false);
     }
   };
-
+  console.log(showNotificationsBox);
   const toggleProfileBox = (event) => {
     if (
       showProfileBox &&

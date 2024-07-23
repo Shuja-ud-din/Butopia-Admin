@@ -37,7 +37,7 @@ const useServices = () => {
       console.log(response);
       if (response.data.success) {
         setData(
-          response.data.data.map((item, index) => {
+          response.data.data.reverse().map((item, index) => {
             return {
               index: index + 1,
               ...item,
@@ -112,7 +112,7 @@ const useServices = () => {
       setLoading(false);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
     }
   };
@@ -173,7 +173,7 @@ const useServices = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-          "Something went wrong!"
+        "Something went wrong!"
       );
       setLoading(false);
     }

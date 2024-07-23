@@ -229,7 +229,7 @@ const useCustomer = () => {
 
     console.log(selectedOption);
     try {
-      const response = await api.patch(`${"/api/provider/"}${id}`, payLoad, {
+      const response = await api.patch(`${"/api/customer/"}${id}`, payLoad, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
