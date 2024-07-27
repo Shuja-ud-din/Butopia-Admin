@@ -33,6 +33,26 @@ const useChat = () => {
     }
   };
 
+  const getAppointmentChats = async () => {
+    try {
+      const response = await api.get("/api/chat/appointments", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setLoading(false);
+      if (response.data.success) {
+        setChats(
+          response.data.data.reverse().map((item, index) => {
+            return { ...item, index: index + 1 };
+          })
+        );
+      }
+    } catch (e) {
+      console.error("Error message", e.message);
+    }
+  };
+
   const readAllMessages = async (chatId) => {
     try {
       const response = await api.put(
@@ -86,6 +106,7 @@ const useChat = () => {
     getSupportChats,
     readAllMessages,
     getOnlineUsers,
+    getAppointmentChats,
     chats,
     loading,
   };

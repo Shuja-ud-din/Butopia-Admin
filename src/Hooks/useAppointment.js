@@ -48,7 +48,7 @@ const useAppointment = () => {
   };
   ////////////////addAppointment//////////////
 
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState(Date.now());
   const handleDateChange = (date) => {
     setSelectedDate(date ? date.toISOString() : "Invalid Date");
   };

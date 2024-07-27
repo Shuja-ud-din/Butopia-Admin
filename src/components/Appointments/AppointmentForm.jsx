@@ -26,7 +26,7 @@ const AppointmentForm = () => {
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
 
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(new Date());
   const times = [
     "9:00 AM",
     "9:30 AM",

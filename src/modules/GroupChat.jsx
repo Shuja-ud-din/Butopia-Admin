@@ -7,8 +7,9 @@ import ChatBox from "../components/ChatBox/ChatBox";
 import { socket } from "../utils/socket";
 import useChat from "../Hooks/useChat";
 import { toUnix } from "../utils/timeFormat";
+import { useLocation } from "react-router-dom";
 
-const Chat = ({ chats }) => {
+const GroupChat = ({ chats }) => {
   const {
     activeChat,
     setActiveChat,
@@ -47,6 +48,8 @@ const Chat = ({ chats }) => {
     setChatsToDisplay(chats);
   }, [chats]);
 
+  console.log(chats);
+
   return (
     <div className="h-[72vh] gap-[1rem] grid grid-cols-12 mt-4 ">
       <div className="p-3 col-span-4 bg-[white]  border border-[#c4c4c4]  rounded-[9px] h-full  flex flex-col">
@@ -64,23 +67,19 @@ const Chat = ({ chats }) => {
               ? chatsToDisplay.map((chat, index) => {
                   return (
                     <ChatBox
-                      name={chat?.user?.name}
-                      isActive={chat?.id === activeChat.id}
-                      profilePhoto={chat?.user?.profilePicture}
-                      isOnline={onlineUsers.find(
-                        (user) => user?.userId === chat?.user?.id
-                      )}
+                      name={`${chat?.user1?.name} & ${chat?.user2?.name}`}
+                      isActive={chat.id === activeChat.id}
                       lastMessage={
-                        chat?.lastMessage ? chat.lastMessage.message : ""
+                        chat.lastMessage ? chat.lastMessage.message : ""
                       }
                       unread={chat.unread}
                       lastMsgTime={
-                        chat?.lastMessage
-                          ? chat?.lastMessage.date
-                          : chat?.createdAt
+                        chat.lastMessage
+                          ? chat.lastMessage.date
+                          : chat.createdAt
                       }
                       onClick={() => {
-                        if (activeChat?.unread > 0) {
+                        if (activeChat.unread > 0) {
                           readAllMessages(activeChat.id);
                         }
                         setActiveChat(chat);
@@ -93,15 +92,10 @@ const Chat = ({ chats }) => {
         </div>
       </div>
       <div className="col-span-8 bg-[white]  border  rounded-[9px] rounded-tr-[9px]  border-[#c4c4c4] shadow-lg ">
-        <Message
-          chat={activeChat}
-          isOnline={onlineUsers.find(
-            (user) => user.userId === activeChat?.user?.id
-          )}
-        />
+        <Message chat={activeChat} isGroupChat={true} />
       </div>
     </div>
   );
 };
 
-export default Chat;
+export default GroupChat;

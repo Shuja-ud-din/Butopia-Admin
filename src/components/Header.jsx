@@ -36,7 +36,7 @@ const Header = () => {
       setShowNotificationsBox(false);
     }
   };
-  console.log(showNotificationsBox);
+
   const toggleProfileBox = (event) => {
     if (
       showProfileBox &&
@@ -72,7 +72,6 @@ const Header = () => {
 
   useEffect(() => {
     socket.on("notification", (data) => {
-      console.log("listen notification called", data);
       sendNotification(data.notification.title, data.notification.message);
       setUnreadNotifications(data.unreadNotifications);
     });
@@ -126,9 +125,9 @@ const Header = () => {
             </div>
             {showProfileBox && (
               <ProfileBox
-                name={user.name}
-                role={user.role}
-                image={user.profilePicture}
+                name={user?.name}
+                role={user?.role}
+                image={user?.profilePicture}
               />
             )}
             {showNotificationsBox && (

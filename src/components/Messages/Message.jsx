@@ -12,7 +12,7 @@ import MessageBadge from "./MessageBadge";
 import useChat from "../../Hooks/useChat";
 import ChatAvatar from "../ChatBox/ChatAvatar";
 
-const Message = ({ chat, isOnline = false }) => {
+const Message = ({ chat, isOnline = false, isGroupChat = false }) => {
   const { messages: chatMsgs, getMessagesById, sendMessage } = useMessages();
   const { activeChat, chatsToDisplay, setChatsToDisplay } =
     useContext(AppContext);
@@ -87,8 +87,8 @@ const Message = ({ chat, isOnline = false }) => {
   }, [activeChat, chatsToDisplay]);
 
   useEffect(() => {
-    getMessagesById(chat.id);
-  }, [chat.id]);
+    getMessagesById(chat?.id);
+  }, [chat?.id]);
 
   useEffect(() => {
     setMessages(chatMsgs);
@@ -111,7 +111,11 @@ const Message = ({ chat, isOnline = false }) => {
             isOnline={isOnline}
           />
           <div className="text-center text-lg font-semibold  text-[white]">
-            {chat ? chat.user.name : ""}
+            {chat
+              ? isGroupChat
+                ? `${chat?.user1?.name} & ${chat?.user2?.name}`
+                : chat?.user?.name
+              : ""}
           </div>
           {/* <h3 className="text-[25px] font-[500] mb-5 ">Messages</h3> */}
         </div>
@@ -155,22 +159,24 @@ const Message = ({ chat, isOnline = false }) => {
             </MessageArea>
           )}
         </div>
-        <form
-          onSubmit={handleSend}
-          className="w-full flex items-center justify-center px-5 py-2"
-        >
-          <InputBar
-            className="bg-[#f8fafb] rounded-[25px] flex items-center justify-center mb-0"
-            type="text"
-            value={value}
-            placeholder={"Type Your Message here..."}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <Button className="ml-3 mb-3 ">
-            Send
-            <FiSend className="ml-2" />
-          </Button>
-        </form>
+        {!isGroupChat && (
+          <form
+            onSubmit={handleSend}
+            className="w-full flex items-center justify-center px-5 py-2"
+          >
+            <InputBar
+              className="bg-[#f8fafb] rounded-[25px] flex items-center justify-center mb-0"
+              type="text"
+              value={value}
+              placeholder={"Type Your Message here..."}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <Button className="ml-3 mb-3 ">
+              Send
+              <FiSend className="ml-2" />
+            </Button>
+          </form>
+        )}
       </div>
     </>
   );

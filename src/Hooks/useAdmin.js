@@ -108,7 +108,7 @@ const useAdmin = () => {
       console.error("Error encountered", error);
       showErrorNotification(
         (error.response ? error.response.data.message : error.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -192,7 +192,7 @@ const useAdmin = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -230,19 +230,23 @@ const useAdmin = () => {
   };
 
   //////////////////handleAdminDashboard////////////////
-  const [adminDashboardData, setAdminDashboardData] = useState([])
+  const [adminDashboardData, setAdminDashboardData] = useState([]);
   // const [recentAppointment, setRecentAppointments] = useState([])
   const handleGetAdminDashboard = async () => {
     try {
-      const response = await api.get("/api/admin/dashboard/details")
-      setAdminDashboardData(response.data.data)
+      const response = await api.get("/api/admin/dashboard/details", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAdminDashboardData(response.data.data);
       // setRecentAppointments(response.data.data.recentAppointment.map((item, index) => {
       //   return { ...item, index: index + 1 }
       // }))
     } catch (e) {
-      console.error(e.response.data.message)
+      console.error(e.response.data.message);
     }
-  }
+  };
   return {
     adminDashboardData,
     handleGetAdminDashboard,
