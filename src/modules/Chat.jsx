@@ -43,9 +43,16 @@ const Chat = ({ chats }) => {
     if (chats?.length > 0) {
       setActiveChat(chats[0]);
     }
-
     setChatsToDisplay(chats);
   }, [chats]);
+
+  useEffect(() => {
+    return () => {
+      setChatsToDisplay([]);
+      readAllMessages(activeChat?.id);
+      console.log(activeChat);
+    };
+  }, []);
 
   return (
     <div className="h-[72vh] gap-[1rem] grid grid-cols-12 mt-4 ">

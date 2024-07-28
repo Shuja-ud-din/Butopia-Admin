@@ -48,7 +48,13 @@ const GroupChat = ({ chats }) => {
     setChatsToDisplay(chats);
   }, [chats]);
 
-  console.log(chats);
+  useEffect(() => {
+    return () => {
+      setChatsToDisplay([]);
+      readAllMessages(activeChat?.id);
+      console.log(activeChat);
+    };
+  }, []);
 
   return (
     <div className="h-[72vh] gap-[1rem] grid grid-cols-12 mt-4 ">

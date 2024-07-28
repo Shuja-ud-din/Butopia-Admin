@@ -29,7 +29,7 @@ const Message = ({ chat, isOnline = false, isGroupChat = false }) => {
         message: value,
         chatId: chat.id,
         sender: localStorage.getItem("userId"),
-        isRead: false,
+        isRead: true,
         date: new Date(),
       };
       setMessages([...messages, newMsg]);
@@ -53,6 +53,7 @@ const Message = ({ chat, isOnline = false, isGroupChat = false }) => {
                 date: data.date,
                 message: data.message,
               },
+              unread: chat.unread + 1,
             };
           } else {
             return chat;
@@ -113,7 +114,9 @@ const Message = ({ chat, isOnline = false, isGroupChat = false }) => {
           <div className="text-center text-lg font-semibold  text-[white]">
             {chat
               ? isGroupChat
-                ? `${chat?.user1?.name} & ${chat?.user2?.name}`
+                ? chat?.user1?.name
+                  ? `${chat?.user1?.name} & ${chat?.user2?.name}`
+                  : ""
                 : chat?.user?.name
               : ""}
           </div>
@@ -130,19 +133,23 @@ const Message = ({ chat, isOnline = false, isGroupChat = false }) => {
                 messages.map((message, index) => {
                   return (
                     <>
-                      {/* {(messages[index - 1]
+                      {(messages[index - 1]
                         ? messages[index - 1].isRead
                         : true) &&
                         !messages[index].isRead && (
                           <MessageBadge text="Unread Messages" />
-                        )} */}
+                        )}
 
                       {index === 0 && (
                         <MessageBadge date={messages[index].date} />
                       )}
                       <MessageBubble
                         key={index}
-                        isMine={chat?.user?.id !== message.sender}
+                        isMine={
+                          isGroupChat
+                            ? chat?.user2?.id !== message.sender
+                            : chat?.user?.id !== message.sender
+                        }
                         message={message.message}
                         time={message.date}
                       />

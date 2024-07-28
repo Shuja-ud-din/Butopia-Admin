@@ -65,10 +65,10 @@ const useChat = () => {
         }
       );
       if (response.data.success) {
-        notification.success({
-          message: "Success",
-          description: "All messages read successfully",
-        });
+        // notification.success({
+        //   message: "Success",
+        //   description: "All messages read successfully",
+        // });
         setChatsToDisplay(
           chatsToDisplay.map((chat) => {
             if (chat.id === chatId) {
@@ -80,10 +80,10 @@ const useChat = () => {
       }
     } catch (e) {
       console.error("Error message", e.message);
-      notification.error({
-        message: "Error",
-        description: "Failed to read messages",
-      });
+      // notification.error({
+      //   message: "Error",
+      //   description: "Failed to read messages",
+      // });
     }
   };
 
