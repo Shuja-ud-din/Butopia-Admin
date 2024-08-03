@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { api } from "../api/api";
 import { notification } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getProviderAvailabilty } from "../services/provider";
 const useProvider = () => {
   const navigate = useNavigate("");
   const token = localStorage.getItem("token");
@@ -154,7 +156,7 @@ const useProvider = () => {
 
       if (response.data.success) {
         console.log(response);
-        getProviderTable()
+        getProviderTable();
         showSuccessNotification("Provider Added Successfully!");
         setLoading(false);
       } else {
@@ -165,7 +167,7 @@ const useProvider = () => {
       console.error(e);
       showErrorNotification(
         (e.response ? e.response.data.error : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -265,7 +267,7 @@ const useProvider = () => {
       console.error(e.message);
       showErrorNotification(
         (e.response ? e.response.data.message : e.message) ||
-        "Something went wrong!"
+          "Something went wrong!"
       );
       setLoading(false);
     }
@@ -298,7 +300,6 @@ const useProvider = () => {
   //////////handleChangeStatus/////////////
 
   const handleChangeStatus = async (isValid, id) => {
-
     const payLoad = {
       isValid,
     };
@@ -306,7 +307,6 @@ const useProvider = () => {
       return;
     }
 
-    console.log(selectedOption);
     try {
       const response = await api.patch(`${"/api/provider/"}${id}`, payLoad, {
         headers: {
@@ -315,7 +315,7 @@ const useProvider = () => {
       });
 
       if (response.data.success) {
-        getProvider()
+        getProvider();
         showSuccessNotification("Status Changed Successfully!");
       } else {
         showErrorNotification(response.data.error);
@@ -352,3 +352,28 @@ const useProvider = () => {
 };
 
 export default useProvider;
+
+export const useGetProviderAvailabilty = (provider) => {
+  const onSuccess = (data) => {
+    console.log(data);
+  };
+  const onError = (error) => {
+    console.error(error);
+  };
+
+  const { data, error, isError, isPending, isSuccess, isFetching } = useQuery({
+    queryKey: ["availability", provider],
+    queryFn: () => getProviderAvailabilty(provider),
+    onSuccess,
+    onError,
+  });
+
+  return {
+    availability: data?.data,
+    error,
+    isError,
+    isPending,
+    isSuccess,
+    isLoading: isFetching,
+  };
+};

@@ -9,11 +9,14 @@ import { Autocomplete, Box, TextField } from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import useAppointment from "../../Hooks/useAppointment";
-import useProvider from "../../Hooks/useProvider";
+import useProvider, {
+  useGetProviderAvailabilty,
+} from "../../Hooks/useProvider";
 import useCustomer from "../../Hooks/useCustomer";
 import getAppointmentTime from "../../utils/getAppointmentTime";
 import moment from "moment";
 import useServices from "../../Hooks/useServices";
+import { getAvailabiltySlots } from "../../services/provider";
 
 const AppointmentForm = () => {
   const navigate = useNavigate();
@@ -25,35 +28,32 @@ const AppointmentForm = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+  const [selectableDays, setSelectAbleDays] = useState([]);
+  const [slots, setSlots] = useState({
+    morning: [],
+    evening: [],
+  });
+
+  const { availability, isLoading } = useGetProviderAvailabilty(
+    selectedProvider?.id
+  );
 
   const [selectedTime, setSelectedTime] = useState(new Date());
-  const times = [
-    "9:00 AM",
-    "9:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-    "12:00 PM",
-  ];
 
-  const eveningSlot = [
-    "5:00 PM",
-    "5:30 PM",
-    "6:00 PM",
-    "6:30 PM",
-    "7:00 PM",
-    "7:30 PM",
-    "8:00 PM",
-  ];
   const handleSelectedTime = (time) => {
     setSelectedTime(time);
+  };
+
+  const shouldDisableDate = (date) => {
+    // Get the day name of the given date
+    const dayName = date.format("dddd");
+    // Check if the day name is in the selectableDays array
+    return !selectableDays.includes(dayName);
   };
 
   useEffect(() => {
     getProviderTable();
     customer.getCustomerTable();
-    // service.getServicesTable();
   }, []);
 
   useEffect(() => {
@@ -62,7 +62,17 @@ const AppointmentForm = () => {
     }
   }, [selectedProvider]);
 
-  console.log(customer.data);
+  useEffect(() => {
+    if (availability?.workingTimes) {
+      setSelectAbleDays(availability?.workingDays);
+      setSlots(
+        getAvailabiltySlots(
+          availability?.workingTimes,
+          availability?.appointments
+        )
+      );
+    }
+  }, [availability]);
 
   return (
     <>
@@ -129,59 +139,75 @@ const AppointmentForm = () => {
               name="date"
               defaultValue={dayjs(new Date())}
               onChange={handleDateChange}
+              disableHighlightToday
+              disablePast
+              maxDate={dayjs().add(1, "month")}
+              shouldDisableDate={shouldDisableDate}
             />
           </LocalizationProvider>
         </div>
-        <div className="w-70 flex  flex-col p-4 ml-2 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
-          <h2 className="font-[600]">Morning</h2>
-          <p className="color-[grey] mb-4 text-[12px] font-[500]">
-            9:00 AM to 12:00 PM
-          </p>
-          <div className="w-full flex  flex-wrap min-w-[200px]">
-            {times.map((item, index) => {
-              return (
-                <TimePickerComponent
-                  time={item}
-                  isSelected={selectedTime === item}
-                  key={index}
-                  onClick={() => handleSelectedTime(item)}
-                />
-              );
-            })}
-          </div>
-          <div className="mt-5 mb-4 w-full h-[0.5px] bg-[grey]"></div>
-          <h2 className="font-[600]">Evening</h2>
-          <p className="color-[grey] mb-4 text-[12px] font-[500]">
-            5:00 PM to 8:00 PM
-          </p>
-          <div className="w-full mb-16 flex  flex-wrap min-w-[200px]">
-            {eveningSlot.map((item, index) => {
-              return (
-                <TimePickerComponent
-                  time={item}
-                  isSelected={selectedTime === item}
-                  key={index}
-                  onClick={() => handleSelectedTime(item)}
-                />
-              );
-            })}
-          </div>
-          <div className="my-3 w-full flex items-center justify-end">
-            <Button
-              type="primary"
-              onClick={() => {
-                addAppointment(
-                  selectedClient.id,
-                  selectedService.id,
-                  moment(
-                    getAppointmentTime(selectedDate, selectedTime)
-                  ).format()
-                );
-              }}
-            >
-              Submit
-            </Button>
-          </div>
+        <div className="w-full flex  flex-col p-4 ml-2 bg-[white] rounded-[9px]  border border-[#c4c4c4] shadow-lg">
+          {!selectedProvider ? (
+            <>
+              <div className="flex items-center h-full justify-center">
+                <h2 className="font-[600]">Select a Doctor first!</h2>
+              </div>
+            </>
+          ) : isLoading ? (
+            <>
+              <div className="flex items-center h-full justify-center">
+                <h2 className="font-[600]">Checking AVailibility</h2>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="font-[600]">Morning</h2>
+
+              <div className="w-full flex  flex-wrap min-w-[200px]">
+                {slots.morning.map((item, index) => {
+                  return (
+                    <TimePickerComponent
+                      time={item}
+                      isSelected={selectedTime === item}
+                      key={index}
+                      onClick={() => handleSelectedTime(item)}
+                    />
+                  );
+                })}
+              </div>
+              <div className="mt-5 mb-4 w-full h-[0.5px] bg-[grey]"></div>
+              <h2 className="font-[600]">Evening</h2>
+
+              <div className="w-full mb-16 flex  flex-wrap min-w-[200px]">
+                {slots.evening.map((item, index) => {
+                  return (
+                    <TimePickerComponent
+                      time={item}
+                      isSelected={selectedTime === item}
+                      key={index}
+                      onClick={() => handleSelectedTime(item)}
+                    />
+                  );
+                })}
+              </div>
+              <div className="my-3 w-full flex items-center justify-end">
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    addAppointment(
+                      selectedClient.id,
+                      selectedService.id,
+                      moment(
+                        getAppointmentTime(selectedDate, selectedTime)
+                      ).format()
+                    );
+                  }}
+                >
+                  Submit
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
