@@ -29,6 +29,7 @@ const AppointmentForm = () => {
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [selectableDays, setSelectAbleDays] = useState([]);
+  const [muiDate, setMUIDate] = useState(null);
   const [slots, setSlots] = useState({
     morning: [],
     evening: [],
@@ -138,9 +139,13 @@ const AppointmentForm = () => {
             <DateCalendar
               name="date"
               defaultValue={dayjs(new Date())}
-              onChange={handleDateChange}
-              disableHighlightToday
+              onChange={(date) => {
+                handleDateChange(date);
+                setMUIDate(date);
+              }}
+              disableHighlightToday={true}
               disablePast
+              value={muiDate}
               maxDate={dayjs().add(1, "month")}
               shouldDisableDate={shouldDisableDate}
             />
