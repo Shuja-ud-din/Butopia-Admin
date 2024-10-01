@@ -9,6 +9,7 @@ import Loader from "../Loader/Loader";
 import Loader2 from "../Loader/Loader2";
 import Button from "../Button/Button";
 import Table from "../Table/Table";
+import usePayment from "../../Hooks/usePayment";
 
 const CustomerDetails = () => {
   const [clientInfo, setClientData] = useState();
@@ -18,6 +19,7 @@ const CustomerDetails = () => {
   const { id } = useParams();
 
   const { getCustomerById, handleChangeStatus } = useCustomer();
+  // const{getPaymentsByCustomer,customerPayments} = usePayment()
 
   const buttonsTxt = ["Appointment", "Payment Details"];
   const showContent = (index) => {
@@ -36,9 +38,10 @@ const CustomerDetails = () => {
 
   useEffect(() => {
     getCustomerData();
+    // getPaymentsByCustomer(clientInfo?.id)
   }, []);
 
-  console.log(clientInfo);
+  // console.log("asdasdadadasdas",customerPayments);
 
   return (
     <>
@@ -152,7 +155,29 @@ const CustomerDetails = () => {
                   />
                 </>
               ) : (
+                
+                <>
                 <h3 className="mb-3 font-[600] text-[22px] ">Payment Table</h3>
+                <Table
+                  array={clientInfo.appointments}
+                  keysToDisplay={[
+                    "index",
+                    "provider",
+                    "service",
+                    "date",
+                    "status",
+                  ]}
+                  customBlocks={[
+                    {
+                      index: 3,
+                      component: (date) => {
+                        return convertToDate(date);
+                      },
+                    },
+                  ]}
+                  label={["#", "Provider", "Service", "Date", "Status"]}
+                />
+              </>
               )}
             </div>
           </div>
