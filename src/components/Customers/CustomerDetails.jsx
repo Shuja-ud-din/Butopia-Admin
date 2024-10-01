@@ -19,7 +19,7 @@ const CustomerDetails = () => {
   const { id } = useParams();
 
   const { getCustomerById, handleChangeStatus } = useCustomer();
-  // const{getPaymentsByCustomer,customerPayments} = usePayment()
+  const{getPaymentsByCustomer,customerPayments} = usePayment()
 
   const buttonsTxt = ["Appointment", "Payment Details"];
   const showContent = (index) => {
@@ -38,10 +38,10 @@ const CustomerDetails = () => {
 
   useEffect(() => {
     getCustomerData();
-    // getPaymentsByCustomer(clientInfo?.id)
+    getPaymentsByCustomer(id)
   }, []);
 
-  // console.log("asdasdadadasdas",customerPayments);
+  console.log(customerPayments);
 
   return (
     <>
@@ -159,23 +159,29 @@ const CustomerDetails = () => {
                 <>
                 <h3 className="mb-3 font-[600] text-[22px] ">Payment Table</h3>
                 <Table
-                  array={clientInfo.appointments}
+                  array={customerPayments}
                   keysToDisplay={[
                     "index",
-                    "provider",
-                    "service",
-                    "date",
+                    "amount",
+                    "createdAt",
+                    "updatedAt",
                     "status",
                   ]}
                   customBlocks={[
                     {
+                      index: 2,
+                      component: (createdAt) => {
+                        return convertToDate(createdAt);
+                      },
+                    },
+                    {
                       index: 3,
-                      component: (date) => {
-                        return convertToDate(date);
+                      component: (updatedAt) => {
+                        return convertToDate(updatedAt);
                       },
                     },
                   ]}
-                  label={["#", "Provider", "Service", "Date", "Status"]}
+                  label={[ "#","Amount", "Created at","Updated at", "Status"]}
                 />
               </>
               )}

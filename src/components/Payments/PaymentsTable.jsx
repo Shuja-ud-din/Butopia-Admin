@@ -1,84 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../Button/Button";
 import { FaPlus } from "react-icons/fa6";
 import Table from "../Table/Table";
 import Select from "../Dropdown/Select";
 import FilterButton from "../Button/FilterButton";
 import { MdDelete } from "react-icons/md";
+import usePayment from "../../Hooks/usePayment";
 
-const data = [
-  {
-    id: 1,
-    customerName: "John Doe",
-    phone: "09087654321",
-    serviceName: "Service 1",
-    date: "2015-03-25",
-    amount: "2000",
-    paymentMethod: "Cash",
-  },
-  {
-    id: 2,
-    customerName: "John Doe",
-    phone: "09087654321",
-    serviceName: "Service 1",
-    date: "2015-03-25",
-    amount: "2000",
-    paymentMethod: "Card",
-  },
-];
 
 const PaymentsTable = () => {
+  const{getAllPayments,customerPayments} = usePayment()
+
+  function convertToDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US");
+  }
+
+  useEffect(() => {
+    getAllPayments();
+  }, []);
+  console.log(customerPayments);
+  
   return (
     <>
       <div className="w-full flex justify-between mb-5">
         <h3 className="text-[25px] font-[500] ">Admins</h3>
-        {/* <Button
-          className=""
-          // onClick={() => navigate("/admin/providers/addproviders")}
-        >
-          <FaPlus size={14} className="mr-2" />
-          Add Admin
-        </Button> */}
       </div>
 
       <Table
-        array={data}
-        search={"customerName"}
-        keysToDisplay={[
-          "id",
-          "customerName",
-          "serviceName",
-          "phone",
-          "date",
-          "amount",
-          "paymentMethod",
-        ]}
-        label={[
-          "#",
-          "Customer Name",
-          "Service Name",
-          "Phone Number",
-          "Date",
-          "Amount",
-          "Payment Method",
-          "Actions",
-        ]}
-        filter={() => {
-          return (
-            <>
-              <input type="date" className="h-[40px] mx-3 rounded-lg px-2 " />
-              <FilterButton />
-            </>
-          );
-        }}
-        extraColumns={[
-          () => {
-            return (
-              <MdDelete className="text-[#FF6666] mr-[1rem] text-[1.3rem]" />
-            );
-          },
-        ]}
-      />
+       array={customerPayments}
+                  keysToDisplay={[
+                    "index",
+                    "amount",
+                    "createdAt",
+                    "updatedAt",
+                    "status",
+                  ]}
+                  customBlocks={[
+                    {
+                      index: 2,
+                      component: (createdAt) => {
+                        return convertToDate(createdAt);
+                      },
+                    },
+                    {
+                      index: 3,
+                      component: (updatedAt) => {
+                        return convertToDate(updatedAt);
+                      },
+                    },
+                  ]}
+                  label={[ "#","Amount", "Created at","Updated at", "Status"]}
+                />
     </>
   );
 };

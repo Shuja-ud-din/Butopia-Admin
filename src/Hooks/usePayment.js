@@ -25,7 +25,7 @@ const[customerPayments,setCustomersPayment] = useState([])
 
 const getPaymentsByCustomer = async(customerId)=>{
  try{
-    const payments = api.get(`/api/payment/getPaymentsByCustomer/${customerId}`,{
+    const payments = await api.get(`/api/payment/getPaymentsByCustomer/${customerId}`,{
         headers : {
             Authorization : `Bearer ${token}`
         }
@@ -33,13 +33,29 @@ const getPaymentsByCustomer = async(customerId)=>{
     console.log(payments);
     
     setCustomersPayment(
-      payments
-        // payments.reverse().map((item, index) => {
-        //   return {
-        //     ...item,
-        //     index: index + 1,
-        //   };
-        // })
+        payments.data.reverse().map((item, index) => {
+          return {
+            ...item,
+            index: index + 1,
+          };
+        })
+      );
+ }catch(error){
+        console.error(`Error fetching data, ${error.message}`)
+ }
+}
+
+const getAllPayments = async()=>{
+ try{
+    const payments = await api.get(`/api/payment/getAllPayments`)
+    
+    setCustomersPayment(
+        payments.data.reverse().map((item, index) => {
+          return {
+            ...item,
+            index: index + 1,
+          };
+        })
       );
  }catch(error){
         console.error(`Error fetching data, ${error.message}`)
@@ -49,6 +65,7 @@ const getPaymentsByCustomer = async(customerId)=>{
 return {
     getPaymentsByCustomer,
     customerPayments,
+    getAllPayments
 }
 }
 export default usePayment;
