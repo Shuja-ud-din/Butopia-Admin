@@ -46,9 +46,15 @@ const getPaymentsByCustomer = async(customerId)=>{
 }
 
 const getAllPayments = async()=>{
+  console.log(token);
+  
  try{
-    const payments = await api.get(`/api/payment/getAllPayments`)
-    
+    const payments = await api.get(`/api/payment/getAllPayments`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+    )
     setCustomersPayment(
         payments.data.reverse().map((item, index) => {
           return {

@@ -166,7 +166,7 @@ const useProvider = () => {
     } catch (e) {
       console.error(e);
       showErrorNotification(
-        (e.response ? e.response.data.error : e.message) ||
+        (e.response ? e.response.data.message : e.message) ||
           "Something went wrong!"
       );
       setLoading(false);
