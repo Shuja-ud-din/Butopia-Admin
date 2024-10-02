@@ -14,7 +14,7 @@ import useProvider from "../../Hooks/useProvider";
 import Loader from "../Loader/Loader";
 import Select from "../Dropdown/Select";
 import { Avatar } from "@mui/material";
-
+import moment from "moment";
 import { FiPhone } from "react-icons/fi";
 import { IoMailOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
@@ -23,17 +23,30 @@ import { CiMedicalCase } from "react-icons/ci";
 import { TbFileDescription } from "react-icons/tb";
 import { Rate } from "antd";
 import useAdmin from "../../Hooks/useAdmin";
+import useAppointment from "../../Hooks/useAppointment";
+import Table from "../Table/Table";
 
 const ProviderDetails = () => {
-  const navigate = useNavigate();
-
-  const { getProvider, getProviderData, providerDetailLoading, handleChangeStatus } = useProvider();
-  const url = useLocation();
   const { id } = useParams();
+  const navigate = useNavigate();
+  const url = useLocation();
+  const {
+    getAppointmentTableData,
+    getAppointmentTable,
+    cancelAppointment,
+    loading,
+  } = useAppointment();
+  const { getProvider, getProviderData, providerDetailLoading, handleChangeStatus } = useProvider();
+  
+  function convertToDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US");
+  }
+
   useEffect(() => {
     getProvider(id);
+    getAppointmentTable(id);
   }, []);
-
   return (
     <>
       <div className="w-full flex justify-between mb-5">
@@ -191,7 +204,7 @@ const ProviderDetails = () => {
             </div>
           </div>
 
-          <div className="w-[90%] h-full mt-[2rem]">
+          <div className="w-[90%] mb-[4rem] mt-[2rem]">
             <div className=" w-full flex  mt-[2rem]">
               <div className="w-[50%] ">
                 <div className="text-[1.2rem] font-primary font-[600] mb-[0.5rem]">
@@ -211,6 +224,49 @@ const ProviderDetails = () => {
               </div>
             </div>
           </div>
+    
+
+      <Table
+        array={getAppointmentTableData}
+        search={"customer"}
+        keysToDisplay={[
+          "index",
+          "customer",
+          "provider",
+          "service",
+          "date",
+          "date",
+          "status",
+        ]}
+        label={[
+          "#",
+          "Customer Name",
+          "Provider Name",
+          "service",
+          "date",
+          "time",
+          "Status",
+        ]}
+        customBlocks={[
+          {
+            index: 4,
+            component: (date) => {
+              return convertToDate(date);
+              // Today at 11:10 AM(date);
+            },
+          },
+          {
+            index: 5,
+            component: (date) => {
+              return moment(date).format("LT");
+              // Today at 11:10 AM(date);
+            },
+          },
+        ]}
+       
+       
+      />
+
         </>
       )}
     </>

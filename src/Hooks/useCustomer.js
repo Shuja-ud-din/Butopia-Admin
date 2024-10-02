@@ -219,6 +219,7 @@ const useCustomer = () => {
   //////////handleChangeStatus/////////////
 
   const handleChangeStatus = async (isValid, id) => {
+console.log("id:",id,"isValid", isValid);
 
     const payLoad = {
       isValid,

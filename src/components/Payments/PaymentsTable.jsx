@@ -24,7 +24,7 @@ const PaymentsTable = () => {
   return (
     <>
       <div className="w-full flex justify-between mb-5">
-        <h3 className="text-[25px] font-[500] ">Admins</h3>
+        <h3 className="text-[25px] font-[500] ">Payments</h3>
       </div>
 
       <Table

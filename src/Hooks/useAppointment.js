@@ -24,9 +24,9 @@ const useAppointment = () => {
   const [loading, setLoading] = useState(false);
   ///////////////////getAllAppointments//////////////
   const [getAppointmentTableData, setGetAppointmentTableData] = useState();
-  const getAppointmentTable = async () => {
+  const getAppointmentTable = async (providerId) => {
     try {
-      const response = await api.get("/api/appointment", {
+      const response = await api.get(`/api/appointment/${providerId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
