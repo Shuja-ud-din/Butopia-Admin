@@ -66,10 +66,13 @@ const ProviderDetails = () => {
               <h3 className="text-[20px] font-[500] ">
                 {getProviderData?.name}
               </h3>
-              <Select value={getProviderData?.isValid} onChange={(e) => handleChangeStatus(e.target.value, id)}>
+              <p className="h-8 w-16 border rounded-[0.2rem] bg-[#ecebeb] flex items-center justify-center">
+                {getProviderData?.isValid ? "Valid" : "Invalid"}
+            </p>
+              {/* <Select value={getProviderData?.isValid} onChange={(e) => handleChangeStatus(e.target.value, id)}>
                 <option value={true}>Active</option>
                 <option value={false}>Deactive</option>
-              </Select>
+              </Select> */}
             </div>
             <div className="grid grid-cols-12">
               <div className="col-span-3">

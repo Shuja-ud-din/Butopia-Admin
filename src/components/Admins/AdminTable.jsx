@@ -161,18 +161,26 @@ const AdminTable = () => {
         customBlocks={[
           {
             index: 4,
-            component: ({ isValid, id }) => {
-              return (
-                <Select onChange={(e) => handleChangeStatus(e, id)}>
-                  <option value="Valid">{isValid ? "Valid" : "Invalid"}</option>
-                  <option value="Invalid">
-                    {isValid ? "Invalid" : "Valid"}
-                  </option>
-                </Select>
-              );
-            },
-          },
+            component: (isValid) => {
+              return isValid ? "Valid" : "Invalid"
+            }
+          }
         ]}
+        // customBlocks={[
+        //   {
+        //     index: 4,
+        //     component: ({ isValid, id }) => {
+        //       return (
+        //         <Select onChange={(e) => handleChangeStatus(e, id)}>
+        //           <option value="Valid">{isValid ? "Valid" : "Invalid"}</option>
+        //           <option value="Invalid">
+        //             {isValid ? "Invalid" : "Valid"}
+        //           </option>
+        //         </Select>
+        //       );
+        //     },
+        //   },
+        // ]}
         extraColumns={[
           (record) => {
             return (

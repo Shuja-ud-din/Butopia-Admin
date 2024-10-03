@@ -73,10 +73,14 @@ const CustomerDetails = () => {
           </div>
         </div> */}
             <div className="flex items-center justify-end">
-              <Select value={clientInfo?.isValid ? true : false} onChange={(e) => handleChangeStatus(e.target.value, id)}>
+            <p className="h-8 w-16 border rounded-[0.2rem] bg-[#ecebeb] flex items-center justify-center">
+                {clientInfo?.isValid ? "Valid" : "Invalid"}
+            </p>
+
+              {/* <Select value={clientInfo?.isValid ? true : false} onChange={(e) => handleChangeStatus(e.target.value, id)}>
                 <option value={true}>Active</option>
                 <option value={false}>Deactive</option>
-              </Select>
+              </Select> */}
             </div>
             <div className="flex items-center grid grid-cols-12">
               <div className="col-span-3">
