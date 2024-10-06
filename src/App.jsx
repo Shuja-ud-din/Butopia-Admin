@@ -48,7 +48,7 @@ function App() {
           path="/admin/*"
           element={
             <>
-              {/* <SocketProvider> */}
+              {/* <SocketProviders> */}
               <Dashboard />
               {/* </SocketProvider> */}
             </>
