@@ -4,7 +4,8 @@ import { FiAlignLeft } from "react-icons/fi";
 import { GoBell } from "react-icons/go";
 import ProfileBox from "./ProfileBox/ProfileBox";
 import { GoChevronDown } from "react-icons/go";
-import logo from "../assets/logo.jpg";
+// import logo from "../assets/logo.jpg";
+import logo from "../assets/logos/logo2.jpg";
 import { Avatar, Badge } from "@mui/material";
 import NotificationsBox from "./NotificationsBox/NotificationsBox";
 import { AppContext } from "../context/AppData";
@@ -84,7 +85,9 @@ const Header = () => {
   return (
     <div className="w-full grid grid-cols-12 h-[60px] bg-[primary] ">
       <div className="col-span-2 flex items-center justify-center bg-[#0b343d] ">
-        <img src={logo} className="h-[60px]" />
+      <img src={logo} className="h-[60px] w-[60px] rounded-full" />
+
+        {/* <img src={logo} className="h-[60px] " /> */}
       </div>
       <div className="col-span-10 shadow-md">
         <div className="flex justify-between items-center h-full">
